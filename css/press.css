@@ -1,0 +1,34 @@
+body {
+  background-color: #FFBDFB;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.home {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.home > div {
+  text-align: center;
+  width:100%;
+}
+
+.welcome {
+  color: #FFFFFF;
+  font-size: 198px;
+  z-index: 2;
+}
+
+.press {
+  color: #B8E986;
+  font-size: 250px;
+  letter-spacing: -23px;
+  position: relative;
+  text-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+  top: -117px;
+  z-index: -10;
+}
