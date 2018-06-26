@@ -46,6 +46,11 @@ var Home = function (_React$Component) {
                 return _this2.setState({ shitemode: true });
               } },
             'PRESS'
+          ),
+          React.createElement(
+            'button',
+            null,
+            'shop'
           )
         )
       );

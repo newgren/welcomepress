@@ -18,6 +18,7 @@ class Home extends React.Component {
           <div class='press' onClick= {
             () => this.setState({shitemode: true})
           }>PRESS</div>
+          <button>shop</button>
         </div>
       </div>
     );
