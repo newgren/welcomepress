@@ -1,9 +1,9 @@
 body {
   background-color: #FFBDFB;
   font-family: Arial, sans-serif;
+  font-size: 100px;
+  margin: 0px;
 }
-
-
 
 .home {
   align-items: center;
@@ -17,6 +17,10 @@ body {
   width:100%;
 }
 
+.shadow {
+  text-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+}
+
 .welcome {
   color: #FFFFFF;
   font-size: 198px;
@@ -26,9 +30,65 @@ body {
 .press {
   color: #B8E986;
   font-size: 250px;
-  letter-spacing: -23px;
   position: relative;
-  text-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+  letter-spacing: -23px;
   top: -117px;
   z-index: -10;
+}
+
+.shopbutton {
+  color:white;
+  font-size: 50px;
+  position: relative;
+  top: -80px;
+  width: 100px;
+  height:50px;
+  background-color: blue;
+  border:none;
+}
+
+.shop {
+  height: 100%;
+  width: 100%;
+}
+
+.menu {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  font-size: 150px;
+  padding: 0px 100px;
+}
+
+.shopText {
+  flex:1;
+  color: #FFBDFB;
+  letter-spacing: -19px;
+}
+.bagText {
+  flex:1;
+  color: #ffffff;
+  letter-spacing: -11px;
+  text-align: right;
+}
+
+.scroller {
+  position: relative;
+  width: 10000px;
+}
+
+.navs {
+  height: 302px;
+  margin-top: -151px;
+  position: fixed;
+  top: 50%;
+  width: 100%;
+}
+
+.navs > img {
+  position: fixed;
+}
+
+.navs > .right {
+  right: 0px;
 }

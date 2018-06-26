@@ -10,52 +10,79 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-var Home = function (_React$Component) {
-  _inherits(Home, _React$Component);
+var Shop = function (_React$Component) {
+  _inherits(Shop, _React$Component);
 
-  function Home(props) {
-    _classCallCheck(this, Home);
+  function Shop(props) {
+    _classCallCheck(this, Shop);
 
-    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Shop.__proto__ || Object.getPrototypeOf(Shop)).call(this, props));
 
     _this.onclick = props.onclick;
+    _this.state = {
+      pos: 0
+    };
     return _this;
   }
 
-  _createClass(Home, [{
-    key: 'render',
+  _createClass(Shop, [{
+    key: "handleScroll",
+    value: function handleScroll(dir) {
+      switch (dir) {
+        case "left":
+          this.setState({ pos: this.state.pos - 400 });
+          break;
+        case "right":
+          this.setState({ pos: this.state.pos + 400 });
+          break;
+        default:
+
+      }
+    }
+  }, {
+    key: "render",
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
-        'div',
-        { className: 'home' },
+        "div",
+        { className: "shop" },
         React.createElement(
-          'div',
-          null,
+          "div",
+          { className: "menu" },
           React.createElement(
-            'div',
-            { className: 'welcome shadow' },
-            'welcome'
+            "div",
+            { className: "shopText shadow" },
+            "SHOP"
           ),
           React.createElement(
-            'div',
-            { className: 'press shadow' },
-            'PRESS'
-          ),
-          React.createElement(
-            'div',
-            null,
-            React.createElement(
-              'button',
-              { className: 'shopbutton', onClick: this.props.onclick },
-              'shop'
-            )
+            "div",
+            { className: "bagText shadow" },
+            "BAG"
           )
+        ),
+        React.createElement(
+          "div",
+          { className: "scroller", style: { left: this.state.pos + "px" } },
+          [1, 2, 3, 4, 5].map(function (i) {
+            return React.createElement("img", { src: "./img/shirtwhite.png", key: i });
+          })
+        ),
+        React.createElement(
+          "div",
+          { className: "navs" },
+          React.createElement("img", { className: "arrow left", src: "./img/arrowleft.png", onClick: function onClick() {
+              return _this2.handleScroll("left");
+            } }),
+          React.createElement("img", { className: "arrow right", src: "./img/arrowright.png", onClick: function onClick() {
+              return _this2.handleScroll("right");
+            } })
         )
       );
     }
   }]);
 
-  return Home;
+  return Shop;
 }(React.Component);
 
-export default Home;
+export default Shop;

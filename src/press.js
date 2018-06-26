@@ -3,19 +3,30 @@
 const e = React.createElement;
 
 import Home from './home.js'
+import Shop from './shop.js'
 
 
 class Press extends React.Component {
   constructor(props) {
     super(props);
 
-    /*this.state = { liked: false }; */
+    this.state = {
+      shitemode: "home"
+    };
   }
 
+  handleClick(link) {
+    this.setState({shitemode: link});
+  }
 
   render() {
-    const home = e(Home);
-    return home;
+    switch (this.state.shitemode) {
+      case "shop":
+        return <Shop />
+        break;
+      default: //default to home
+        return <Home onclick={() => this.handleClick("shop")}/>
+    }
     /*
     if (this.state.liked) {
       return 'You liked this.';

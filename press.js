@@ -11,6 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var e = React.createElement;
 
 import Home from './home.js';
+import Shop from './shop.js';
 
 var Press = function (_React$Component) {
   _inherits(Press, _React$Component);
@@ -18,16 +19,34 @@ var Press = function (_React$Component) {
   function Press(props) {
     _classCallCheck(this, Press);
 
-    return _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
-    /*this.state = { liked: false }; */
+    _this.state = {
+      shitemode: "home"
+    };
+    return _this;
   }
 
   _createClass(Press, [{
+    key: 'handleClick',
+    value: function handleClick(link) {
+      this.setState({ shitemode: link });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var home = e(Home);
-      return home;
+      var _this2 = this;
+
+      switch (this.state.shitemode) {
+        case "shop":
+          return React.createElement(Shop, null);
+          break;
+        default:
+          //default to home
+          return React.createElement(Home, { onclick: function onclick() {
+              return _this2.handleClick("shop");
+            } });
+      }
       /*
       if (this.state.liked) {
         return 'You liked this.';

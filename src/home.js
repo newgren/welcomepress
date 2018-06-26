@@ -5,20 +5,18 @@ const e = React.createElement;
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shitemode: false
-    };
+    this.onclick = props.onclick;
   }
 
   render() {
     return (
-      <div class='home'>
+      <div className='home'>
         <div>
-          <div class='welcome'>welcome</div>
-          <div class='press' onClick= {
-            () => this.setState({shitemode: true})
-          }>PRESS</div>
-          <button>shop</button>
+          <div className='welcome shadow'>welcome</div>
+          <div className='press shadow'>PRESS</div>
+          <div>
+            <button className='shopbutton' onClick={this.props.onclick}>shop</button>
+          </div>
         </div>
       </div>
     );
