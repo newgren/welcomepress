@@ -10,7 +10,8 @@ class Shop extends React.Component {
     super(props);
     this.state = {
       pos: 0,
-      sel: -1
+      sel: -1,
+      cart: []
     };
   }
 
@@ -39,7 +40,18 @@ class Shop extends React.Component {
     }
   }
 
-
+  addToCart(item, qty) {
+    let n = [];
+    for(let i = 0; i < qty; i++) {
+      n.push(item);
+    }
+    let c = this.state.cart.concat(n);
+    this.setState({
+      sel: -1,
+      cart: c
+    });
+    console.log(c);
+  }
 
   render() {
 
@@ -48,7 +60,7 @@ class Shop extends React.Component {
         <div className='shop'>
           <div className='menu'>
             <div className='shopText shadow'>SHOP</div>
-            <div className='bagText shadow'>BAG</div>
+            <div className='bagText shadow'>BAG{this.state.cart.length  ? '(' + this.state.cart.length + ')' : ''}</div>
           </div>
           <div className='scroller' style={{left: this.state.pos + "px"}}>
             {[0,1,2,3,4].map((i) =>
@@ -65,7 +77,7 @@ class Shop extends React.Component {
           </div>
         </div>
         <div className='itemFrame'>
-          {this.state.sel > -1 ? <Item no={this.state.sel}/> : <p></p>}
+          {this.state.sel > -1 ? <Item no={this.state.sel} add={(qty) => this.addToCart(this.state.sel, qty)}/> : <p></p>}
         </div>
         <div className='back'>
           {this.state.sel > -1 ? <button onClick={() => this.setState({sel:-1})}>GOBACK</button> : <br/>}

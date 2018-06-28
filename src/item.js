@@ -7,9 +7,15 @@ const n = <br/>
 class Item extends React.Component {
   constructor(props) {
     super(props);
-    this.onclick = props.onclick;
+    this.no = props.no;
+    this.state = {
+      qty: 1
+    };
   }
 
+  handleChange(e) {
+    this.setState({qty: e.target.value});
+  }
 
   render() {
     return (
@@ -23,11 +29,11 @@ class Item extends React.Component {
                 {['S', 'M', 'L'].map(s => <option value={s} key={s}>{s}</option>)}
               </select>
               QTY
-              <select className='qty'>
+              <select className='qty' value={this.state.qty} onChange={this.handleChange.bind(this)}>
                 {[1,2,3,4,5].map(n => <option value={n} key={n}>{n}</option>)}
               </select>
               <div className='buy'>
-                <button>+BAG</button>
+                <button onClick={() => this.props.add(this.state.qty)}>+BAG</button>
               </div>
             </div>
           </div>

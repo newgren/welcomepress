@@ -19,13 +19,23 @@ var Item = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
-    _this.onclick = props.onclick;
+    _this.no = props.no;
+    _this.state = {
+      qty: 1
+    };
     return _this;
   }
 
   _createClass(Item, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ qty: e.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         'div',
         { className: 'item' },
@@ -60,7 +70,7 @@ var Item = function (_React$Component) {
               'QTY',
               React.createElement(
                 'select',
-                { className: 'qty' },
+                { className: 'qty', value: this.state.qty, onChange: this.handleChange.bind(this) },
                 [1, 2, 3, 4, 5].map(function (n) {
                   return React.createElement(
                     'option',
@@ -74,7 +84,9 @@ var Item = function (_React$Component) {
                 { className: 'buy' },
                 React.createElement(
                   'button',
-                  null,
+                  { onClick: function onClick() {
+                      return _this2.props.add(_this2.state.qty);
+                    } },
                   '+BAG'
                 )
               )

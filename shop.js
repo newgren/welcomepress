@@ -23,7 +23,8 @@ var Shop = function (_React$Component) {
 
     _this.state = {
       pos: 0,
-      sel: -1
+      sel: -1,
+      cart: []
     };
     return _this;
   }
@@ -58,6 +59,20 @@ var Shop = function (_React$Component) {
       }
     }
   }, {
+    key: 'addToCart',
+    value: function addToCart(item, qty) {
+      var n = [];
+      for (var i = 0; i < qty; i++) {
+        n.push(item);
+      }
+      var c = this.state.cart.concat(n);
+      this.setState({
+        sel: -1,
+        cart: c
+      });
+      console.log(c);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -79,7 +94,8 @@ var Shop = function (_React$Component) {
             React.createElement(
               'div',
               { className: 'bagText shadow' },
-              'BAG'
+              'BAG',
+              this.state.cart.length ? '(' + this.state.cart.length + ')' : ''
             )
           ),
           React.createElement(
@@ -109,7 +125,9 @@ var Shop = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'itemFrame' },
-          this.state.sel > -1 ? React.createElement(Item, { no: this.state.sel }) : React.createElement('p', null)
+          this.state.sel > -1 ? React.createElement(Item, { no: this.state.sel, add: function add(qty) {
+              return _this2.addToCart(_this2.state.sel, qty);
+            } }) : React.createElement('p', null)
         ),
         React.createElement(
           'div',
