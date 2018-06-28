@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import Item from './item.js';
 import OutsideAlerter from './OutsideAlerter.js';
+import catalog from './product/catalog.js';
 
 var e = React.createElement;
 
@@ -42,11 +43,12 @@ var Shop = function (_React$Component) {
   }, {
     key: 'canGoRight',
     value: function canGoRight() {
-      return this.state.pos > 5 * -400;
+      return this.state.pos > 9 * -400;
     }
   }, {
     key: 'handleScroll',
     value: function handleScroll(dir) {
+      console.log(catalog.items);
       var pos = this.state.pos;
       switch (dir) {
         case "left":
@@ -70,7 +72,6 @@ var Shop = function (_React$Component) {
         sel: -1,
         cart: c
       });
-      console.log(c);
     }
   }, {
     key: 'render',
@@ -101,10 +102,10 @@ var Shop = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'scroller', style: { left: this.state.pos + "px" } },
-            [0, 1, 2, 3, 4].map(function (i) {
-              return React.createElement('img', { src: './img/shirtwhite.png', onClick: function onClick() {
-                  return _this2.setState({ sel: i });
-                }, key: i });
+            catalog.items.map(function (item) {
+              return React.createElement('img', { src: './product/' + item.id + '.png', onClick: function onClick() {
+                  return _this2.setState({ sel: item.id });
+                }, key: item.id });
             })
           ),
           React.createElement(
@@ -125,7 +126,7 @@ var Shop = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'itemFrame' },
-          this.state.sel > -1 ? React.createElement(Item, { no: this.state.sel, add: function add(qty) {
+          this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(qty) {
               return _this2.addToCart(_this2.state.sel, qty);
             } }) : React.createElement('p', null)
         ),

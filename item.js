@@ -48,13 +48,18 @@ var Item = function (_React$Component) {
             React.createElement(
               'div',
               { className: 'text' },
-              ['BAGHEAD', 'SHIRT', '$25'].map(function (word) {
+              this.props.item.name.toUpperCase().split(" ").map(function (word) {
                 return React.createElement(
                   'div',
                   { key: word },
-                  word + '.'
+                  word
                 );
               }),
+              React.createElement(
+                'div',
+                { className: 'desc' },
+                this.props.item.description
+              ),
               n,
               React.createElement(
                 'select',
@@ -99,7 +104,7 @@ var Item = function (_React$Component) {
               'div',
               { className: 'scroller' },
               [0, 1, 2].map(function (i) {
-                return React.createElement('img', { src: './img/shirtwhite.png', key: i });
+                return React.createElement('img', { src: './product/' + _this2.props.item.id + '.png', key: i });
               })
             )
           )
@@ -107,7 +112,7 @@ var Item = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'right' },
-          React.createElement('img', { src: './img/shirtwhite.png' })
+          React.createElement('img', { src: './product/' + this.props.item.id + '.png' })
         )
       );
     }

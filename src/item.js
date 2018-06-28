@@ -23,7 +23,10 @@ class Item extends React.Component {
         <div className='left'>
           <div className='info'>
             <div className='text'>
-              {['BAGHEAD', 'SHIRT', '$25'].map(word => <div key={word}>{word+'.'}</div>)}
+              {this.props.item.name.toUpperCase().split(" ").map(word => <div key={word}>{word}</div>)}
+              <div className='desc'>
+                {this.props.item.description}
+              </div>
               {n}
               <select className='sizes' size='3'>
                 {['S', 'M', 'L'].map(s => <option value={s} key={s}>{s}</option>)}
@@ -40,13 +43,13 @@ class Item extends React.Component {
           <div className='pics'>
             <div className='scroller'>
               {[0,1,2].map((i) =>
-                  <img src='./img/shirtwhite.png' key={i}/>
+                  <img src={'./product/'+this.props.item.id+'.png'} key={i}/>
               )}
             </div>
           </div>
         </div>
         <div className='right'>
-            <img src='./img/shirtwhite.png'/>
+            <img src={'./product/'+this.props.item.id+'.png'}/>
         </div>
       </div>
     );

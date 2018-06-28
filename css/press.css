@@ -80,10 +80,15 @@ body {
 
 .shop > .scroller {
   -webkit-transition: left 1s;
+  height: 400px;
   left: 0px;
-  transition: left 1s;
   position: fixed;
-  width: 10000px;
+  transition: left 1s;
+  white-space: nowrap;
+}
+
+.shop > .scroller > img {
+  height: 100%;
 }
 
 .navs {
@@ -148,6 +153,10 @@ body {
   width: 100%;
 }
 
+.text > .desc {
+  font-size: 10px;
+}
+
 select.sizes {
   border: 0px;
   font-size: 50px;
@@ -199,9 +208,10 @@ item > .left {
 }
 
 .item > .right > img {
-  right: 10%;
+  height: 500px;
   max-width:100%;
   position: relative;
+  right: 10%;
 }
 
 .back {

@@ -1,7 +1,8 @@
 'use strict';
 
-import Item from './item.js'
-import OutsideAlerter from './OutsideAlerter.js'
+import Item from './item.js';
+import OutsideAlerter from './OutsideAlerter.js';
+import catalog from './product/catalog.js';
 
 const e = React.createElement;
 
@@ -24,10 +25,11 @@ class Shop extends React.Component {
   }
 
   canGoRight() {
-    return this.state.pos > 5 * -400;
+    return this.state.pos > 9 * -400;
   }
 
   handleScroll(dir) {
+    console.log(catalog.items);
     let pos = this.state.pos;
     switch (dir) {
       case "left":
@@ -50,7 +52,6 @@ class Shop extends React.Component {
       sel: -1,
       cart: c
     });
-    console.log(c);
   }
 
   render() {
@@ -63,9 +64,10 @@ class Shop extends React.Component {
             <div className='bagText shadow'>BAG{this.state.cart.length  ? '(' + this.state.cart.length + ')' : ''}</div>
           </div>
           <div className='scroller' style={{left: this.state.pos + "px"}}>
-            {[0,1,2,3,4].map((i) =>
-                <img src='./img/shirtwhite.png' onClick={() => this.setState({sel: i})} key={i}/>
+            {catalog.items.map((item) =>
+              <img src={'./product/'+item.id+'.png'} onClick={() => this.setState({sel: item.id})} key={item.id}/>
             )}
+
           </div>
           <div className='navs'>
             <img className='arrow left' src='./img/arrowleft.png'
@@ -77,7 +79,7 @@ class Shop extends React.Component {
           </div>
         </div>
         <div className='itemFrame'>
-          {this.state.sel > -1 ? <Item no={this.state.sel} add={(qty) => this.addToCart(this.state.sel, qty)}/> : <p></p>}
+          {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(qty) => this.addToCart(this.state.sel, qty)}/> : <p></p>}
         </div>
         <div className='back'>
           {this.state.sel > -1 ? <button onClick={() => this.setState({sel:-1})}>GOBACK</button> : <br/>}

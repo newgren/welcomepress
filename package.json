@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/newgren/welcomepress/issues"
   },
-  "homepage": "https://github.com/newgren/welcomepress#readme"
+  "homepage": "https://github.com/newgren/welcomepress#readme",
+  "devDependencies": {
+    "json-loader": "^0.5.7"
+  }
 }
