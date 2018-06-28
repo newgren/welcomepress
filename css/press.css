@@ -1,8 +1,14 @@
+body, html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: #FFBDFB;
   font-family: Arial, sans-serif;
-  font-size: 100px;
-  margin: 0px;
+  font-size: 26px;
+  margin: 0;
+  padding:0;
 }
 
 .home {
@@ -72,8 +78,11 @@ body {
   text-align: right;
 }
 
-.scroller {
-  position: relative;
+.shop > .scroller {
+  -webkit-transition: left 1s;
+  left: 0px;
+  transition: left 1s;
+  position: fixed;
   width: 10000px;
 }
 
@@ -83,12 +92,132 @@ body {
   position: fixed;
   top: 50%;
   width: 100%;
+  pointer-events: none;
 }
 
 .navs > img {
+  pointer-events: all;
   position: fixed;
 }
 
 .navs > .right {
   right: 0px;
+}
+
+.itemFrame {
+  position: fixed;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.item {
+  background-color: #B8E986;
+  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+  display: flex;
+  position: fixed;
+  width: 80%;
+  max-height: 80%;
+  padding: 20px 0px;
+  pointer-events: all;
+}
+
+.item > .left {
+  display: flex;
+  flex-direction: column;
+  flex:2;
+}
+
+.item > .left > .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex:5;
+  width: 100%;
+  padding: 15px;
+  padding-left: 25px;
+}
+
+.info > .text {
+  background-color: white;
+  border: 20px solid white;
+  width: 100%;
+}
+
+select.sizes {
+  border: 0px;
+  font-size: 50px;
+  font-weight: bold;
+  padding: 0px;
+  height: 190px;
+  outline: none;
+}
+
+select.qty {
+  font-size:30px;
+}
+
+.buy {
+  display: flex;
+  justify-content: center;
+}
+
+.buy > button {
+  background-color: #FFBDFB;
+  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+  border:none;
+  color:white;
+  margin: 20px 50px;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+item > .left {
+  background-color: orange;
+}
+
+.item > .left > .pics {
+  flex:1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.pics > .scroller > img {
+  max-width: 100px;
+  position: static;
+}
+
+.item > .right {
+  flex: 4;
+}
+
+.item > .right > img {
+  right: 10%;
+  max-width:100%;
+  position: relative;
+}
+
+.back {
+  bottom:10px;
+  left:10px;
+  position:fixed;
+  height: 5%;
+  width: 10%;
+}
+
+.back > button {
+  background-color: #FFBDFB;
+  color:white;
+  font-size:30px;
+  font-weight: bold;
+  box-shadow: -3px 5px 5px rgba(0,0,0,0.5);
+  border:none;
+  height: 100%;
 }

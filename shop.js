@@ -8,6 +8,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import Item from './item.js';
+import OutsideAlerter from './OutsideAlerter.js';
+
 var e = React.createElement;
 
 var Shop = function (_React$Component) {
@@ -18,65 +21,106 @@ var Shop = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Shop.__proto__ || Object.getPrototypeOf(Shop)).call(this, props));
 
-    _this.onclick = props.onclick;
     _this.state = {
-      pos: 0
+      pos: 0,
+      sel: -1
     };
     return _this;
   }
 
   _createClass(Shop, [{
-    key: "handleScroll",
+    key: 'blinkArrow',
+    value: function blinkArrow() {
+      alert("end of the line");
+    }
+  }, {
+    key: 'canGoLeft',
+    value: function canGoLeft() {
+      return this.state.pos < 0;
+    }
+  }, {
+    key: 'canGoRight',
+    value: function canGoRight() {
+      return this.state.pos > 5 * -400;
+    }
+  }, {
+    key: 'handleScroll',
     value: function handleScroll(dir) {
+      var pos = this.state.pos;
       switch (dir) {
         case "left":
-          this.setState({ pos: this.state.pos - 400 });
+          this.canGoLeft() ? this.setState({ pos: pos + 400 }) : this.blinkArrow();
           break;
         case "right":
-          this.setState({ pos: this.state.pos + 400 });
+          this.canGoRight() ? this.setState({ pos: pos - 400 }) : this.blinkArrow();
           break;
         default:
-
       }
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
       return React.createElement(
-        "div",
-        { className: "shop" },
+        'div',
+        null,
         React.createElement(
-          "div",
-          { className: "menu" },
+          'div',
+          { className: 'shop' },
           React.createElement(
-            "div",
-            { className: "shopText shadow" },
-            "SHOP"
+            'div',
+            { className: 'menu' },
+            React.createElement(
+              'div',
+              { className: 'shopText shadow' },
+              'SHOP'
+            ),
+            React.createElement(
+              'div',
+              { className: 'bagText shadow' },
+              'BAG'
+            )
           ),
           React.createElement(
-            "div",
-            { className: "bagText shadow" },
-            "BAG"
+            'div',
+            { className: 'scroller', style: { left: this.state.pos + "px" } },
+            [0, 1, 2, 3, 4].map(function (i) {
+              return React.createElement('img', { src: './img/shirtwhite.png', onClick: function onClick() {
+                  return _this2.setState({ sel: i });
+                }, key: i });
+            })
+          ),
+          React.createElement(
+            'div',
+            { className: 'navs' },
+            React.createElement('img', { className: 'arrow left', src: './img/arrowleft.png',
+              style: { display: this.canGoLeft() ? "initial" : "none" },
+              onClick: function onClick() {
+                return _this2.handleScroll("left");
+              } }),
+            React.createElement('img', { className: 'arrow right', src: './img/arrowright.png',
+              style: { display: this.canGoRight() ? "initial" : "none" },
+              onClick: function onClick() {
+                return _this2.handleScroll("right");
+              } })
           )
         ),
         React.createElement(
-          "div",
-          { className: "scroller", style: { left: this.state.pos + "px" } },
-          [1, 2, 3, 4, 5].map(function (i) {
-            return React.createElement("img", { src: "./img/shirtwhite.png", key: i });
-          })
+          'div',
+          { className: 'itemFrame' },
+          this.state.sel > -1 ? React.createElement(Item, { no: this.state.sel }) : React.createElement('p', null)
         ),
         React.createElement(
-          "div",
-          { className: "navs" },
-          React.createElement("img", { className: "arrow left", src: "./img/arrowleft.png", onClick: function onClick() {
-              return _this2.handleScroll("left");
-            } }),
-          React.createElement("img", { className: "arrow right", src: "./img/arrowright.png", onClick: function onClick() {
-              return _this2.handleScroll("right");
-            } })
+          'div',
+          { className: 'back' },
+          this.state.sel > -1 ? React.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this2.setState({ sel: -1 });
+              } },
+            'GOBACK'
+          ) : React.createElement('br', null)
         )
       );
     }

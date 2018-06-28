@@ -5,7 +5,6 @@ const e = React.createElement;
 import Home from './home.js'
 import Shop from './shop.js'
 
-
 class Press extends React.Component {
   constructor(props) {
     super(props);
