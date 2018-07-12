@@ -9,6 +9,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import Item from './item.js';
+import Bag from './bag.js';
+
 import OutsideAlerter from './OutsideAlerter.js';
 import catalog from './product/catalog.js';
 
@@ -22,7 +24,9 @@ var Shop = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Shop.__proto__ || Object.getPrototypeOf(Shop)).call(this, props));
 
+    _this.goToBag = props.goToBag;
     _this.state = {
+      mode: 'shop',
       pos: 0,
       sel: -1,
       cart: []
@@ -72,6 +76,7 @@ var Shop = function (_React$Component) {
         sel: -1,
         cart: c
       });
+      console.log(this.state.cart);
     }
   }, {
     key: 'render',
@@ -94,7 +99,9 @@ var Shop = function (_React$Component) {
             ),
             React.createElement(
               'div',
-              { className: 'bagText shadow' },
+              { className: 'bagText shadow', onClick: function onClick() {
+                  return _this2.setState({ mode: 'bag', sel: -1 });
+                } },
               'BAG',
               this.state.cart.length ? '(' + this.state.cart.length + ')' : ''
             )
@@ -129,6 +136,11 @@ var Shop = function (_React$Component) {
           this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(qty) {
               return _this2.addToCart(_this2.state.sel, qty);
             } }) : React.createElement('p', null)
+        ),
+        React.createElement(
+          'div',
+          { className: 'bagFrame' },
+          this.state.mode === 'bag' ? React.createElement(Bag, null) : React.createElement('p', null)
         ),
         React.createElement(
           'div',

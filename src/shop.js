@@ -1,6 +1,8 @@
 'use strict';
 
 import Item from './item.js';
+import Bag from './bag.js';
+
 import OutsideAlerter from './OutsideAlerter.js';
 import catalog from './product/catalog.js';
 
@@ -9,7 +11,9 @@ const e = React.createElement;
 class Shop extends React.Component {
   constructor(props) {
     super(props);
+    this.goToBag = props.goToBag;
     this.state = {
+      mode: 'shop',
       pos: 0,
       sel: -1,
       cart: []
@@ -52,6 +56,7 @@ class Shop extends React.Component {
       sel: -1,
       cart: c
     });
+    console.log(this.state.cart);
   }
 
   render() {
@@ -61,7 +66,9 @@ class Shop extends React.Component {
         <div className='shop'>
           <div className='menu'>
             <div className='shopText shadow'>SHOP</div>
-            <div className='bagText shadow'>BAG{this.state.cart.length  ? '(' + this.state.cart.length + ')' : ''}</div>
+            <div className='bagText shadow' onClick={() => this.setState({mode: 'bag', sel: -1})}>
+              BAG{this.state.cart.length  ? '(' + this.state.cart.length + ')' : ''}
+            </div>
           </div>
           <div className='scroller' style={{left: this.state.pos + "px"}}>
             {catalog.items.map((item) =>
@@ -80,6 +87,9 @@ class Shop extends React.Component {
         </div>
         <div className='itemFrame'>
           {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(qty) => this.addToCart(this.state.sel, qty)}/> : <p></p>}
+        </div>
+        <div className='bagFrame'>
+          {this.state.mode === 'bag' ? <Bag /> : <p></p>}
         </div>
         <div className='back'>
           {this.state.sel > -1 ? <button onClick={() => this.setState({sel:-1})}>GOBACK</button> : <br/>}

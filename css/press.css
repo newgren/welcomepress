@@ -71,11 +71,16 @@ body {
   color: #FFBDFB;
   letter-spacing: -19px;
 }
+
 .bagText {
   flex:1;
   color: #ffffff;
   letter-spacing: -11px;
   text-align: right;
+}
+
+.bagText:hover {
+  cursor: pointer;
 }
 
 .shop > .scroller {
@@ -213,6 +218,29 @@ item > .left {
   position: relative;
   right: 10%;
 }
+
+.bagFrame {
+  position: fixed;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.bag {
+  background-color: #B8E986;
+  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
+  display: flex;
+  position: fixed;
+  width: 80%;
+  max-height: 80%;
+  padding: 20px 0px;
+  pointer-events: all;
+}
+
 
 .back {
   bottom:10px;

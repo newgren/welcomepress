@@ -9,10 +9,10 @@ export default
 		},
 		{
 			"id": 1,
-			"name": "baghead",
+			"name": "privacy breach",
 			"description": "oof",
-			"price": 25.3,
-			"tags": ["shirt", "clothes"]
+			"price": "2200000000",
+			"tags": ["shirt", "clothes", "data"]
 		},
 		{
 			"id": 2,

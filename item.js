@@ -60,6 +60,11 @@ var Item = function (_React$Component) {
                 { className: 'desc' },
                 this.props.item.description
               ),
+              React.createElement(
+                'div',
+                null,
+                this.props.item.price + "$"
+              ),
               n,
               React.createElement(
                 'select',

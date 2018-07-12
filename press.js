@@ -12,6 +12,7 @@ var e = React.createElement;
 
 import Home from './home.js';
 import Shop from './shop.js';
+import Bag from './bag.js';
 
 var Press = function (_React$Component) {
   _inherits(Press, _React$Component);
@@ -22,7 +23,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      shitemode: "home"
+      shitemode: 'home'
     };
     return _this;
   }
@@ -38,13 +39,15 @@ var Press = function (_React$Component) {
       var _this2 = this;
 
       switch (this.state.shitemode) {
-        case "shop":
-          return React.createElement(Shop, null);
+        case 'shop':
+          return React.createElement(Shop, { goToBag: function goToBag() {
+              return _this2.handleClick('bag');
+            } });
           break;
         default:
           //default to home
           return React.createElement(Home, { onclick: function onclick() {
-              return _this2.handleClick("shop");
+              return _this2.handleClick('shop');
             } });
       }
       /*

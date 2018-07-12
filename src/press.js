@@ -4,13 +4,15 @@ const e = React.createElement;
 
 import Home from './home.js'
 import Shop from './shop.js'
+import Bag from './bag.js'
+
 
 class Press extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      shitemode: "home"
+      shitemode: 'home'
     };
   }
 
@@ -20,11 +22,11 @@ class Press extends React.Component {
 
   render() {
     switch (this.state.shitemode) {
-      case "shop":
-        return <Shop />
+      case 'shop':
+        return <Shop goToBag={() => this.handleClick('bag')}/>
         break;
       default: //default to home
-        return <Home onclick={() => this.handleClick("shop")}/>
+        return <Home onclick={() => this.handleClick('shop')}/>
     }
     /*
     if (this.state.liked) {

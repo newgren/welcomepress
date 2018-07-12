@@ -1,0 +1,14 @@
+span {
+  font-family: Helvetica;
+  font-size: 80px;
+}
+
+body {
+  align-items: center;
+  background-color: #4c69ba;
+  display: flex;
+  justify-content: center;
+}
+
+.fblogin {
+}

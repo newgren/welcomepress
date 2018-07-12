@@ -27,6 +27,9 @@ class Item extends React.Component {
               <div className='desc'>
                 {this.props.item.description}
               </div>
+              <div>
+                {this.props.item.price+"$"}
+              </div>
               {n}
               <select className='sizes' size='3'>
                 {['S', 'M', 'L'].map(s => <option value={s} key={s}>{s}</option>)}
