@@ -3,7 +3,6 @@
 import Item from './item.js';
 import Bag from './bag.js';
 
-import OutsideAlerter from './OutsideAlerter.js';
 import catalog from './product/catalog.js';
 
 const e = React.createElement;
@@ -16,12 +15,8 @@ class Shop extends React.Component {
       mode: 'shop',
       pos: 0,
       sel: -1,
-      cart: []
+      cart: {}
     };
-  }
-
-  blinkArrow() {
-    alert("end of the line");
   }
 
   canGoLeft() {
@@ -29,11 +24,11 @@ class Shop extends React.Component {
   }
 
   canGoRight() {
+    //TODO: fix this shite
     return this.state.pos > 9 * -400;
   }
 
   handleScroll(dir) {
-    console.log(catalog.items);
     let pos = this.state.pos;
     switch (dir) {
       case "left":
@@ -46,24 +41,50 @@ class Shop extends React.Component {
     }
   }
 
-  addToCart(item, qty) {
-    let n = [];
-    for(let i = 0; i < qty; i++) {
-      n.push(item);
+  addToCart(id, size, qty) {
+    let cart = this.state.cart;
+    if (!(id in cart)) {
+      cart[id] = {};
     }
-    let c = this.state.cart.concat(n);
+    cart[id][size] = qty + (size in cart[id] ? cart[id][size] : 0);
     this.setState({
-      sel: -1,
-      cart: c
+      cart: cart,
+      sel: -1
     });
-    console.log(this.state.cart);
+  }
+
+  /**
+  * return whether element has ancestor with class=className
+  */
+  hasParentClass(elem, className) {
+    if(elem.className === className) {
+      return true;
+    }
+    while ((elem = elem.parentElement)) {
+      if(elem.className === className) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /*
+  * handle clicks to 'GO BACK' from popups like BAG or ITEM
+  */
+  handleClick(e) {
+    if (this.state.sel > -1 && this.state.mode === 'shop' && !this.hasParentClass(e.target, 'item')) {
+      this.setState({sel: -1});
+    }
+    if (this.state.mode === 'bag' && !this.hasParentClass(e.target, 'bag')) {
+      this.setState({mode: 'shop'});
+    }
   }
 
   render() {
 
     return (
-      <div>
-        <div className='shop'>
+      <div onClick={this.handleClick.bind(this)}>
+        <div className='shop' style={{backgroundColor: (this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986')}}>
           <div className='menu'>
             <div className='shopText shadow'>SHOP</div>
             <div className='bagText shadow' onClick={() => this.setState({mode: 'bag', sel: -1})}>
@@ -71,8 +92,8 @@ class Shop extends React.Component {
             </div>
           </div>
           <div className='scroller' style={{left: this.state.pos + "px"}}>
-            {catalog.items.map((item) =>
-              <img src={'./product/'+item.id+'.png'} onClick={() => this.setState({sel: item.id})} key={item.id}/>
+            {catalog.items.map((item, id) =>
+              <img src={'./product/'+item.image_url+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
             )}
 
           </div>
@@ -86,13 +107,17 @@ class Shop extends React.Component {
           </div>
         </div>
         <div className='itemFrame'>
-          {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(qty) => this.addToCart(this.state.sel, qty)}/> : <p></p>}
+          {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(size, qty) => this.addToCart(this.state.sel, size, qty)}/> : <p></p>}
         </div>
         <div className='bagFrame'>
-          {this.state.mode === 'bag' ? <Bag /> : <p></p>}
+          {this.state.mode === 'bag' ? <Bag cart={this.state.cart}/> : <p></p>}
         </div>
         <div className='back'>
-          {this.state.sel > -1 ? <button onClick={() => this.setState({sel:-1})}>GOBACK</button> : <br/>}
+          {
+            (this.state.sel > -1 || this.state.mode === 'bag') ?
+              <button onClick={() => this.setState({mode: 'shop', sel: -1})}>GOBACK</button>
+              : <br/>
+          }
         </div>
       </div>
     );

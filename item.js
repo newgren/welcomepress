@@ -21,15 +21,21 @@ var Item = function (_React$Component) {
 
     _this.no = props.no;
     _this.state = {
+      size: 'M',
       qty: 1
     };
     return _this;
   }
 
   _createClass(Item, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.setState({ qty: e.target.value });
+    key: 'handleSizeChange',
+    value: function handleSizeChange(e) {
+      this.setState({ size: e.target.value });
+    }
+  }, {
+    key: 'handleQtyChange',
+    value: function handleQtyChange(e) {
+      this.setState({ qty: parseInt(e.target.value) });
     }
   }, {
     key: 'render',
@@ -68,7 +74,7 @@ var Item = function (_React$Component) {
               n,
               React.createElement(
                 'select',
-                { className: 'sizes', size: '3' },
+                { className: 'sizes', value: this.state.size, onChange: this.handleSizeChange.bind(this), size: '3' },
                 ['S', 'M', 'L'].map(function (s) {
                   return React.createElement(
                     'option',
@@ -80,7 +86,7 @@ var Item = function (_React$Component) {
               'QTY',
               React.createElement(
                 'select',
-                { className: 'qty', value: this.state.qty, onChange: this.handleChange.bind(this) },
+                { className: 'qty', value: this.state.qty, onChange: this.handleQtyChange.bind(this) },
                 [1, 2, 3, 4, 5].map(function (n) {
                   return React.createElement(
                     'option',
@@ -95,7 +101,7 @@ var Item = function (_React$Component) {
                 React.createElement(
                   'button',
                   { onClick: function onClick() {
-                      return _this2.props.add(_this2.state.qty);
+                      return _this2.props.add(_this2.state.size, _this2.state.qty);
                     } },
                   '+BAG'
                 )
@@ -109,7 +115,7 @@ var Item = function (_React$Component) {
               'div',
               { className: 'scroller' },
               [0, 1, 2].map(function (i) {
-                return React.createElement('img', { src: './product/' + _this2.props.item.id + '.png', key: i });
+                return React.createElement('img', { src: './product/' + _this2.props.item.image_url + '.png', key: i });
               })
             )
           )
@@ -117,7 +123,7 @@ var Item = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'right' },
-          React.createElement('img', { src: './product/' + this.props.item.id + '.png' })
+          React.createElement('img', { src: './product/' + this.props.item.image_url + '.png' })
         )
       );
     }

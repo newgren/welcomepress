@@ -1,11 +1,28 @@
-span {
+
+body {
+  background-color: black;
+  margin: 0;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+  margin: 0;
+  width:100%;
+}
+
+span, p{
+  color:white;
   font-family: Helvetica;
   font-size: 80px;
 }
 
-body {
-  background-color: black;
+#loading{
+  display: none;
 }
+
 
 .fblogin {
 }

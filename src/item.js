@@ -1,6 +1,5 @@
 'use strict';
 
-
 const e = React.createElement;
 const n = <br/>
 
@@ -9,12 +8,17 @@ class Item extends React.Component {
     super(props);
     this.no = props.no;
     this.state = {
+      size: 'M',
       qty: 1
     };
   }
 
-  handleChange(e) {
-    this.setState({qty: e.target.value});
+  handleSizeChange(e) {
+    this.setState({size: e.target.value});
+  }
+
+  handleQtyChange(e) {
+    this.setState({qty: parseInt(e.target.value)});
   }
 
   render() {
@@ -31,28 +35,28 @@ class Item extends React.Component {
                 {this.props.item.price+"$"}
               </div>
               {n}
-              <select className='sizes' size='3'>
+              <select className='sizes' value={this.state.size} onChange={this.handleSizeChange.bind(this)} size='3'>
                 {['S', 'M', 'L'].map(s => <option value={s} key={s}>{s}</option>)}
               </select>
               QTY
-              <select className='qty' value={this.state.qty} onChange={this.handleChange.bind(this)}>
+              <select className='qty' value={this.state.qty} onChange={this.handleQtyChange.bind(this)}>
                 {[1,2,3,4,5].map(n => <option value={n} key={n}>{n}</option>)}
               </select>
               <div className='buy'>
-                <button onClick={() => this.props.add(this.state.qty)}>+BAG</button>
+                <button onClick={() => this.props.add(this.state.size, this.state.qty)}>+BAG</button>
               </div>
             </div>
           </div>
           <div className='pics'>
             <div className='scroller'>
               {[0,1,2].map((i) =>
-                  <img src={'./product/'+this.props.item.id+'.png'} key={i}/>
+                  <img src={'./product/'+this.props.item.image_url+'.png'} key={i}/>
               )}
             </div>
           </div>
         </div>
         <div className='right'>
-            <img src={'./product/'+this.props.item.id+'.png'}/>
+            <img src={'./product/'+this.props.item.image_url+'.png'}/>
         </div>
       </div>
     );

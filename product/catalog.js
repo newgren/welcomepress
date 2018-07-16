@@ -1,74 +1,32 @@
 export default
 {
 	"items": [{
-			"id": 0,
 			"name": "Shite shirt",
+			"image_url": "fish",
 			"description": "shoot it, ... that's about all u can do w it",
 			"price": 25.0,
 			"tags": ["shirt", "clothes"]
 		},
 		{
-			"id": 1,
 			"name": "privacy breach",
-			"description": "oof",
-			"price": "2200000000",
+			"image_url": "privacypolicy",
+			"description": "\"you messed with the wrong kid\"",
+			"price": 5000000.0,
 			"tags": ["shirt", "clothes", "data"]
 		},
 		{
-			"id": 2,
-			"name": "okaydad.re",
-			"description": "the best orange png i could find",
-			"price": 253.0,
-			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 3,
-			"name": "674ink",
-			"description": "",
-			"price": 15.0,
-			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 4,
-			"name": "APY",
-			"description": "",
-			"price": 253.0,
-			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 5,
-			"name": "DVR",
-			"description": "optics?",
+			"name": "redlippedbatfish",
+			"image_url": "redlip",
+			"description": "ee",
 			"price": 25.0,
 			"tags": ["shirt", "clothes"]
 		},
 		{
-			"id": 6,
-			"name": "corporate",
-			"description": "",
-			"price": 253.0,
+			"name": "orange",
+			"image_url": "orange",
+			"description": "\"I got this for $1, but actually $0.50 because it was Arbor Day 😏\"",
+			"price": 0.50,
 			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 7,
-			"name": "jarv.is",
-			"description": "\"How many days till travert is in chicago?\"",
-			"price": 15.0,
-			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 8,
-			"name": "VVV",
-			"description": "",
-			"price": 253.0,
-			"tags": ["shirt", "clothes"]
-		},
-		{
-			"id": 9,
-			"name": "Promotional Content",
-			"description": "thanks for letting me make a business, dad (read: corporate)",
-			"price": -3.0,
-			"tags": ["sticker"]
 		}
 	]
 }

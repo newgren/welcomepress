@@ -11,7 +11,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import Item from './item.js';
 import Bag from './bag.js';
 
-import OutsideAlerter from './OutsideAlerter.js';
 import catalog from './product/catalog.js';
 
 var e = React.createElement;
@@ -29,17 +28,12 @@ var Shop = function (_React$Component) {
       mode: 'shop',
       pos: 0,
       sel: -1,
-      cart: []
+      cart: {}
     };
     return _this;
   }
 
   _createClass(Shop, [{
-    key: 'blinkArrow',
-    value: function blinkArrow() {
-      alert("end of the line");
-    }
-  }, {
     key: 'canGoLeft',
     value: function canGoLeft() {
       return this.state.pos < 0;
@@ -47,12 +41,12 @@ var Shop = function (_React$Component) {
   }, {
     key: 'canGoRight',
     value: function canGoRight() {
+      //TODO: fix this shite
       return this.state.pos > 9 * -400;
     }
   }, {
     key: 'handleScroll',
     value: function handleScroll(dir) {
-      console.log(catalog.items);
       var pos = this.state.pos;
       switch (dir) {
         case "left":
@@ -66,17 +60,49 @@ var Shop = function (_React$Component) {
     }
   }, {
     key: 'addToCart',
-    value: function addToCart(item, qty) {
-      var n = [];
-      for (var i = 0; i < qty; i++) {
-        n.push(item);
+    value: function addToCart(id, size, qty) {
+      var cart = this.state.cart;
+      if (!(id in cart)) {
+        cart[id] = {};
       }
-      var c = this.state.cart.concat(n);
+      cart[id][size] = qty + (size in cart[id] ? cart[id][size] : 0);
       this.setState({
-        sel: -1,
-        cart: c
+        cart: cart,
+        sel: -1
       });
-      console.log(this.state.cart);
+    }
+
+    /**
+    * return whether element has ancestor with class=className
+    */
+
+  }, {
+    key: 'hasParentClass',
+    value: function hasParentClass(elem, className) {
+      if (elem.className === className) {
+        return true;
+      }
+      while (elem = elem.parentElement) {
+        if (elem.className === className) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /*
+    * handle clicks to 'GO BACK' from popups like BAG or ITEM
+    */
+
+  }, {
+    key: 'handleClick',
+    value: function handleClick(e) {
+      if (this.state.sel > -1 && this.state.mode === 'shop' && !this.hasParentClass(e.target, 'item')) {
+        this.setState({ sel: -1 });
+      }
+      if (this.state.mode === 'bag' && !this.hasParentClass(e.target, 'bag')) {
+        this.setState({ mode: 'shop' });
+      }
     }
   }, {
     key: 'render',
@@ -85,10 +111,10 @@ var Shop = function (_React$Component) {
 
       return React.createElement(
         'div',
-        null,
+        { onClick: this.handleClick.bind(this) },
         React.createElement(
           'div',
-          { className: 'shop' },
+          { className: 'shop', style: { backgroundColor: this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986' } },
           React.createElement(
             'div',
             { className: 'menu' },
@@ -109,10 +135,10 @@ var Shop = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'scroller', style: { left: this.state.pos + "px" } },
-            catalog.items.map(function (item) {
-              return React.createElement('img', { src: './product/' + item.id + '.png', onClick: function onClick() {
-                  return _this2.setState({ sel: item.id });
-                }, key: item.id });
+            catalog.items.map(function (item, id) {
+              return React.createElement('img', { src: './product/' + item.image_url + '.png', onClick: function onClick() {
+                  return _this2.setState({ sel: id });
+                }, key: item.name });
             })
           ),
           React.createElement(
@@ -133,22 +159,22 @@ var Shop = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'itemFrame' },
-          this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(qty) {
-              return _this2.addToCart(_this2.state.sel, qty);
+          this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(size, qty) {
+              return _this2.addToCart(_this2.state.sel, size, qty);
             } }) : React.createElement('p', null)
         ),
         React.createElement(
           'div',
           { className: 'bagFrame' },
-          this.state.mode === 'bag' ? React.createElement(Bag, null) : React.createElement('p', null)
+          this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null)
         ),
         React.createElement(
           'div',
           { className: 'back' },
-          this.state.sel > -1 ? React.createElement(
+          this.state.sel > -1 || this.state.mode === 'bag' ? React.createElement(
             'button',
             { onClick: function onClick() {
-                return _this2.setState({ sel: -1 });
+                return _this2.setState({ mode: 'shop', sel: -1 });
               } },
             'GOBACK'
           ) : React.createElement('br', null)

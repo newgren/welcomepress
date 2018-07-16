@@ -42,6 +42,8 @@
       <script>
       function checkLoginState() {
         FB.getLoginStatus(function(response) {
+          document.getElementById('auth').style = 'display:none;';
+          document.getElementById('loading').style = 'display:block;';
           statusChangeCallback(response);
         });
       }
@@ -52,15 +54,18 @@
         'GET',
         {"limit":"1000"},
         function(response) {
+          if ('error' in response) {
+            alert('error');
+            return;
+          }
+          console.log(response);
           const wow = parseText(response.data);
           var sp = document.createElement('span');
           var co = document.createTextNode(wow);
           sp.appendChild(co);
           var button = document.getElementById('infinite');
-          document.body.insertBefore(sp, button);
-          document.getElementById('auth').style = 'display:none;';
-          document.getElementsByTagName('body').style = 'display:inherit;';
-
+          document.getElementById('box').style = 'display:none;';
+          //document.body.insertBefore(sp, button);
         }
         );
       }
@@ -77,14 +82,15 @@
 
 
       </script>
-
-      <fb:login-button
-        id='auth'
-        class='fblogin'
-        scope="user_posts"
-        onlogin="checkLoginState();">
-      </fb:login-button>
+      <div class='box' id='box'>
+        <fb:login-button
+          id='auth'
+          class='fblogin'
+          scope="user_posts"
+          onlogin="checkLoginState();">
+        </fb:login-button>
+        <p id='loading'>loading</p>
+      <box>
       <div id='infinite'></div>
-
     </body>
 </html>
