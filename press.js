@@ -23,7 +23,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      shitemode: 'shop'
+      shitemode: 'home'
     };
     return _this;
   }
