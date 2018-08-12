@@ -91,13 +91,17 @@ class Shop extends React.Component {
               BAG{this.state.cart.length  ? '(' + this.state.cart.length + ')' : ''}
             </div>
           </div>
-          <div className='scroller' style={{left: this.state.pos + "px"}}>
+          <div className='desktop scroller' style={{left: this.state.pos + "px"}}>
             {catalog.items.map((item, id) =>
               <img src={'./product/'+item.image_url+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
             )}
-
           </div>
-          <div className='navs'>
+          <div className='mobile itemList'>
+            {catalog.items.map((item, id) =>
+              <img src={'./product/'+item.image_url+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
+            )}
+          </div>
+          <div className='navs desktop'>
             <img className='arrow left' src='./img/arrowleft.png'
               style={{display: this.canGoLeft() ? "initial" : "none"}}
               onClick={() => this.handleScroll("left")}/>

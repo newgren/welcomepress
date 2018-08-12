@@ -12,7 +12,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      shitemode: 'home'
+      shitemode: 'shop'
     };
   }
 

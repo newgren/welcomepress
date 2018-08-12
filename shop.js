@@ -134,7 +134,7 @@ var Shop = function (_React$Component) {
           ),
           React.createElement(
             'div',
-            { className: 'scroller', style: { left: this.state.pos + "px" } },
+            { className: 'desktop scroller', style: { left: this.state.pos + "px" } },
             catalog.items.map(function (item, id) {
               return React.createElement('img', { src: './product/' + item.image_url + '.png', onClick: function onClick() {
                   return _this2.setState({ sel: id });
@@ -143,7 +143,16 @@ var Shop = function (_React$Component) {
           ),
           React.createElement(
             'div',
-            { className: 'navs' },
+            { className: 'mobile itemList' },
+            catalog.items.map(function (item, id) {
+              return React.createElement('img', { src: './product/' + item.image_url + '.png', onClick: function onClick() {
+                  return _this2.setState({ sel: id });
+                }, key: item.name });
+            })
+          ),
+          React.createElement(
+            'div',
+            { className: 'navs desktop' },
             React.createElement('img', { className: 'arrow left', src: './img/arrowleft.png',
               style: { display: this.canGoLeft() ? "initial" : "none" },
               onClick: function onClick() {

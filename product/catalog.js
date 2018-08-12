@@ -1,6 +1,14 @@
 export default
 {
-	"items": [{
+	"items": [
+        {
+            "name":"Denny",
+            "image_url": "dennisjpg",
+            "description": "You won't feel like you're in Champaign when you're wearing our shirts.",
+            "price": 15,
+            "tags": ["shirt", "clothes"]
+        },
+        {
 			"name": "Shite shirt",
 			"image_url": "fish",
 			"description": "shoot it, ... that's about all u can do w it",

@@ -47,15 +47,15 @@ class Item extends React.Component {
               </div>
             </div>
           </div>
-          <div className='pics'>
-            <div className='scroller'>
+          <div className='pics desktop-flex'>
+            <div className='scroller desktop'>
               {[0,1,2].map((i) =>
                   <img src={'./product/'+this.props.item.image_url+'.png'} key={i}/>
               )}
             </div>
           </div>
         </div>
-        <div className='right'>
+        <div className='right desktop'>
             <img src={'./product/'+this.props.item.image_url+'.png'}/>
         </div>
       </div>

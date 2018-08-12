@@ -19,5 +19,9 @@
   "homepage": "https://github.com/newgren/welcomepress#readme",
   "devDependencies": {
     "json-loader": "^0.5.7"
+  },
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-responsive": "^5.0.0"
   }
 }

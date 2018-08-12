@@ -1,3 +1,5 @@
+/* yo this is mobile-first. desktop at bottom */
+
 body, html {
   height: 100%;
   width: 100%;
@@ -9,6 +11,14 @@ body {
   font-size: 26px;
   margin: 0;
   padding:0;
+}
+
+.desktop {
+  display: none;
+}
+
+.mobile {
+  display: inherit;
 }
 
 .home {
@@ -63,8 +73,21 @@ body {
   align-items: flex-start;
   display: flex;
   flex-direction: row;
-  font-size: 150px;
-  padding: 0px 100px;
+  font-size: 100px;
+  padding: 0px 0px;
+}
+
+.shopText {
+  flex:1;
+  color: #FFBDFB;
+  letter-spacing: -19px;
+}
+
+.bagText {
+  flex:1;
+  color: #ffffff;
+  letter-spacing: -11px;
+  text-align: right;
 }
 
 .shopText {
@@ -129,7 +152,6 @@ body {
 .item {
   background-color: #B8E986;
   box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  display: flex;
   position: fixed;
   width: 80%;
   max-height: 80%;
@@ -140,22 +162,16 @@ body {
 .item > .left {
   display: flex;
   flex-direction: column;
-  flex:2;
 }
 
 .item > .left > .info {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex:5;
-  width: 100%;
   padding: 15px;
-  padding-left: 25px;
 }
 
 .info > .text {
   background-color: white;
-  border: 20px solid white;
+  padding: 20px;
   width: 100%;
 }
 
@@ -165,7 +181,7 @@ body {
 
 select.sizes {
   border: 0px;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: bold;
   padding: 0px;
   height: 190px;
@@ -173,7 +189,7 @@ select.sizes {
 }
 
 select.qty {
-  font-size:30px;
+  font-size:20px;
 }
 
 .buy {
@@ -197,28 +213,7 @@ item > .left {
   background-color: orange;
 }
 
-.item > .left > .pics {
-  flex:1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
 
-.pics > .scroller > img {
-  max-width: 100px;
-  position: static;
-}
-
-.item > .right {
-  flex: 4;
-}
-
-.item > .right > img {
-  height: 500px;
-  max-width:100%;
-  position: relative;
-  right: 10%;
-}
 
 .bagFrame {
   display: flex;
@@ -304,7 +299,6 @@ item > .left {
   text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 
-
 .back {
   bottom:10px;
   left:10px;
@@ -321,4 +315,71 @@ item > .left {
   box-shadow: -3px 5px 5px rgba(0,0,0,0.5);
   border:none;
   height: 100%;
+}
+
+.itemList > img{
+  max-width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    /* For desktop: */
+    .desktop {
+      display: block;
+    }
+    .desktop-flex {
+      display: flex;
+    }
+    .mobile {
+      display: none;
+    }
+    .menu {
+      font-size: 150px;
+    }
+    .item {
+      display: flex;
+    }
+    .item > .left {
+      flex: 2;
+    }
+    .item > .right {
+      flex: 4;
+    }
+    .item > .left > .info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex:5;
+      width: 100%;
+      padding: 15px;
+      padding-left: 25px;
+    }
+
+    .info > .text {
+      background-color: white;
+      border: 20px solid white;
+      width: 100%;
+    }
+    .item > .left > .pics {
+      flex:1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pics > .scroller > img {
+      max-width: 100px;
+      position: static;
+    }
+
+    .item > .right > img {
+      height: 500px;
+      position: relative;
+      right: 10%;
+    }
+    select.sizes {
+      font-size: 50px;
+    }
+    select.qty {
+      font-size: 30px;
+    }
 }

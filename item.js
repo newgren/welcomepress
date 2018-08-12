@@ -110,10 +110,10 @@ var Item = function (_React$Component) {
           ),
           React.createElement(
             'div',
-            { className: 'pics' },
+            { className: 'pics desktop-flex' },
             React.createElement(
               'div',
-              { className: 'scroller' },
+              { className: 'scroller desktop' },
               [0, 1, 2].map(function (i) {
                 return React.createElement('img', { src: './product/' + _this2.props.item.image_url + '.png', key: i });
               })
@@ -122,7 +122,7 @@ var Item = function (_React$Component) {
         ),
         React.createElement(
           'div',
-          { className: 'right' },
+          { className: 'right desktop' },
           React.createElement('img', { src: './product/' + this.props.item.image_url + '.png' })
         )
       );
