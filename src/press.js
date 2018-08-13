@@ -6,7 +6,6 @@ import Home from './home.js'
 import Shop from './shop.js'
 import Bag from './bag.js'
 
-
 class Press extends React.Component {
   constructor(props) {
     super(props);

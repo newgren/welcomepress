@@ -10,8 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-import Countdown from './countdown.js';
-
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
 
@@ -29,7 +27,7 @@ var Home = function (_React$Component) {
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'home center' },
+        { className: 'home' },
         React.createElement(
           'div',
           null,
@@ -43,17 +41,12 @@ var Home = function (_React$Component) {
             { className: 'press shadow' },
             'PRESS'
           ),
-          React.createElement(Countdown, null),
           React.createElement(
             'div',
             null,
             React.createElement(
               'button',
-              { className: 'shopbutton disabled', onClick: function onClick() {
-                  alert("getgot");alert("fr just come back later");
-                }
-                /*this.props.onclick*/
-              },
+              { className: 'shopbutton', onClick: this.props.onclick },
               'shop'
             )
           )

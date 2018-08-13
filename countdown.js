@@ -10,59 +10,74 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-import Countdown from './countdown.js';
+var second = 1000,
+    minute = second * 60,
+    hour = minute * 60,
+    day = hour * 24;
 
-var Home = function (_React$Component) {
-  _inherits(Home, _React$Component);
+var countDown = new Date('Aug 31, 2018 23:59:59').getTime(),
+    x = setInterval(function () {
 
-  function Home(props) {
-    _classCallCheck(this, Home);
+  var now = new Date().getTime(),
+      distance = countDown - now;
 
-    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+  document.getElementById('days').innerText = Math.floor(distance / day), document.getElementById('hours').innerText = Math.floor(distance % day / hour), document.getElementById('minutes').innerText = Math.floor(distance % hour / minute), document.getElementById('seconds').innerText = Math.floor(distance % minute / second);
 
-    _this.onclick = props.onclick;
-    return _this;
+  //do something later when date is reached
+  //if (distance < 0) {
+  //  clearInterval(x);
+  //  'IT'S MY BIRTHDAY!;
+  //}
+}, second);
+
+var Countdown = function (_React$Component) {
+  _inherits(Countdown, _React$Component);
+
+  function Countdown(props) {
+    _classCallCheck(this, Countdown);
+
+    return _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
   }
 
-  _createClass(Home, [{
+  _createClass(Countdown, [{
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'home center' },
+        { className: 'container' },
         React.createElement(
-          'div',
+          'ul',
           null,
           React.createElement(
-            'div',
-            { className: 'welcome shadow' },
-            'welcome'
-          ),
-          React.createElement(
-            'div',
-            { className: 'press shadow' },
-            'PRESS'
-          ),
-          React.createElement(Countdown, null),
-          React.createElement(
-            'div',
+            'li',
             null,
-            React.createElement(
-              'button',
-              { className: 'shopbutton disabled', onClick: function onClick() {
-                  alert("getgot");alert("fr just come back later");
-                }
-                /*this.props.onclick*/
-              },
-              'shop'
-            )
+            React.createElement('span', { id: 'days' }),
+            'days'
+          ),
+          React.createElement(
+            'li',
+            null,
+            React.createElement('span', { id: 'hours' }),
+            'Hours'
+          ),
+          React.createElement(
+            'li',
+            null,
+            React.createElement('span', { id: 'minutes' }),
+            'Minutes'
+          ),
+          React.createElement(
+            'li',
+            null,
+            React.createElement('span', { id: 'seconds' }),
+            'Seconds'
           )
         )
       );
     }
   }]);
 
-  return Home;
+  return Countdown;
 }(React.Component);
 
-export default Home;
+export default Countdown;

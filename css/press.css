@@ -21,14 +21,11 @@ body {
   display: inherit;
 }
 
-.home {
-  align-items: center;
-  display: flex;
+.center {
   height: 100%;
-  justify-content: center;
 }
 
-.home > div {
+.center > div {
   text-align: center;
   width:100%;
 }
@@ -39,34 +36,70 @@ body {
 
 .welcome {
   color: #FFFFFF;
-  font-size: 198px;
   z-index: 2;
+  font-size: 118.8px;
 }
 
 .press {
   color: #B8E986;
-  font-size: 250px;
+  font-size: 150px;
   position: relative;
   letter-spacing: -23px;
-  top: -117px;
+  top: -72px;
   z-index: -10;
 }
 
 .shopbutton {
-  color:white;
-  font-size: 50px;
-  position: relative;
-  top: -80px;
-  width: 100px;
-  height:50px;
   background-color: blue;
   border:none;
+  color:white;
+  font-size: 50px;
+  height:50px;
+  margin-top: 20px;
+  width: 100px;
+}
+
+.disabled {
+  opacity: 0.5;
 }
 
 .shop {
   background-color: #FFBDFB;
   height: 100%;
   width: 100%;
+}
+
+.container {
+  color: #333;
+  position: relative;
+  text-align: center;
+  top: -100px;
+}
+
+.container > ul {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 0;
+}
+
+.container > ul > li {
+  color: white;
+  display: inline-block;
+  font-family: 'Dharma Gothic E', sans-serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 800;
+  list-style-type: none;
+  padding: 10px;
+  text-shadow: -2px 3px 3px rgba(0,0,0,0.5);
+  text-transform: uppercase;
+}
+
+.container > ul > li span {
+  color: white;
+  font-size:100px;
 }
 
 .menu {
@@ -321,7 +354,7 @@ item > .left {
   max-width: 100%;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 650px) {
     /* For desktop: */
     .desktop {
       display: block;
@@ -331,6 +364,13 @@ item > .left {
     }
     .mobile {
       display: none;
+    }
+    .welcome {
+      font-size: 198px;
+    }
+    .press {
+      font-size: 250px;
+      top: -117px;
     }
     .menu {
       font-size: 150px;

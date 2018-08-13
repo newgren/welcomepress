@@ -2,6 +2,8 @@
 
 const e = React.createElement;
 
+import Countdown from './countdown.js'
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -10,12 +12,16 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className='home'>
+      <div className='home center'>
         <div>
           <div className='welcome shadow'>welcome</div>
           <div className='press shadow'>PRESS</div>
+          <Countdown/>
           <div>
-            <button className='shopbutton' onClick={this.props.onclick}>shop</button>
+            <button className='shopbutton disabled' onClick={
+            () => {alert("getgot"); alert("fr just come back later")}
+            /*this.props.onclick*/
+            }>shop</button>
           </div>
         </div>
       </div>
