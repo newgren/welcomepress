@@ -1,5 +1,17 @@
 /* yo this is mobile-first. desktop at bottom */
 
+@font-face {
+    font-family: 'BROCK';
+    src: url('../fonts/dharmagothice_exbold_r-webfont.eot');
+    src: url('../fonts/dharmagothice_exbold_r-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/dharmagothice_exbold_r-webfont.woff2') format('woff2'),
+         url('../fonts/dharmagothice_exbold_r-webfont.woff') format('woff'),
+         url('../fonts/dharmagothice_exbold_r-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body, html {
   height: 100%;
   width: 100%;
@@ -22,7 +34,10 @@ body {
 }
 
 .center {
+  align-items: center;
+  display: flex;
   height: 100%;
+  justify-content: center;
 }
 
 .center > div {
@@ -58,15 +73,16 @@ body {
   background-color: blue;
   border:none;
   color:white;
-  font-size: 50px;
+  font-size: 30px;
   height:50px;
   position: relative;
-  top: 100px;
+  top: 10px;
   width: 100px;
 }
 
 .adjuster {
   position: relative;
+  top: -20px;
 }
 
 .disabled {
@@ -95,7 +111,7 @@ body {
 .container > ul > li {
   color: white;
   display: inline-block;
-  font-family: 'Dharma Gothic E', sans-serif;
+  font-family: BROCK, sans-serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 800;
@@ -254,8 +270,6 @@ item > .left {
   background-color: orange;
 }
 
-
-
 .bagFrame {
   display: flex;
   height: 100%;
@@ -383,6 +397,9 @@ item > .left {
     .welcomePRESS {
       position: inherit;
       top: 0px;
+    }
+    .shopbutton {
+      font-size: 50px;
     }
     .adjuster {
       position: relative;
