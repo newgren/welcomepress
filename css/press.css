@@ -49,14 +49,24 @@ body {
   z-index: -10;
 }
 
+.welcomePRESS {
+  position: relative;
+  top: 50px;
+}
+
 .shopbutton {
   background-color: blue;
   border:none;
   color:white;
   font-size: 50px;
   height:50px;
-  margin-top: 20px;
+  position: relative;
+  top: 100px;
   width: 100px;
+}
+
+.adjuster {
+  position: relative;
 }
 
 .disabled {
@@ -71,9 +81,7 @@ body {
 
 .container {
   color: #333;
-  position: relative;
   text-align: center;
-  top: -100px;
 }
 
 .container > ul {
@@ -88,7 +96,7 @@ body {
   color: white;
   display: inline-block;
   font-family: 'Dharma Gothic E', sans-serif;
-  font-size: 50px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 800;
   list-style-type: none;
@@ -99,7 +107,7 @@ body {
 
 .container > ul > li span {
   color: white;
-  font-size:100px;
+  font-size:60px;
 }
 
 .menu {
@@ -371,6 +379,20 @@ item > .left {
     .press {
       font-size: 250px;
       top: -117px;
+    }
+    .welcomePRESS {
+      position: inherit;
+      top: 0px;
+    }
+    .adjuster {
+      position: relative;
+      top: -100px;
+    }
+    .container > ul > li {
+      font-size:50px;
+    }
+    .container > ul > li span {
+      font-size:100px;
     }
     .menu {
       font-size: 150px;

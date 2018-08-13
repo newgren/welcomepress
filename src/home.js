@@ -13,16 +13,16 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home center'>
-        <div>
+        <div className='welcomePRESS'>
           <div className='welcome shadow'>welcome</div>
           <div className='press shadow'>PRESS</div>
+        </div>
+        <div className='adjuster'>
           <Countdown/>
-          <div>
-            <button className='shopbutton disabled' onClick={
-            () => {alert("getgot"); alert("fr just come back later")}
-            /*this.props.onclick*/
-            }>shop</button>
-          </div>
+          <button className='shopbutton disabled' onClick={
+          () => {alert("getgot"); alert("fr just come back later")}
+          /*this.props.onclick*/
+          }>shop</button>
         </div>
       </div>
     );

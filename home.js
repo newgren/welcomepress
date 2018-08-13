@@ -32,7 +32,7 @@ var Home = function (_React$Component) {
         { className: 'home center' },
         React.createElement(
           'div',
-          null,
+          { className: 'welcomePRESS' },
           React.createElement(
             'div',
             { className: 'welcome shadow' },
@@ -42,20 +42,20 @@ var Home = function (_React$Component) {
             'div',
             { className: 'press shadow' },
             'PRESS'
-          ),
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'adjuster' },
           React.createElement(Countdown, null),
           React.createElement(
-            'div',
-            null,
-            React.createElement(
-              'button',
-              { className: 'shopbutton disabled', onClick: function onClick() {
-                  alert("getgot");alert("fr just come back later");
-                }
-                /*this.props.onclick*/
-              },
-              'shop'
-            )
+            'button',
+            { className: 'shopbutton disabled', onClick: function onClick() {
+                alert("getgot");alert("fr just come back later");
+              }
+              /*this.props.onclick*/
+            },
+            'shop'
           )
         )
       );
