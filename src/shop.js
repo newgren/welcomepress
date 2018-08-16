@@ -110,12 +110,8 @@ class Shop extends React.Component {
               onClick={() => this.handleScroll("right")}/>
           </div>
         </div>
-        <div className='itemFrame'>
-          {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(size, qty) => this.addToCart(this.state.sel, size, qty)}/> : <p></p>}
-        </div>
-        <div className='bagFrame'>
-          {this.state.mode === 'bag' ? <Bag cart={this.state.cart}/> : <p></p>}
-        </div>
+        {this.state.sel > -1 ? <Item item={catalog.items[this.state.sel]} add={(size, qty) => this.addToCart(this.state.sel, size, qty)}/> : <p></p>}
+        {this.state.mode === 'bag' ? <Bag cart={this.state.cart}/> : <p></p>}
         <div className='back'>
           {
             (this.state.sel > -1 || this.state.mode === 'bag') ?

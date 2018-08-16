@@ -165,18 +165,10 @@ var Shop = function (_React$Component) {
               } })
           )
         ),
-        React.createElement(
-          'div',
-          { className: 'itemFrame' },
-          this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(size, qty) {
-              return _this2.addToCart(_this2.state.sel, size, qty);
-            } }) : React.createElement('p', null)
-        ),
-        React.createElement(
-          'div',
-          { className: 'bagFrame' },
-          this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null)
-        ),
+        this.state.sel > -1 ? React.createElement(Item, { item: catalog.items[this.state.sel], add: function add(size, qty) {
+            return _this2.addToCart(_this2.state.sel, size, qty);
+          } }) : React.createElement('p', null),
+        this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null),
         React.createElement(
           'div',
           { className: 'back' },

@@ -44,86 +44,90 @@ var Item = function (_React$Component) {
 
       return React.createElement(
         'div',
-        { className: 'item' },
+        { className: 'itemCenter' },
         React.createElement(
           'div',
-          { className: 'left' },
+          { className: 'item' },
           React.createElement(
             'div',
-            { className: 'info' },
+            { className: 'left' },
             React.createElement(
               'div',
-              { className: 'text' },
-              this.props.item.name.toUpperCase().split(" ").map(function (word) {
-                return React.createElement(
-                  'div',
-                  { key: word },
-                  word
-                );
-              }),
+              { className: 'info' },
               React.createElement(
                 'div',
-                { className: 'desc' },
-                this.props.item.description
-              ),
-              React.createElement(
-                'div',
-                null,
-                this.props.item.price + "$"
-              ),
-              n,
-              React.createElement(
-                'select',
-                { className: 'sizes', value: this.state.size, onChange: this.handleSizeChange.bind(this), size: '3' },
-                ['S', 'M', 'L'].map(function (s) {
+                { className: 'text' },
+                this.props.item.name.toUpperCase().split(" ").map(function (word) {
                   return React.createElement(
-                    'option',
-                    { value: s, key: s },
-                    s
+                    'div',
+                    { key: word },
+                    word
                   );
-                })
-              ),
-              'QTY',
-              React.createElement(
-                'select',
-                { className: 'qty', value: this.state.qty, onChange: this.handleQtyChange.bind(this) },
-                [1, 2, 3, 4, 5].map(function (n) {
-                  return React.createElement(
-                    'option',
-                    { value: n, key: n },
-                    n
-                  );
-                })
-              ),
-              React.createElement(
-                'div',
-                { className: 'buy' },
+                }),
                 React.createElement(
-                  'button',
-                  { onClick: function onClick() {
-                      return _this2.props.add(_this2.state.size, _this2.state.qty);
-                    } },
-                  '+BAG'
+                  'div',
+                  { className: 'desc' },
+                  this.props.item.description
+                ),
+                React.createElement(
+                  'div',
+                  null,
+                  this.props.item.price + "$"
+                ),
+                n,
+                React.createElement(
+                  'select',
+                  { className: 'sizes', value: this.state.size, onChange: this.handleSizeChange.bind(this), size: '3' },
+                  ['S', 'M', 'L'].map(function (s) {
+                    return React.createElement(
+                      'option',
+                      { value: s, key: s },
+                      s
+                    );
+                  })
+                ),
+                'QTY',
+                React.createElement(
+                  'select',
+                  { className: 'qty', value: this.state.qty, onChange: this.handleQtyChange.bind(this) },
+                  [1, 2, 3, 4, 5].map(function (n) {
+                    return React.createElement(
+                      'option',
+                      { value: n, key: n },
+                      n
+                    );
+                  })
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'buy' },
+                  React.createElement(
+                    'button',
+                    { onClick: function onClick() {
+                        return _this2.props.add(_this2.state.size, _this2.state.qty);
+                      } },
+                    '+BAG'
+                  )
                 )
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: 'pics desktop-flex' },
+              React.createElement(
+                'div',
+                { className: 'scroller desktop' },
+                [0, 1, 2].map(function (i) {
+                  return React.createElement('img', { src: './product/' + _this2.props.item.image_url + '.png', key: i });
+                })
               )
             )
           ),
           React.createElement(
             'div',
-            { className: 'pics desktop-flex' },
-            React.createElement(
-              'div',
-              { className: 'scroller desktop' },
-              [0, 1, 2].map(function (i) {
-                return React.createElement('img', { src: './product/' + _this2.props.item.image_url + '.png', key: i });
-              })
-            )
+            { className: 'right desktop' },
+            React.createElement('img', { src: './product/' + this.props.item.image_url + '.png' })
           )
-        ),
-        React.createElement(
-          'div',
-          { className: 'right desktop' },
-          React.createElement('img', { src: './product/' + this.props.item.image_url + '.png' })
         )
       );
     }

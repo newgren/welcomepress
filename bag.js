@@ -32,55 +32,68 @@ var Bag = function (_React$Component) {
 
       return React.createElement(
         'div',
-        { className: 'bag' },
+        { className: 'bagCenter' },
         React.createElement(
           'div',
-          { className: 'bagItem legend' },
+          { className: 'bag' },
           React.createElement(
             'div',
-            { className: 'right' },
+            { className: 'bagItem legend' },
             React.createElement(
               'div',
-              { className: 'price' },
+              { className: 'right' },
               React.createElement(
-                'span',
-                null,
-                'PRICE'
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: 'total' },
+                'div',
+                { className: 'price' },
+                React.createElement(
+                  'span',
+                  null,
+                  'PRICE'
+                )
+              ),
               React.createElement(
-                'span',
-                null,
-                'TOTAL'
+                'div',
+                { className: 'total' },
+                React.createElement(
+                  'span',
+                  null,
+                  'TOTAL'
+                )
               )
             )
-          )
-        ),
-        Object.keys(this.cart).map(function (id) {
-          return Object.keys(_this2.cart[id]).map(function (size) {
-            return React.createElement(BagItem, {
-              id: id,
-              size: size,
-              qty: _this2.cart[id][size],
-              name: catalog.items[id].name.toUpperCase(),
-              image_url: './product/' + catalog.items[id].image_url + '.png',
-              price: catalog.items[id].price,
-              key: id + size + _this2.cart[id][size]
+          ),
+          Object.keys(this.cart).map(function (id) {
+            return Object.keys(_this2.cart[id]).map(function (size) {
+              return React.createElement(BagItem, {
+                id: id,
+                size: size,
+                qty: _this2.cart[id][size],
+                name: catalog.items[id].name.toUpperCase(),
+                image_url: './product/' + catalog.items[id].image_url + '.png',
+                price: catalog.items[id].price,
+                key: id + size + _this2.cart[id][size]
+              });
             });
-          });
-        }),
-        React.createElement(
-          'div',
-          { className: 'checkoutButton' },
+          }),
           React.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this2.setState({ mode: 'shop', sel: -1 });
-              } },
-            'CHECKOUT'
+            'div',
+            { className: 'center checkoutbox' },
+            React.createElement(
+              'button',
+              { onClick: function onClick() {
+                  return alert(2);
+                } },
+              React.createElement(
+                'div',
+                null,
+                'CHECK'
+              ),
+              React.createElement(
+                'div',
+                null,
+                'OUT'
+              )
+            )
           )
         )
       );
