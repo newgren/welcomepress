@@ -71,7 +71,18 @@ var Bag = function (_React$Component) {
               key: id + size + _this2.cart[id][size]
             });
           });
-        })
+        }),
+        React.createElement(
+          'div',
+          { className: 'checkoutButton' },
+          React.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this2.setState({ mode: 'shop', sel: -1 });
+              } },
+            'CHECKOUT'
+          )
+        )
       );
     }
   }]);

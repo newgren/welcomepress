@@ -305,29 +305,40 @@ item > .left {
   position:relative;
 }
 
-.bagItem > div > img {
-  float: left;
-  height: 200px;
-  left: -25px;
-  top: -25px;
-  position: relative;
-}
 
 .bagItem > .left {
+  align-items: start;
+  display: flex;
   float: left;
   left: -10px;
   width: 50%;
   height: 150px;
 }
 
+.bagItem .imagebox {
+  flex:initial;
+  max-width: 50%;
+}
+
+.bagItem img {
+  float: left;
+  left: -25px;
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  top: -25px;
+}
+
+.bagItem .text {
+  flex: initial;
+}
+.bagItem .text > div{
+  word-wrap: break-word;
+}
+
 .bagItem > .right {
   float:right;
   left: 10px;
-  width: 50%;
-}
-
-.bagItem > .left > .text {
-  float:left;
   width: 50%;
 }
 

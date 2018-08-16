@@ -19,10 +19,13 @@ class BagItem extends React.Component {
     return (
       <div className='bagItem'>
         <div className='left'>
-          <img src={this.image_url}/>
+          <div className='imagebox'>
+            <img src={this.image_url}/>
+          </div>
           <div className='text'>
-            <span>{this.name+'\n'+this.size+'\n'+this.qty}
-            </span>
+            <div>{this.name}</div>
+            <div>{this.size}</div>
+            <div>{this.qty}</div>
           </div>
         </div>
         <div className='right'>

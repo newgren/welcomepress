@@ -33,6 +33,11 @@ class Bag extends React.Component {
             />
           )
         )}
+        <div className='center'>
+          <div className='checkoutButton'>
+            <button onClick={()=>()}>CHECKOUT</button>
+          </div>
+        </div>
       </div>
     );
   }

@@ -38,14 +38,28 @@ var BagItem = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'left' },
-          React.createElement('img', { src: this.image_url }),
+          React.createElement(
+            'div',
+            { className: 'imagebox' },
+            React.createElement('img', { src: this.image_url })
+          ),
           React.createElement(
             'div',
             { className: 'text' },
             React.createElement(
-              'span',
+              'div',
               null,
-              this.name + '\n' + this.size + '\n' + this.qty
+              this.name
+            ),
+            React.createElement(
+              'div',
+              null,
+              this.size
+            ),
+            React.createElement(
+              'div',
+              null,
+              this.qty
             )
           )
         ),
