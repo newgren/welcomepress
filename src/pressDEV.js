@@ -20,7 +20,7 @@ class Press extends React.Component {
   }
 
   render() {
-    alert((window.innerWidth > 0) ? window.innerWidth : screen.width);
+    window.onload = () => alert((window.innerWidth > 0) ? window.innerWidth : screen.width);
     switch (this.state.shitemode) {
       case 'shop':
         return <Shop goToBag={() => this.handleClick('bag')}/>

@@ -38,7 +38,9 @@ var Press = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      alert(window.innerWidth > 0 ? window.innerWidth : screen.width);
+      window.onload = function () {
+        return alert(window.innerWidth > 0 ? window.innerWidth : screen.width);
+      };
       switch (this.state.shitemode) {
         case 'shop':
           return React.createElement(Shop, { goToBag: function goToBag() {
