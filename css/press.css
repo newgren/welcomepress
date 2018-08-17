@@ -402,6 +402,18 @@ item > .left {
   text-shadow: -5px 3px 2px rgba(0,0,0,0.5);
 }
 
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 812px)
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : portrait) {
+
+  body {
+    background-color: red;
+  }
+
+}
+
 @media only screen and (min-width: 650px) {
     /* For desktop: */
     .desktop {
