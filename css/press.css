@@ -17,8 +17,7 @@
   --pink: #FFBDFB;
 }
 
-@media screen
-and (max-width : 812px) {
+@media screen and (max-width : 812px) {
 
   html {
     height: 100%;
@@ -406,7 +405,6 @@ and (max-width : 812px) {
   }
 }
 
-@media screen and (min-width: 812px) {
     /* For desktop: */
     .desktop {
       display: block;
@@ -507,4 +505,3 @@ and (max-width : 812px) {
     select.qty {
       font-size: 30px;
     }
-}
