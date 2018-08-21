@@ -17,7 +17,7 @@
   --pink: #FFBDFB;
 }
 
-@media only screen
+@media screen
 and (max-device-width : 812px) {
 
   html {
@@ -406,7 +406,7 @@ and (max-device-width : 812px) {
   }
 }
 
-@media only screen and (min-width: 812px) {
+@media screen and (min-width: 812px) {
     /* For desktop: */
     .desktop {
       display: block;
