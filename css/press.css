@@ -18,9 +18,7 @@
 }
 
 @media only screen
-and (max-device-width : 812px)
-and (-webkit-device-pixel-ratio : 3)
-and (orientation : portrait) {
+and (max-device-width : 812px) {
 
   html {
     height: 100%;
