@@ -18,7 +18,7 @@
 }
 
 @media screen
-and (max-device-width : 812px) {
+and (max-width : 812px) {
 
   html {
     height: 100%;
