@@ -18,7 +18,7 @@ let countDown = new Date('Sep 28, 2018 23:59:59').getTime(),
         document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
         document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
         document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-
+        
       //do something later when date is reached
       //if (distance < 0) {
       //  clearInterval(x);

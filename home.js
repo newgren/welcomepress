@@ -69,8 +69,6 @@ var Home = function (_React$Component) {
           animationIsActive = false;
         }, intervalDelay * tailLength * 2);
       }, false);
-      //let id = startAnimation();
-      //window.setTimeout(() => window.clearInterval(id), 2001);
     }
   }, {
     key: 'render',
