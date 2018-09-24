@@ -54,7 +54,7 @@ class Home extends React.Component {
         timeout = setTimeout(() => {
           clearInterval(interval);
           animationIsActive = false;
-        }, intervalDelay * tailLength);
+        }, intervalDelay * tailLength * 2);
     }, false);
     //let id = startAnimation();
     //window.setTimeout(() => window.clearInterval(id), 2001);

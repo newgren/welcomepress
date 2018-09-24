@@ -67,7 +67,7 @@ var Home = function (_React$Component) {
         timeout = setTimeout(function () {
           clearInterval(interval);
           animationIsActive = false;
-        }, intervalDelay * tailLength);
+        }, intervalDelay * tailLength * 2);
       }, false);
       //let id = startAnimation();
       //window.setTimeout(() => window.clearInterval(id), 2001);
