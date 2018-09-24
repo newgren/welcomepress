@@ -10,7 +10,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-import Countdown from './countdown.js';
+var x, y;
+var tailLength = 45;
 
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
@@ -25,43 +26,90 @@ var Home = function (_React$Component) {
   }
 
   _createClass(Home, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var element = this.refs.elem;
+      var animationIsActive = false;
+      var framesPerSecond = 60;
+      var intervalDelay = Math.round(1000 / framesPerSecond);
+      //let lagTailLength = 5;
+
+
+      var i = 0;
+      var z = 0;
+
+      var startAnimation = function startAnimation() {
+
+        return window.setInterval(function () {
+          console.log('go');
+          i = (i + 1) % tailLength;
+          i = i === 0 ? 1 : i;
+          var thing = document.getElementById('n' + i);
+          thing.style.left = x - thing.offsetWidth / 4 + "px";
+          thing.style.top = y - 825 - thing.offsetHeight / 4 + "px";
+          thing.style.zIndex = z++;
+        }, Math.floor(intervalDelay));
+      };
+      var timeout = null; // id of timeout callback to cancel animation
+      var interval = null; // id of interval callback to animate
+      window.addEventListener('mousemove', function (event) {
+        window.clearTimeout(timeout);
+        if (!animationIsActive) {
+          interval = startAnimation();
+          animationIsActive = true;
+        }
+        x = event.clientX;
+        y = event.clientY;
+        if (typeof x !== 'undefined') {
+          element.style.left = x - element.offsetWidth / 4 + "px";
+          element.style.top = y - 825 - element.offsetHeight / 4 + "px";
+        }
+        timeout = setTimeout(function () {
+          clearInterval(interval);
+          animationIsActive = false;
+        }, intervalDelay * tailLength);
+      }, false);
+      //let id = startAnimation();
+      //window.setTimeout(() => window.clearInterval(id), 2001);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'home center' },
+        { ref: 'cont' },
         React.createElement(
           'div',
-          null,
+          { className: 'home center' },
           React.createElement(
             'div',
-            { className: 'welcomePRESS' },
+            { className: 'welcome' },
             React.createElement(
-              'div',
-              { className: 'welcome shadow' },
-              'welcome'
-            ),
-            React.createElement(
-              'div',
-              { className: 'press shadow' },
-              'PRESS'
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'adjuster' },
-            React.createElement(Countdown, null),
-            React.createElement(
-              'button',
-              { className: 'shopbutton disabled', onClick: function onClick() {
-                  alert("getgot");alert("fr just come back later");
-                }
-                /*this.props.onclick*/
-              },
-              'shop'
+              'svg',
+              { viewBox: '0 0 417 60' },
+              React.createElement(
+                'text',
+                { y: '57' },
+                'WELCOME'
+              )
             )
           )
-        )
+        ),
+        Array.apply(null, Array(tailLength)).map(function (i, j) {
+          return React.createElement(
+            'div',
+            { id: 'n' + j, key: j, className: 'press', ref: j === 0 ? 'elem' : '' },
+            React.createElement(
+              'svg',
+              { viewBox: '0 0 417 60' },
+              React.createElement(
+                'text',
+                { y: '57' },
+                'PRESS'
+              )
+            )
+          );
+        })
       );
     }
   }]);

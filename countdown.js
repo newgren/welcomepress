@@ -15,7 +15,7 @@ var second = 1000,
     hour = minute * 60,
     day = hour * 24;
 
-var countDown = new Date('Aug 31, 2018 23:59:59').getTime(),
+var countDown = new Date('Sep 28, 2018 23:59:59').getTime(),
     x = setInterval(function () {
 
   var now = new Date().getTime(),

@@ -2,14 +2,23 @@
 
 @font-face {
     font-family: 'BROCK';
-    src: url('../fonts/dharmagothice_exbold_r-webfont.eot');
-    src: url('../fonts/dharmagothice_exbold_r-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/dharmagothice_exbold_r-webfont.woff2') format('woff2'),
-         url('../fonts/dharmagothice_exbold_r-webfont.woff') format('woff'),
-         url('../fonts/dharmagothice_exbold_r-webfont.ttf') format('truetype');
+    src: url('../fonts/dharma/dharmagothice_exbold_r-webfont.eot');
+    src: url('../fonts/dharma/dharmagothice_exbold_r-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/dharma/dharmagothice_exbold_r-webfont.woff2') format('woff2'),
+         url('../fonts/dharma/dharmagothice_exbold_r-webfont.woff') format('woff'),
+         url('../fonts/dharma/dharmagothice_exbold_r-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
 
+@font-face {
+  font-family: 'galderglynn';
+  src: url('../fonts/galderglynn/galderglynn_titling_bl.ttf');
+}
+
+@font-face {
+  font-family: 'questrial';
+  src: url('../fonts/questrial/Questrial-Regular.ttf');
 }
 
 :root {
@@ -23,11 +32,48 @@ html {
 }
 
 body {
-  background-color: #FFBDFB;
-  font-family: Arial, sans-serif;
-  font-size: 26px;
+  background-color: yellow;
+  color:white;
+  cursor: none;
+  /* text-shadow: -4px 0 blue, 0 4px blue, 4px 0 blue, 0 -4px blue; */
+
+  font-family: 'galderglynn', sans-serif;
+  font-size: 10vw;
   margin: 0;
   padding:0;
+}
+
+svg {
+  font-size: 75px;
+  width: 66%;
+}
+
+svg text {
+  fill: white;
+  stroke: blue;
+  stroke-width:2.5px;
+}
+
+.press svg {
+  position: fixed;
+}
+
+
+.welcome svg {
+  padding-left: 3px;
+}
+
+svg {
+  z-index: 2;
+}
+
+#n0 {
+  z-index: 999999999;
+}
+
+
+.home {
+  font-family:
 }
 
 .desktop {
@@ -55,18 +101,14 @@ body {
 }
 
 .welcome {
-  color: #FFFFFF;
-  z-index: 2;
   font-size: 118.8px;
 }
 
 .press {
-  color: #B8E986;
-  font-size: 150px;
+  font-size: 100px;
   position: relative;
-  letter-spacing: -23px;
-  top: -72px;
-  z-index: -10;
+  top: 0;
+  left: 0;
 }
 
 .welcomePRESS {
@@ -85,10 +127,7 @@ body {
   width: 100px;
 }
 
-.adjuster {
-  position: relative;
-  top: -20px;
-}
+
 
 .disabled {
   opacity: 0.5;
@@ -101,8 +140,9 @@ body {
 }
 
 .container {
-  color: #333;
   text-align: center;
+  position: fixed;
+  top: 0px;
 }
 
 .container > ul {
@@ -114,21 +154,21 @@ body {
 }
 
 .container > ul > li {
-  color: white;
+  background-color: white;
+  color: blue;
   display: inline-block;
-  font-family: BROCK, sans-serif;
-  font-size: 30px;
+  font-family: 'questrial';
+  font-size: 5vw;
   font-style: normal;
   font-weight: 800;
   list-style-type: none;
   padding: 10px;
-  text-shadow: -2px 3px 3px rgba(0,0,0,0.5);
   text-transform: uppercase;
 }
 
-.container > ul > li span {
-  color: white;
-  font-size:60px;
+.container span {
+  color: blue;
+  font-size: 2vw;
 }
 
 .menu {
@@ -416,6 +456,9 @@ and (orientation : portrait) {
 
 @media only screen and (min-width: 650px) {
     /* For desktop: */
+    body {
+      color:white;
+    }
     .desktop {
       display: block;
     }
@@ -424,13 +467,6 @@ and (orientation : portrait) {
     }
     .mobile {
       display: none;
-    }
-    .welcome {
-      font-size: 198px;
-    }
-    .press {
-      font-size: 250px;
-      top: -117px;
     }
     .welcomePRESS {
       position: inherit;
