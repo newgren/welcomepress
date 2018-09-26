@@ -43,6 +43,35 @@ body {
   padding:0;
 }
 
+.homeDesktop {
+  display: none;
+}
+
+.homeMobile {
+  display: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+
+
+.homeBox {
+  margin: 33px 0px 0px 27px;
+}
+/* .welcome {
+  font-size: 118.8px;
+}
+.welcome text {
+  font-size: 200px;
+} */
+
+.press {
+  font-size: 100px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
 svg {
   font-size: 75px;
   width: 66%;
@@ -54,26 +83,35 @@ svg text {
   stroke-width:2.5px;
 }
 
-.press svg {
+.questionBox {
+  background-color: white;
+  border: 2px solid blue;
+  height: 24px;
+  line-height: 24px;
+  margin-top: 14px;
+  text-align: center;
+  width: 24px;
+}
+.questionBox span {
+  color:blue;
+  font-family: 'questrial';
+  font-size: 16px;
+}
+.square {
+  border: 0.75vw solid blue;
+  height: 53.8vw;
   position: fixed;
+  width: 53.8vw;
 }
 
-
-.welcome svg {
-  padding-left: 3px;
+.square#work {
+  background-image: url('../examples/work.png');
+  right: 3vw;
 }
-
-svg {
-  z-index: 2;
-}
-
-#n0 {
-  z-index: 999999999;
-}
-
-
-.home {
-  font-family:
+.square#shop {
+  background-image: url('../examples/shop.png');
+  left: 20vw;
+  top: 103vw;
 }
 
 .desktop {
@@ -100,16 +138,6 @@ svg {
   text-shadow: -8px 10px 10px rgba(0,0,0,0.5);
 }
 
-.welcome {
-  font-size: 118.8px;
-}
-
-.press {
-  font-size: 100px;
-  position: relative;
-  top: 0;
-  left: 0;
-}
 
 .welcomePRESS {
   position: relative;
@@ -448,9 +476,9 @@ and (max-device-width : 812px)
 and (-webkit-device-pixel-ratio : 3)
 and (orientation : portrait) {
 
-  body {
+  /* body {
     background-color: red;
-  }
+  } */
 
 }
 
@@ -458,6 +486,15 @@ and (orientation : portrait) {
     /* For desktop: */
     body {
       color:white;
+      cursor: none;
+
+    }
+    .homeDesktop {
+      display: inherit;
+    }
+    .homeMobile {
+      background-color: red;
+      display:none;
     }
     .desktop {
       display: block;
@@ -467,6 +504,119 @@ and (orientation : portrait) {
     }
     .mobile {
       display: none;
+    }
+    .over {
+      background-color: white;
+      display: flex;
+      height: 100%;
+      opacity: 0;
+      position: fixed;
+      top: 0px;
+      width: 100%;
+    }
+    .over.entered {
+      opacity:1;
+      transition: opacity 0.3s;
+      -webkit-transition: opacity 0.3s;
+    }
+    .over .left {
+      background-color: yellow;
+      flex: 1;
+    }
+    .over .right {
+      border: 0.6vw solid blue;
+      display: flex;
+      flex: 3;
+      flex-direction: column;
+    }
+    .over .right div {
+      align-items: center;
+      border: 0.6vw solid blue;
+      display: flex;
+      justify-content: center;
+      margin: 2.83vw;
+      text-align: center;
+      flex:1;
+    }
+    .over .right .top {
+      background: url('../examples/work_whole.png');
+      background-size: auto;
+      margin-bottom: 1.415vw;
+
+
+    }
+    .over .right .bottom {
+      background-image: url('../examples/shop_whole.png');
+      margin-top: 1.415vw;
+    }
+
+    svg {
+      font-size: 75px;
+      width: 66%;
+      z-index: 2;
+    }
+
+    .rot svg {
+      font-size: 3.5vw;
+    }
+
+    .over text{
+      fill: yellow;
+    }
+
+    .over .left {
+    }
+
+    svg text {
+      fill: white;
+      stroke: blue;
+      stroke-width:2.5px;
+    }
+
+    .welcome svg {
+      padding-left: 3px;
+    }
+
+    .welcome svg text {
+      stroke-width:2px;
+    }
+
+    #n0 {
+      z-index: 999999999;
+    }
+    .welcome {
+
+    }
+    .welcome.rot {
+      background-color: red;
+      left: 0vw;
+      position: fixed;
+      transform: rotate(-90deg);
+      bottom: -11.48vw;
+      transform-origin: 0% 0%;
+      width: 300px;
+      -webkit-transform: rotate(-90deg);
+    }
+    .press.rot {
+      position: fixed;
+      bottom: -11.48vw;
+      transform-origin: 0% 0%;
+      /* transform: rotate(-90deg);
+      -webkit-transform: rotate(-90deg); */
+      width: 300px;
+    }
+    .rot svg {
+      width: 80vw;
+    }
+    .rot text {
+      fill: white;
+    }
+    .press {
+      font-size: 100px;
+    }
+
+    .press svg {
+      position: fixed;
     }
     .welcomePRESS {
       position: inherit;
