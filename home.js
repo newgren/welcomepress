@@ -18,7 +18,7 @@ var tailLength = 45;
 
 //TODO: swap two lines below
 document.onclick = function () {
-  //window.onload = () => {
+  // window.onload = () => {
   entered = true;
   var presses = document.getElementsByClassName('press');
   for (var i = 0; i < presses.length; i++) {
@@ -146,10 +146,10 @@ var Home = function (_React$Component) {
                 { className: 'welcome rot' },
                 React.createElement(
                   'svg',
-                  { viewBox: '0 0 417 60' },
+                  { viewBox: '0 0 240 80' },
                   React.createElement(
                     'text',
-                    { y: '57' },
+                    { x: '0', y: '0' },
                     'WELCOME'
                   )
                 )
@@ -172,29 +172,21 @@ var Home = function (_React$Component) {
               'div',
               { className: 'right' },
               React.createElement(
-                'div',
-                { className: 'top' },
+                'svg',
+                { viewBox: '0 0 400 120', className: 'workFloat' },
                 React.createElement(
-                  'svg',
-                  { viewBox: '0 0 417 60' },
-                  React.createElement(
-                    'text',
-                    { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
-                    'WORK'
-                  )
+                  'text',
+                  { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
+                  'WORK'
                 )
               ),
               React.createElement(
-                'div',
-                { className: 'bottom' },
+                'svg',
+                { viewBox: '0 0 400 120', className: 'shopFloat' },
                 React.createElement(
-                  'svg',
-                  { viewBox: '0 0 417 60' },
-                  React.createElement(
-                    'text',
-                    { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
-                    'SHOP'
-                  )
+                  'text',
+                  { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
+                  'SHOP'
                 )
               )
             )

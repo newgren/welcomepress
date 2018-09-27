@@ -10,7 +10,7 @@ var tailLength = 45;
 
 //TODO: swap two lines below
 document.onclick = () => {
-//window.onload = () => {
+// window.onload = () => {
   entered = true;
   let presses = document.getElementsByClassName('press');
   for (let i = 0; i < presses.length; i++) {
@@ -103,8 +103,8 @@ class Home extends React.Component {
           <div className='over'>
             <div className='left'>
               <div className='welcome rot'>
-                <svg viewBox="0 0 417 60">
-                  <text y="57">WELCOME</text>
+                <svg viewBox="0 0 240 80">
+                  <text x="0" y="0">WELCOME</text>
                 </svg>
               </div>
               <div className='press rot' id='nodelete'>
@@ -114,20 +114,16 @@ class Home extends React.Component {
               </div>
             </div>
             <div className='right'>
-              <div className='top'>
-                <svg viewBox="0 0 417 60">
-                  <text x="50%" y="50%" alignmentBaseline="middle" textAnchor="middle">
-                    WORK
-                  </text>
-                </svg>
-              </div>
-              <div className='bottom'>
-                <svg viewBox="0 0 417 60">
-                  <text x="50%" y="50%" alignmentBaseline="middle" textAnchor="middle">
-                    SHOP
-                  </text>
-                </svg>
-              </div>
+              <svg viewBox="0 0 400 120" className='workFloat'>
+                <text x="50%" y="50%" alignmentBaseline="middle" textAnchor="middle">
+                  WORK
+                </text>
+              </svg>
+              <svg viewBox="0 0 400 120" className='shopFloat'>
+                <text x="50%" y="50%" alignmentBaseline="middle" textAnchor="middle">
+                  SHOP
+                </text>
+              </svg>
             </div>
           </div>
         </div>
