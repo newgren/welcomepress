@@ -114,7 +114,7 @@ var Shop = function (_React$Component) {
         { onClick: this.handleClick.bind(this) },
         React.createElement(
           'div',
-          { className: 'shop', style: { backgroundColor: this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986' } },
+          { className: 'shopBox', style: { backgroundColor: this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986' } },
           React.createElement(
             'div',
             { className: 'menu' },

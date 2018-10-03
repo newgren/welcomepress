@@ -16,11 +16,12 @@ class StrokeText extends React.Component {
     let text = document.getElementById('text'+this.num)
 
     console.log(box.getAttribute('viewBox').split(/\s+|,/)[2]);
-    let w = box.getBBox().width;
     let textLength = text.getComputedTextLength();
+    //alert(textLength);
     console.log('rect: ' + w);
     console.log('text: ' + textLength);
 
+    let w = box.getBBox().width;
     box.setAttribute('viewBox', '0 -15 ' + w + ' 50');
     rect.setAttribute('width', textLength);
     console.log(text.getComputedTextLength());
@@ -28,7 +29,7 @@ class StrokeText extends React.Component {
 
   render() {
     return (
-      <div className='strokeText'>
+      <div className={this.num != 0 ? 'strokeText' : 'strokeText special'}>
         <svg viewBox="0 -15 100 20" id={'svg'+this.num}>
           <rect x='0' y='0' width="100" height="20" id={'rect'+this.num}/>
           <text x='0' y='0' id={'text'+this.num}>{this.copy}</text>

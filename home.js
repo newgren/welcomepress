@@ -17,8 +17,8 @@ var tailLength = 45;
 // enter site
 
 //TODO: swap two lines below
-document.onclick = function () {
-  // window.onload = () => {
+// document.onclick = () => {
+window.onload = function () {
   entered = true;
   var presses = document.getElementsByClassName('press');
   for (var i = 0; i < presses.length; i++) {
@@ -49,11 +49,10 @@ var Home = function (_React$Component) {
       //   document.getElementById('homeDesktop').style.display !== 'none';
       // }
 
-
       var element = this.refs.elem;
       var animationIsActive = false;
       var framesPerSecond = 60;
-      var intervalDelay = Math.round(1000 / framesPerSecond);
+      var stutterIntervalDelay = Math.round(1000 / framesPerSecond);
       //let lagTailLength = 5;
 
       var i = 0;
@@ -63,7 +62,7 @@ var Home = function (_React$Component) {
       //   return;
       // }
 
-      var startAnimation = function startAnimation() {
+      var startLaggyAnimation = function startLaggyAnimation() {
         return window.setInterval(function () {
           console.log('go');
           i = (i + 1) % tailLength;
@@ -72,14 +71,15 @@ var Home = function (_React$Component) {
           thing.style.left = x - thing.offsetWidth / 4 + "px";
           thing.style.top = y - 825 - thing.offsetHeight / 4 + "px";
           thing.style.zIndex = z++;
-        }, Math.floor(intervalDelay));
+        }, Math.floor(stutterIntervalDelay));
       };
+
       var timeout = null; // id of timeout callback to cancel animation
       var interval = null; // id of interval callback to animate
       window.addEventListener('mousemove', function (event) {
         window.clearTimeout(timeout);
         if (!animationIsActive && !entered) {
-          interval = startAnimation();
+          interval = startLaggyAnimation();
           animationIsActive = true;
         }
         x = event.clientX;
@@ -91,8 +91,22 @@ var Home = function (_React$Component) {
         timeout = setTimeout(function () {
           clearInterval(interval);
           animationIsActive = false;
-        }, intervalDelay * tailLength * 2);
+        }, stutterIntervalDelay * tailLength * 2);
       }, false);
+
+      var intervalDuration = 10;
+      var startChChChChAnimation = function startChChChChAnimation() {
+        var copies = document.getElementsByClassName('work layer');
+        var copyIndex = copies.length - 1;
+        var intervalPointer = window.setInterval(function () {
+          if (copyIndex < 0) {
+            clearInterval(intervalPointer);
+            return;
+          }
+          copies[copyIndex--].style.display = 'inherit';
+        }, intervalDuration);
+      };
+      startChChChChAnimation();
     }
   }, {
     key: 'render',
@@ -138,56 +152,56 @@ var Home = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'over' },
-            React.createElement(
-              'div',
-              { className: 'left' },
-              React.createElement(
+            Array.apply(null, Array(24)).map(function (i, j) {
+              return React.createElement(
                 'div',
-                { className: 'welcome rot' },
+                {
+                  id: 'work' + j,
+                  key: j,
+                  className: 'work layer',
+                  style: {
+                    transform: 'translate(' + -j + 'vw, ' + -j * 1.5 + 'vh)',
+                    zIndex: -j
+                  } },
                 React.createElement(
-                  'svg',
-                  { viewBox: '0 0 240 80' },
-                  React.createElement(
-                    'text',
-                    { x: '0', y: '0' },
-                    'WELCOME'
-                  )
-                )
-              ),
-              React.createElement(
-                'div',
-                { className: 'press rot', id: 'nodelete' },
-                React.createElement(
-                  'svg',
-                  { viewBox: '0 0 417 60' },
-                  React.createElement(
-                    'text',
-                    { y: '57' },
-                    'PRESS'
-                  )
-                )
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: 'right' },
-              React.createElement(
-                'svg',
-                { viewBox: '0 0 400 120', className: 'workFloat' },
-                React.createElement(
-                  'text',
-                  { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
+                  'span',
+                  null,
                   'WORK'
                 )
-              ),
+              );
+            }),
+            React.createElement(
+              'div',
+              { className: 'work' },
               React.createElement(
-                'svg',
-                { viewBox: '0 0 400 120', className: 'shopFloat' },
+                'span',
+                null,
+                'WORK'
+              )
+            ),
+            Array.apply(null, Array(40)).map(function (i, j) {
+              return React.createElement(
+                'div',
+                {
+                  id: 'shop' + j,
+                  key: j,
+                  className: 'shop layer',
+                  style: { transform: 'translate(' + j + 'vw, ' + j * 1.5 + 'vh)',
+                    zIndex: -j } },
                 React.createElement(
-                  'text',
-                  { x: '50%', y: '50%', alignmentBaseline: 'middle', textAnchor: 'middle' },
+                  'span',
+                  null,
                   'SHOP'
                 )
+              );
+            }),
+            React.createElement(
+              'div',
+              { className: 'shop' },
+              React.createElement(
+                'span',
+                null,
+                'SHOP'
               )
             )
           )

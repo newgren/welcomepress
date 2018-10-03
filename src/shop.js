@@ -83,7 +83,7 @@ class Shop extends React.Component {
   render() {
     return (
       <div onClick={this.handleClick.bind(this)}>
-        <div className='shop' style={{backgroundColor: (this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986')}}>
+        <div className='shopBox' style={{backgroundColor: (this.state.mode === 'shop' ? '#FFBDFB' : '#B8E986')}}>
           <div className='menu'>
             <div className='shopText shadow'>SHOP</div>
             <div className='bagText shadow' onClick={() => this.setState({mode: 'bag', sel: -1})}>

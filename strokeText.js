@@ -32,11 +32,12 @@ var StrokeText = function (_React$Component) {
       var text = document.getElementById('text' + this.num);
 
       console.log(box.getAttribute('viewBox').split(/\s+|,/)[2]);
-      var w = box.getBBox().width;
       var textLength = text.getComputedTextLength();
+      //alert(textLength);
       console.log('rect: ' + w);
       console.log('text: ' + textLength);
 
+      var w = box.getBBox().width;
       box.setAttribute('viewBox', '0 -15 ' + w + ' 50');
       rect.setAttribute('width', textLength);
       console.log(text.getComputedTextLength());
@@ -46,7 +47,7 @@ var StrokeText = function (_React$Component) {
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'strokeText' },
+        { className: this.num != 0 ? 'strokeText' : 'strokeText special' },
         React.createElement(
           'svg',
           { viewBox: '0 -15 100 20', id: 'svg' + this.num },

@@ -9,6 +9,12 @@ div {
 
 .strokeText {
   border: 1px solid blue;
+  font-size: 15px;
+  width: 700px;
+}
+
+.special {
+  width: 500px;
 }
 
 .strokeText > svg {
