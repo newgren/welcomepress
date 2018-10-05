@@ -228,18 +228,6 @@ svg text {
   font-size: 10px;
 }
 
-select.sizes {
-  border: 0px;
-  font-size: 30px;
-  font-weight: bold;
-  padding: 0px;
-  height: 190px;
-  outline: none;
-}
-
-select.qty {
-  font-size:20px;
-}
 
 .buy {
   display: flex;
@@ -341,24 +329,6 @@ select.qty {
   font-size: 24px;
   padding:5px;
   text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
-}
-
-.back {
-  bottom:10px;
-  left:10px;
-  position:fixed;
-  height: 5%;
-  width: 10%;
-}
-
-.back > button {
-  background-color: #FFBDFB;
-  color:white;
-  font-size:30px;
-  font-weight: bold;
-  box-shadow: -3px 5px 5px rgba(0,0,0,0.5);
-  border:none;
-  height: 100%;
 }
 
 .itemList > img{
@@ -551,7 +521,6 @@ and (orientation : portrait) {
       border: .36vw solid blue;
       flex: 40;
       min-width: 0;
-
       height: 100%;
     }
 
@@ -573,6 +542,13 @@ and (orientation : portrait) {
     .banner img#shopBannerText{
       height: 65%;
       padding: 2vh 0;
+    }
+
+    .banner #shopProductName {
+      color:blue;
+      font-size: 4vw;
+      max-width: 63vw;
+      text-align: center;
     }
 
     .banner img#bagbannericon {
@@ -642,21 +618,25 @@ and (orientation : portrait) {
 
     .item .right {
       flex: 34;
+      position: relative;
       padding-left: 1vw;
+      top: 15vh;
     }
 
-    .item .right h1 {
+    .item .right span#h1 {
       font-family: 'galderglynn', sans-serif;
       font-size: 4.5vw;
     }
 
-    .item .right h2 {
+    .item .right span#h2 {
+      display: block;
       font-family: questrial;
       font-size: 2.5vw;
+      margin: 2vh 0;
     }
 
     .item .sizebar {
-      height: 3vw;
+      height: 3.5vw;
       width: 100%;
     }
 
@@ -670,11 +650,52 @@ and (orientation : portrait) {
       height: 100%;
       justify-content: center;
       margin-right: 0.6vw;
-      width: 3vw;
+      width: 3.5vw;
     }
 
     .item .sizebar div > span {
       font-size: 2vw;
+    }
+
+    .item .right select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      background-color: white;
+      border: 0.2vw solid blue;
+      border-radius: 0;
+      color:blue;
+      font-family: questrial;
+      font-size: 2vw;
+      margin-bottom: 2vh;
+      padding: 0.5vw 1vw;
+      width: 9vw;
+      size:4;
+
+      /* arrow things */
+      background: url('../iconImages/select_arrow_desktop.png');
+      background-position: right 1.7vw center;
+      background-repeat: no-repeat;
+      background-size: 1vw;
+    }
+
+    .item .right select option {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      background-color: yellow;
+    }
+
+
+    .item .right button {
+      background-color: blue;
+      color:white;
+      display: block;
+      font-family: Arial;
+      font-size: 2.2vw;
+      padding: 1vw;
     }
 
     .bagItem {
@@ -691,10 +712,4 @@ and (orientation : portrait) {
       top: -25px;
     }
 
-    select.sizes {
-      font-size: 50px;
-    }
-    select.qty {
-      font-size: 30px;
-    }
 }

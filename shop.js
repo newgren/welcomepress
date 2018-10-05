@@ -120,7 +120,11 @@ var Shop = function (_React$Component) {
             'div',
             { className: 'banner' },
             React.createElement('img', { src: './iconImages/banner_left_desktop.png', id: 'leftBannerIcon' }),
-            React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }),
+            this.state.sel == -1 ? React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
+              'span',
+              { id: 'shopProductName' },
+              catalog.items[this.state.sel].name
+            ),
             React.createElement('img', { src: './iconImages/bag_desktop.png',
               onClick: function onClick() {
                 return _this2.setState({ mode: 'bag', sel: -1 });
@@ -132,7 +136,7 @@ var Shop = function (_React$Component) {
             'div',
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_url + '.png', onClick: function onClick() {
+              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png', onClick: function onClick() {
                   return _this2.setState({ sel: id });
                 }, key: item.name });
             })
@@ -145,23 +149,12 @@ var Shop = function (_React$Component) {
             'div',
             { className: 'mobile itemList' },
             catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_url + '.png', onClick: function onClick() {
+              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png', onClick: function onClick() {
                   return _this2.setState({ sel: id });
                 }, key: item.name });
             })
           ),
-          this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null),
-          React.createElement(
-            'div',
-            { className: 'back' },
-            this.state.sel > -1 || this.state.mode === 'bag' ? React.createElement(
-              'button',
-              { onClick: function onClick() {
-                  return _this2.setState({ mode: 'shop', sel: -1 });
-                } },
-              'GOBACK'
-            ) : React.createElement('br', null)
-          )
+          this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null)
         )
       );
     }

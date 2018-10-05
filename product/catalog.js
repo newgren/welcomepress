@@ -3,35 +3,35 @@ export default
 	"items": [
     {
       "name":"welcome press promotional shirt",
-      "image_url": "modelA",
+      "image_urls": ["modelA", "modelA_2"],
       "description": "You won't feel like you're in Champaign when you're wearing our shirts.",
       "price": 15,
       "tags": ["shirt", "clothes"]
     },
     {
 			"name": "Shite shirt",
-			"image_url": "fish",
+			"image_urls": ["fish", "orange"],
 			"description": "shoot it, ... that's about all u can do w it",
 			"price": 25.0,
 			"tags": ["shirt", "clothes"]
 		},
 		{
 			"name": "privacy breach",
-			"image_url": "privacypolicy",
+			"image_urls": ["privacypolicy"],
 			"description": "\"you messed with the wrong kid\"",
 			"price": 5000000.0,
 			"tags": ["shirt", "clothes", "data"]
 		},
 		{
 			"name": "redlippedbatfish",
-			"image_url": "redlip",
+			"image_urls": ["redlip"],
 			"description": "ee",
 			"price": 25.0,
 			"tags": ["shirt", "clothes"]
 		},
 		{
 			"name": "orange",
-			"image_url": "orange",
+			"image_urls": ["orange"],
 			"description": "\"I got this for $1, but actually $0.50 because it was Arbor Day 😏\"",
 			"price": 0.50,
 			"tags": ["shirt", "clothes"]

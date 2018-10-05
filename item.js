@@ -21,6 +21,7 @@ var Item = function (_React$Component) {
 
     _this.no = props.no;
     _this.state = {
+      imageIndex: 0,
       size: 'M',
       qty: 1
     };
@@ -37,9 +38,6 @@ var Item = function (_React$Component) {
     value: function handleQtyChange(e) {
       this.setState({ qty: parseInt(e.target.value) });
     }
-
-    // TODO: this.props.item.description
-
   }, {
     key: 'render',
     value: function render() {
@@ -51,27 +49,32 @@ var Item = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'left' },
-          [0, 1, 2].map(function (i) {
-            return React.createElement('img', { src: './product/' + _this2.props.item.image_url + '.png', key: i });
+          this.props.item.image_urls.map(function (url, i) {
+            return React.createElement('img', { src: './product/' + url + '.png',
+              key: i,
+              onClick: function onClick() {
+                return _this2.setState({ imageIndex: i });
+              }
+            });
           })
         ),
         React.createElement(
           'div',
           { className: 'mid' },
-          React.createElement('img', { src: './product/' + this.props.item.image_url + '.png' })
+          React.createElement('img', { src: './product/' + this.props.item.image_urls[this.state.imageIndex] + '.png' })
         ),
         React.createElement(
           'div',
           { className: 'right' },
           React.createElement(
-            'h1',
-            null,
+            'span',
+            { id: 'h1' },
             '$',
             this.props.item.price
           ),
           React.createElement(
-            'h2',
-            null,
+            'span',
+            { id: 'h2' },
             'size:'
           ),
           React.createElement(
@@ -90,9 +93,20 @@ var Item = function (_React$Component) {
             })
           ),
           React.createElement(
-            'h2',
-            null,
+            'span',
+            { id: 'h2' },
             'quantity:'
+          ),
+          React.createElement(
+            'select',
+            { value: this.state.qty, onChange: this.handleQtyChange.bind(this) },
+            [1, 2, 3, 4, 5].map(function (n) {
+              return React.createElement(
+                'option',
+                { value: n, key: n },
+                n
+              );
+            })
           ),
           React.createElement(
             'button',

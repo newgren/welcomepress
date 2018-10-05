@@ -8,6 +8,7 @@ class Item extends React.Component {
     super(props);
     this.no = props.no;
     this.state = {
+      imageIndex: 0,
       size: 'M',
       qty: 1
     };
@@ -21,29 +22,36 @@ class Item extends React.Component {
     this.setState({qty: parseInt(e.target.value)});
   }
 
-  // TODO: this.props.item.description
+
 
   render() {
     return (
         <div className='item'>
           <div className='left'>
-              {[0,1,2].map((i) =>
-                    <img src={'./product/'+this.props.item.image_url+'.png'} key={i}/>
+              {
+                this.props.item.image_urls.map((url, i) =>
+                    <img src={'./product/'+url+'.png'}
+                         key={i}
+                         onClick={() => this.setState({imageIndex: i})}
+                    />
               )}
 
           </div>
           <div className='mid'>
-              <img src={'./product/'+this.props.item.image_url+'.png'}/>
+              <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
           </div>
           <div className='right'>
-            <h1>${this.props.item.price}</h1>
-            <h2>size:</h2>
+            <span id='h1'>${this.props.item.price}</span>
+            <span id='h2'>size:</span>
             <div className='sizebar'>
               {['S','M','L','XL'].map((i) =>
                 <div><span>{i}</span></div>
               )}
             </div>
-            <h2>quantity:</h2>
+            <span id='h2'>quantity:</span>
+            <select value={this.state.qty} onChange={this.handleQtyChange.bind(this)}>
+              {[1,2,3,4,5].map(n => <option value={n} key={n}>{n}</option>)}
+            </select>
             <button type='button'>ADD TO BAG</button>
           </div>
         </div>

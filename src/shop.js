@@ -89,7 +89,12 @@ class Shop extends React.Component {
         <div className='shopBox'>
           <div className='banner'>
             <img src='./iconImages/banner_left_desktop.png' id='leftBannerIcon' />
-            <img src='./iconImages/SHOP.png' id='shopBannerText' />
+            {
+            this.state.sel == -1 ?
+              <img src='./iconImages/SHOP.png' id='shopBannerText' />
+              :
+              <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
+            }
             <img src='./iconImages/bag_desktop.png'
                  onClick={() => this.setState({mode: 'bag', sel: -1})}
                  id='bagbannericon'
@@ -99,7 +104,7 @@ class Shop extends React.Component {
             this.state.sel == -1 ?
               <div className='desktop scroller'>
                 {catalog.items.map((item, id) =>
-                  <img src={'./product/'+item.image_url+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
+                  <img src={'./product/'+item.image_urls[0]+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
                 )}
               </div>
             :
@@ -109,17 +114,10 @@ class Shop extends React.Component {
           }
           <div className='mobile itemList'>
             {catalog.items.map((item, id) =>
-              <img src={'./product/'+item.image_url+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
+              <img src={'./product/'+item.image_urls[0]+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
             )}
           </div>
           {this.state.mode === 'bag' ? <Bag cart={this.state.cart}/> : <p></p>}
-          <div className='back'>
-            {
-              (this.state.sel > -1 || this.state.mode === 'bag') ?
-                <button onClick={() => this.setState({mode: 'shop', sel: -1})}>GOBACK</button>
-                : <br/>
-            }
-          </div>
         </div>
       </div>
     );
