@@ -71,6 +71,22 @@ var Shop = function (_React$Component) {
         sel: -1
       });
     }
+  }, {
+    key: 'getCartSize',
+    value: function getCartSize() {
+      var cart = this.state.cart;
+      var keys = Object.keys(cart);
+      var size = 0;
+      console.log(cart);
+      keys.forEach(function (key) {
+        var shirt = cart[key];
+        var shirtKeys = Object.keys(shirt);
+        shirtKeys.forEach(function (shirtkey) {
+          size += shirt[shirtkey];
+        });
+      });
+      return size;
+    }
 
     /**
     * return whether element has ancestor with class=className
@@ -125,12 +141,20 @@ var Shop = function (_React$Component) {
               { id: 'shopProductName' },
               catalog.items[this.state.sel].name
             ),
-            React.createElement('img', { src: './iconImages/bag_desktop.png',
-              onClick: function onClick() {
-                return _this2.setState({ mode: 'bag', sel: -1 });
-              },
-              id: 'bagbannericon'
-            })
+            React.createElement(
+              'div',
+              { id: 'bagbannericon' },
+              React.createElement('img', { src: './iconImages/bag_desktop.png',
+                onClick: function onClick() {
+                  return _this2.setState({ mode: 'bag', sel: -1 });
+                }
+              }),
+              React.createElement(
+                'span',
+                null,
+                this.getCartSize()
+              )
+            )
           ),
           this.state.sel == -1 ? React.createElement(
             'div',

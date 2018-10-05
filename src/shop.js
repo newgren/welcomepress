@@ -53,6 +53,21 @@ class Shop extends React.Component {
     });
   }
 
+  getCartSize() {
+    let cart = this.state.cart;
+    let keys = Object.keys(cart);
+    let size = 0;
+    console.log(cart);
+    keys.forEach((key) => {
+      let shirt = cart[key];
+      let shirtKeys = Object.keys(shirt);
+      shirtKeys.forEach((shirtkey) => {
+        size += shirt[shirtkey];
+      });
+    });
+    return size;
+  }
+
   /**
   * return whether element has ancestor with class=className
   */
@@ -95,10 +110,13 @@ class Shop extends React.Component {
               :
               <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
             }
-            <img src='./iconImages/bag_desktop.png'
-                 onClick={() => this.setState({mode: 'bag', sel: -1})}
-                 id='bagbannericon'
-            />
+            <div id='bagbannericon'>
+              <img src='./iconImages/bag_desktop.png'
+                   onClick={() => this.setState({mode: 'bag', sel: -1})}
+              />
+            <span>{this.getCartSize()}</span>
+            </div>
+
           </div>
           {
             this.state.sel == -1 ?

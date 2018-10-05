@@ -512,7 +512,7 @@ and (orientation : portrait) {
 
     .shopLeft {
       background-color: yellow;
-      flex: 10;
+      flex: 7;
       height: 100%;
     }
 
@@ -551,10 +551,27 @@ and (orientation : portrait) {
       text-align: center;
     }
 
-    .banner img#bagbannericon {
+    .banner #bagbannericon {
+      align-items: center;
+      display: flex;
       height: 55%;
+      justify-content: center;
       right: 0;
+      padding-bottom: 1vw;
       padding-right: 2vw;
+      position: absolute;
+    }
+
+    .banner #bagbannericon img {
+      height: 100%;
+    }
+
+    .banner #bagbannericon span {
+      color: blue;
+      font-family: questrial;
+      font-size: 2vw;
+      padding-right: 0.55vw;
+      padding-top: 1.3vw;
       position: absolute;
     }
 
@@ -643,6 +660,7 @@ and (orientation : portrait) {
     .item .sizebar div {
       align-items: center;
       border: 0.2vw solid blue;
+      cursor: pointer;
       display: flex;
       float: left;
       font-family: questrial;
@@ -651,6 +669,19 @@ and (orientation : portrait) {
       justify-content: center;
       margin-right: 0.6vw;
       width: 3.5vw;
+    }
+
+    .item .sizebar div:hover {
+      background-color: blue;
+      color:white;
+    }
+
+    .item .sizebar div.selected {
+      background-color: yellow;
+    }
+
+    .item .sizebar div.selected:hover {
+      color:blue;
     }
 
     .item .sizebar div > span {
@@ -688,7 +719,6 @@ and (orientation : portrait) {
       background-color: yellow;
     }
 
-
     .item .right button {
       background-color: blue;
       color:white;
@@ -696,6 +726,18 @@ and (orientation : portrait) {
       font-family: Arial;
       font-size: 2.2vw;
       padding: 1vw;
+    }
+
+    .item .right #sizeError {
+      color:red;
+      font-family: questrial;
+      font-size: 1.3vw;
+      position: relative;
+      top: 1vh;
+    }
+
+    .item .right #sizeError.visible {
+      
     }
 
     .bagItem {

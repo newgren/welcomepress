@@ -22,8 +22,9 @@ var Item = function (_React$Component) {
     _this.no = props.no;
     _this.state = {
       imageIndex: 0,
-      size: 'M',
-      qty: 1
+      size: '',
+      qty: 1,
+      sizeError: false
     };
     return _this;
   }
@@ -80,14 +81,19 @@ var Item = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'sizebar' },
-            ['S', 'M', 'L', 'XL'].map(function (i) {
+            ['S', 'M', 'L', 'XL'].map(function (s) {
               return React.createElement(
                 'div',
-                null,
+                { key: s,
+                  onClick: function onClick() {
+                    return _this2.setState({ size: s, sizeError: false });
+                  },
+                  className: s == _this2.state.size ? 'selected' : ''
+                },
                 React.createElement(
                   'span',
                   null,
-                  i
+                  s
                 )
               );
             })
@@ -110,9 +116,23 @@ var Item = function (_React$Component) {
           ),
           React.createElement(
             'button',
-            { type: 'button' },
+            {
+              type: 'button',
+              onClick: function onClick() {
+                if (_this2.state.size === '') {
+                  _this2.setState({ sizeError: true });
+                } else {
+                  _this2.setState({ sizeError: false });
+                  _this2.props.add(_this2.state.size, _this2.state.qty);
+                }
+              } },
             'ADD TO BAG'
-          )
+          ),
+          this.state.sizeError ? React.createElement(
+            'span',
+            { id: 'sizeError' },
+            'whoah, select a size'
+          ) : React.createElement('p', null)
         )
       );
     }
