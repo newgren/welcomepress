@@ -6,11 +6,18 @@ var entered = false;
 var x, y;
 var tailLength = 45;
 
+var numWorkCopies = 24;
+var numShopTextCopies = 29;
+var numMarkCopies = 20;
+var numInfoCopies = 30;
+
+var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+
 // enter site
 
 //TODO: swap two lines below
-// document.onclick = () => {
-window.onload = () => {
+document.onclick = () => {
+// window.onload = () => {
   entered = true;
   let presses = document.getElementsByClassName('press');
   for (let i = 0; i < presses.length; i++) {
@@ -19,6 +26,80 @@ window.onload = () => {
     }
   }
   document.getElementsByClassName('over')[0].className = 'over entered';
+
+
+  let chchch = (copies, duration) => {
+    let copyIndex = copies.length - 1;
+    let intervalPointer = window.setInterval(() => {
+      if(copyIndex < 0) {
+        clearInterval(intervalPointer);
+        return;
+      }
+      copies[copyIndex--].style.display = 'inherit';
+    }, duration);
+  }
+
+  let fatherWork = document.getElementById('fatherWork')
+  let initWorkShopTextHovers = (copies) => {
+    for(let i = 0; i < copies.length; i++) {
+      break;
+      copies[i].onmouseover = () => {
+        copies[i].style.backgroundColor = "limegreen";
+      };
+      copies[i].onmouseout = () => {
+        copies[i].style.backgroundColor = "";
+      };
+    }
+  }
+  //do chchch animations and init hovers
+  let workCopies = document.getElementsByClassName('work layer');
+  chchch(workCopies, 20);
+  initWorkShopTextHovers(workCopies);
+  let shopTextCopies = document.getElementsByClassName('shopText layer');
+  chchch(shopTextCopies, 30);
+  let markCopies = document.getElementsByClassName('mark layer');
+  chchch(markCopies, 40);
+
+  initWorkShopTextHovers(shopTextCopies);
+
+  let marks = document.getElementsByClassName('mark layer');
+  let mark = document.getElementById('mark');
+
+  //let lock_over = false;
+  //let lock_out = false;
+
+  let move = (copies, index, isOver) => {
+    //isOver ? lock_over = true : lock_out = true;
+    let intervalPointer = window.setInterval(() => {
+      if( //(isOver && lock_out) || (!isOver && lock_over) ||
+          index.val < 0 || index.val >= copies.length) {
+        if(index.val < 0) {
+          index.val = 0;
+        }
+        if(index.val >= copies.length) {
+          index.val = copies.length - 1;
+        }
+        clearInterval(intervalPointer);
+        return;
+      }
+      copies[isOver ? index.val-- : index.val++]
+        .style.display = !isOver ? 'none' : 'inherit';
+
+    }, 10);
+    //isOver ? lock_over = false : lock_out = false;
+  }
+
+  let infos = document.getElementsByClassName('info layer');
+  let masterIndex = {val: infos.length - 1};
+  mark.onmouseover = () => {
+    console.log('over');
+    move(infos, masterIndex, true);
+  };
+  mark.onmouseout = () => {
+    console.log('out');
+    move(infos, masterIndex, false);
+  };
+
 }
 
 class Home extends React.Component {
@@ -79,19 +160,7 @@ class Home extends React.Component {
         }, stutterIntervalDelay * tailLength * 2);
     }, false);
 
-    let intervalDuration = 10;
-    let startChChChChAnimation = () => {
-        let copies = document.getElementsByClassName('work layer');
-        let copyIndex = copies.length - 1;
-        let intervalPointer = window.setInterval(() => {
-          if(copyIndex < 0) {
-            clearInterval(intervalPointer);
-            return;
-          }
-          copies[copyIndex--].style.display = 'inherit';
-        }, intervalDuration);
-    }
-    startChChChChAnimation();
+
   }
 
 
@@ -115,7 +184,7 @@ class Home extends React.Component {
           }
           <div className='over'>
             {
-              Array.apply(null, Array(24)).map((i, j) => <div
+              Array.apply(null, Array(numWorkCopies)).map((i, j) => <div
                 id={'work'+j}
                 key={j}
                 className='work layer'
@@ -126,12 +195,12 @@ class Home extends React.Component {
                 <span>WORK</span>
               </div>)
             }
-            <div className='work'><span>WORK</span></div>
             {
-              Array.apply(null, Array(40)).map((i, j) => <div
-                id={'shop'+j}
+              Array.apply(null, Array(numShopTextCopies)).map((i, j) => <div
+                id={'shopText'+j}
                 key={j}
-                className='shop layer'
+                className='shopText layer'
+                onClick={this.props.onclick}
                 style={
                   {transform: `translate(${j}vw, ${j*1.5}vh)`,
                   zIndex: -j}
@@ -139,7 +208,33 @@ class Home extends React.Component {
                 <span>SHOP</span>
               </div>)
             }
-            <div className='shop'><span>SHOP</span></div>
+            {
+              Array.apply(null, Array(numMarkCopies)).map((i, j) => <div
+                id={'mark'+j}
+                key={j}
+                className='mark layer'
+                style={
+                  {transform: `translate(${-j}vw, ${j*1.5}vh)`,
+                  zIndex: -j}
+                }>
+                <span>?</span>
+              </div>)
+            }
+            <div className='mark' id='mark'><span>?</span></div>
+            {
+              Array.apply(null, Array(numInfoCopies)).map((i, j) => <div
+                id={'info'+j}
+                key={j}
+                className='info layer'
+                style={
+                  {transform: `translate(${-j}vw, ${j*1.5}vh)`,
+                  zIndex: -j}
+                }>
+                <span>{infoBlurb}</span>
+                <br/>
+                <span><a href='mailto:hello@welcomepress.xyz'>hello@welcomepress.xyz</a></span>
+              </div>)
+            }
           </div>
         </div>
         <div className='homeMobile' id='homeMobile' ref='homeMobile'>
@@ -160,7 +255,7 @@ class Home extends React.Component {
           </div>
           <div className='square' id='work'>
           </div>
-          <div className='square' id='shop'>
+          <div className='square' id='shopText'>
           </div>
         </div>
       </div>

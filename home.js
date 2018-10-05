@@ -14,11 +14,18 @@ var entered = false;
 var x, y;
 var tailLength = 45;
 
+var numWorkCopies = 24;
+var numShopTextCopies = 29;
+var numMarkCopies = 20;
+var numInfoCopies = 30;
+
+var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+
 // enter site
 
 //TODO: swap two lines below
-// document.onclick = () => {
-window.onload = function () {
+document.onclick = function () {
+  // window.onload = () => {
   entered = true;
   var presses = document.getElementsByClassName('press');
   for (var i = 0; i < presses.length; i++) {
@@ -27,6 +34,82 @@ window.onload = function () {
     }
   }
   document.getElementsByClassName('over')[0].className = 'over entered';
+
+  var chchch = function chchch(copies, duration) {
+    var copyIndex = copies.length - 1;
+    var intervalPointer = window.setInterval(function () {
+      if (copyIndex < 0) {
+        clearInterval(intervalPointer);
+        return;
+      }
+      copies[copyIndex--].style.display = 'inherit';
+    }, duration);
+  };
+
+  var fatherWork = document.getElementById('fatherWork');
+  var initWorkShopTextHovers = function initWorkShopTextHovers(copies) {
+    var _loop = function _loop(_i) {
+      return 'break';
+      copies[_i].onmouseover = function () {
+        copies[_i].style.backgroundColor = "limegreen";
+      };
+      copies[_i].onmouseout = function () {
+        copies[_i].style.backgroundColor = "";
+      };
+    };
+
+    for (var _i = 0; _i < copies.length; _i++) {
+      var _ret = _loop(_i);
+
+      if (_ret === 'break') break;
+    }
+  };
+  //do chchch animations and init hovers
+  var workCopies = document.getElementsByClassName('work layer');
+  chchch(workCopies, 20);
+  initWorkShopTextHovers(workCopies);
+  var shopTextCopies = document.getElementsByClassName('shopText layer');
+  chchch(shopTextCopies, 30);
+  var markCopies = document.getElementsByClassName('mark layer');
+  chchch(markCopies, 40);
+
+  initWorkShopTextHovers(shopTextCopies);
+
+  var marks = document.getElementsByClassName('mark layer');
+  var mark = document.getElementById('mark');
+
+  //let lock_over = false;
+  //let lock_out = false;
+
+  var move = function move(copies, index, isOver) {
+    //isOver ? lock_over = true : lock_out = true;
+    var intervalPointer = window.setInterval(function () {
+      if ( //(isOver && lock_out) || (!isOver && lock_over) ||
+      index.val < 0 || index.val >= copies.length) {
+        if (index.val < 0) {
+          index.val = 0;
+        }
+        if (index.val >= copies.length) {
+          index.val = copies.length - 1;
+        }
+        clearInterval(intervalPointer);
+        return;
+      }
+      copies[isOver ? index.val-- : index.val++].style.display = !isOver ? 'none' : 'inherit';
+    }, 10);
+    //isOver ? lock_over = false : lock_out = false;
+  };
+
+  var infos = document.getElementsByClassName('info layer');
+  var masterIndex = { val: infos.length - 1 };
+  mark.onmouseover = function () {
+    console.log('over');
+    move(infos, masterIndex, true);
+  };
+  mark.onmouseout = function () {
+    console.log('out');
+    move(infos, masterIndex, false);
+  };
 };
 
 var Home = function (_React$Component) {
@@ -93,24 +176,12 @@ var Home = function (_React$Component) {
           animationIsActive = false;
         }, stutterIntervalDelay * tailLength * 2);
       }, false);
-
-      var intervalDuration = 10;
-      var startChChChChAnimation = function startChChChChAnimation() {
-        var copies = document.getElementsByClassName('work layer');
-        var copyIndex = copies.length - 1;
-        var intervalPointer = window.setInterval(function () {
-          if (copyIndex < 0) {
-            clearInterval(intervalPointer);
-            return;
-          }
-          copies[copyIndex--].style.display = 'inherit';
-        }, intervalDuration);
-      };
-      startChChChChAnimation();
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         'div',
         { className: 'home' },
@@ -152,7 +223,7 @@ var Home = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'over' },
-            Array.apply(null, Array(24)).map(function (i, j) {
+            Array.apply(null, Array(numWorkCopies)).map(function (i, j) {
               return React.createElement(
                 'div',
                 {
@@ -170,22 +241,14 @@ var Home = function (_React$Component) {
                 )
               );
             }),
-            React.createElement(
-              'div',
-              { className: 'work' },
-              React.createElement(
-                'span',
-                null,
-                'WORK'
-              )
-            ),
-            Array.apply(null, Array(40)).map(function (i, j) {
+            Array.apply(null, Array(numShopTextCopies)).map(function (i, j) {
               return React.createElement(
                 'div',
                 {
-                  id: 'shop' + j,
+                  id: 'shopText' + j,
                   key: j,
-                  className: 'shop layer',
+                  className: 'shopText layer',
+                  onClick: _this2.props.onclick,
                   style: { transform: 'translate(' + j + 'vw, ' + j * 1.5 + 'vh)',
                     zIndex: -j } },
                 React.createElement(
@@ -195,15 +258,57 @@ var Home = function (_React$Component) {
                 )
               );
             }),
+            Array.apply(null, Array(numMarkCopies)).map(function (i, j) {
+              return React.createElement(
+                'div',
+                {
+                  id: 'mark' + j,
+                  key: j,
+                  className: 'mark layer',
+                  style: { transform: 'translate(' + -j + 'vw, ' + j * 1.5 + 'vh)',
+                    zIndex: -j } },
+                React.createElement(
+                  'span',
+                  null,
+                  '?'
+                )
+              );
+            }),
             React.createElement(
               'div',
-              { className: 'shop' },
+              { className: 'mark', id: 'mark' },
               React.createElement(
                 'span',
                 null,
-                'SHOP'
+                '?'
               )
-            )
+            ),
+            Array.apply(null, Array(numInfoCopies)).map(function (i, j) {
+              return React.createElement(
+                'div',
+                {
+                  id: 'info' + j,
+                  key: j,
+                  className: 'info layer',
+                  style: { transform: 'translate(' + -j + 'vw, ' + j * 1.5 + 'vh)',
+                    zIndex: -j } },
+                React.createElement(
+                  'span',
+                  null,
+                  infoBlurb
+                ),
+                React.createElement('br', null),
+                React.createElement(
+                  'span',
+                  null,
+                  React.createElement(
+                    'a',
+                    { href: 'mailto:hello@welcomepress.xyz' },
+                    'hello@welcomepress.xyz'
+                  )
+                )
+              );
+            })
           )
         ),
         React.createElement(
@@ -249,7 +354,7 @@ var Home = function (_React$Component) {
             )
           ),
           React.createElement('div', { className: 'square', id: 'work' }),
-          React.createElement('div', { className: 'square', id: 'shop' })
+          React.createElement('div', { className: 'square', id: 'shopText' })
         )
       );
     }

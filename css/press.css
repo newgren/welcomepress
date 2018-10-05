@@ -41,35 +41,9 @@ body {
   padding:0;
 }
 
-/* .strokeText {
-  color:red;
+a {
+  text-decoration: none;
 }
-
-.strokeText {
-  align-items: center;
-  border: 1px solid red;
-  display: flex;
-  justify-content: center;
-  height: 200px;
-}
-
-.strokeText > div {
-  position: fixed;
-}
-
-.strokeText > #stroke {
-  color:blue;
-  font-size: 200px;
-  z-index: 0;
-
-}
-.strokeText > #strokeIn {
-  color:blue;
-  font-size: 170px;
-  z-index: 0;
-
-} */
-
 
 .strokeText > #text {
   color:white;
@@ -88,17 +62,9 @@ body {
   width: 100%;
 }
 
-
-
 .homeBox {
   margin: 33px 0px 0px 27px;
 }
-/* .welcome {
-  font-size: 118.8px;
-}
-.welcome text {
-  font-size: 200px;
-} */
 
 .press {
   font-size: 100px;
@@ -144,14 +110,6 @@ svg text {
   top: 103vw;
 }
 
-.desktop {
-  display: none;
-}
-
-.mobile {
-  display: inherit;
-}
-
 .center {
   align-items: center;
   display: flex;
@@ -174,7 +132,7 @@ svg text {
   top: 50px;
 }
 
-.shopBoxbutton {
+.shopbutton {
   background-color: blue;
   border:none;
   color:white;
@@ -185,16 +143,10 @@ svg text {
   width: 100px;
 }
 
-
-
 .disabled {
   opacity: 0.5;
 }
 
-.shopBox {
-  height: 100%;
-  width: 100%;
-}
 
 .container {
   text-align: center;
@@ -228,7 +180,7 @@ svg text {
   font-size: 2vw;
 }
 
-.menu {
+.banner {
   align-items: flex-start;
   display: flex;
   flex-direction: row;
@@ -236,7 +188,7 @@ svg text {
   padding: 0px 0px;
 }
 
-.shopBoxText {
+.shopText {
   flex:1;
   color: #FFBDFB;
   letter-spacing: -19px;
@@ -249,7 +201,7 @@ svg text {
   text-align: right;
 }
 
-.shopBoxText {
+.shopText {
   flex:1;
   color: #FFBDFB;
   letter-spacing: -19px;
@@ -264,75 +216,6 @@ svg text {
 
 .bagText:hover {
   cursor: pointer;
-}
-
-.shopBox > .scroller {
-  -webkit-transition: left 1s;
-  height: 400px;
-  left: 0px;
-  position: fixed;
-  transition: left 1s;
-  white-space: nowrap;
-}
-
-.shopBox > .scroller > img {
-  height: 100%;
-}
-
-.navs {
-  height: 302px;
-  margin-top: -151px;
-  position: fixed;
-  top: 50%;
-  width: 100%;
-  pointer-events: none;
-}
-
-.navs > img {
-  pointer-events: all;
-  position: fixed;
-}
-
-.navs > .right {
-  right: 0px;
-}
-
-.itemFrame {
-  position: fixed;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-}
-
-.itemCenter {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 100px;
-  width: 100%;
-}
-
-.item {
-  background-color: #B8E986;
-  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  width: 80%;
-  max-height: 80%;
-  padding: 20px 0px;
-  pointer-events: all;
-}
-
-.item > .left {
-  display: flex;
-  flex-direction: column;
-}
-
-.item > .left > .info {
-  display: flex;
-  padding: 15px;
 }
 
 .info > .text {
@@ -373,10 +256,6 @@ select.qty {
   font-size: 40px;
   font-weight: bold;
   padding: 10px;
-}
-
-item > .left {
-  background-color: orange;
 }
 
 .bagCenter {
@@ -515,20 +394,14 @@ and (orientation : portrait) {
     /* For desktop: */
     body {
       color:white;
-
     }
+
+    /* begin HOME */
     .homeDesktop {
       display: inherit;
     }
     .homeMobile {
-      background-color: red;
       display:none;
-    }
-    .desktop {
-      display: block;
-    }
-    .desktop-flex {
-      display: flex;
     }
     .mobile {
       display: none;
@@ -551,10 +424,13 @@ and (orientation : portrait) {
       border: 0.36vw solid blue;
       color: blue;
       display: inline-block;
-      font-size: 12.5vw;
+      font-size: 10.5vw;
       /* max padding?? */
       padding: 0 2.4vw 1vh 2.4vw;
       position: fixed;
+    }
+    .over div:hover {
+      background-color: yellow;
     }
     .over .work {
       display: none;
@@ -562,12 +438,42 @@ and (orientation : portrait) {
       top: 11vh;
     }
 
-    .over .layer {
-    }
-
-    .over .shop {
+    .over .shopText {
+      display: none;
       right: 6vw;
       top: 38vh;
+    }
+
+    .over .mark {
+      bottom: 6vh;
+      left: 48vw;
+    }
+
+    .over .mark span {
+      pointer-events: none;
+    }
+
+    .over .mark:hover {
+      background-color: yellow;
+    }
+
+
+    .over .info {
+      display: none;
+      bottom: 25vh;
+      font-family: questrial;
+      font-size: 2.1vw;
+      left: 8vw;
+      max-width: 30vw;
+      padding: 2vw;
+    }
+
+    .info span {
+      display: block;
+    }
+
+    .over .layer {
+
     }
 
     .welcome svg, .press svg {
@@ -576,30 +482,9 @@ and (orientation : portrait) {
       z-index: 2;
     }
 
-    .left {
-      /* background-color: green; */
-      height: 100vh;
-      left: 0px;
-      position: fixed;
-      width: 25vw;
-    }
-
-    .left div  {
-      display: none;
-    }
-
-    .right {
-      font-size: 8vw;
-      width: 39vw;
-    }
-
-    .right svg {
-      border: 3px solid blue;
-    }
-
     svg.workFloat {
     }
-    svg.shopBoxFloat {
+    svg.shopFloat {
     }
 
     .rot svg {
@@ -646,7 +531,71 @@ and (orientation : portrait) {
     .press svg {
       position: fixed;
     }
-    .shopBoxbutton {
+
+    /* end HOME */ /* (i think!) */
+
+    /* begin SHOP */
+
+    .shop {
+      display: flex;
+    }
+
+    .shopLeft {
+      background-color: yellow;
+      flex: 10;
+      height: 100%;
+    }
+
+    .shopBox {
+      background-color: white;
+      border: .36vw solid blue;
+      flex: 40;
+      min-width: 0;
+
+      height: 100%;
+    }
+
+    .banner {
+      align-items: center;
+      display: flex;
+      height: 18%;
+      justify-content: center;
+      position: relative;
+    }
+
+    .banner img#leftBannerIcon {
+      height: 40%;
+      left: 0px;
+      padding-left: 2vw;
+      position: absolute;
+    }
+
+    .banner img#shopBannerText{
+      height: 65%;
+      padding: 2vh 0;
+    }
+
+    .banner img#bagbannericon {
+      height: 55%;
+      right: 0;
+      padding-right: 2vw;
+      position: absolute;
+    }
+
+    .shop .scroller {
+      -webkit-transition: left 1s;
+      height: 82%;
+      transition: left 1s;
+      white-space: nowrap;
+    }
+
+    .shop .scroller > img {
+      height: 100%;
+    }
+
+    /* end SHOP */
+
+    .shopbutton {
       font-size: 50px;
     }
     .adjuster {
@@ -659,51 +608,74 @@ and (orientation : portrait) {
     .container > ul > li span {
       font-size:100px;
     }
-    .menu {
+    .banner {
       font-size: 150px;
     }
+
     .item {
+      color: blue;
       display: flex;
+      height: 82%;
+      width: 100%;
     }
-    .item > .left {
-      flex: 2;
+
+    .item .left {
+      flex: 7;
+      padding-left: 1vw;
+      padding-right: 1vw;
     }
-    .item > .right {
-      flex: 4;
+
+    .item .left img {
+      margin-top: 3vh;
+      width: 100%;
     }
-    .item > .left > .info {
-      display: flex;
+
+    .item .mid {
+      flex: 59;
+      padding-left: 1vw;
+      padding-right: 1vw;
+    }
+
+    .item .mid img {
+      width: 100%;
+    }
+
+    .item .right {
+      flex: 34;
+      padding-left: 1vw;
+    }
+
+    .item .right h1 {
+      font-family: 'galderglynn', sans-serif;
+      font-size: 4.5vw;
+    }
+
+    .item .right h2 {
+      font-family: questrial;
+      font-size: 2.5vw;
+    }
+
+    .item .sizebar {
+      height: 3vw;
+      width: 100%;
+    }
+
+    .item .sizebar div {
       align-items: center;
-      justify-content: center;
-      flex:5;
-      width: 100%;
-      padding: 15px;
-      padding-left: 25px;
-    }
-
-    .info > .text {
-      background-color: white;
-      border: 20px solid white;
-      width: 100%;
-    }
-    .item > .left > .pics {
-      flex:1;
-      width: 100%;
+      border: 0.2vw solid blue;
       display: flex;
+      float: left;
+      font-family: questrial;
+      font-size: 2vw;
+      height: 100%;
       justify-content: center;
+      margin-right: 0.6vw;
+      width: 3vw;
     }
 
-    .pics > .scroller > img {
-      max-width: 100px;
-      position: static;
+    .item .sizebar div > span {
+      font-size: 2vw;
     }
-
-    .item > .right > img {
-      height: 500px;
-      position: relative;
-      right: 10%;
-    }
-
 
     .bagItem {
       max-height: 150px;

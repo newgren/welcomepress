@@ -12,7 +12,6 @@ var e = React.createElement;
 
 import Home from './home.js';
 import Shop from './shop.js';
-import Bag from './bag.js';
 
 var Press = function (_React$Component) {
   _inherits(Press, _React$Component);
@@ -23,7 +22,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      shitemode: 'home'
+      shitemode: 'shop'
     };
     return _this;
   }
