@@ -24,11 +24,12 @@ var Shop = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Shop.__proto__ || Object.getPrototypeOf(Shop)).call(this, props));
 
     _this.goToBag = props.goToBag;
+    _this.goToHome = props.goToHome;
     _this.state = {
-      mode: 'shop',
+      mode: 'bag',
       pos: 0,
       sel: -1,
-      cart: {}
+      cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
     };
     return _this;
   }
@@ -72,12 +73,18 @@ var Shop = function (_React$Component) {
       });
     }
   }, {
+    key: 'removeFromCart',
+    value: function removeFromCart(index) {
+      var cart = this.state.cart;
+      delete cart[index];
+      this.setState({ cart: cart });
+    }
+  }, {
     key: 'getCartSize',
     value: function getCartSize() {
       var cart = this.state.cart;
       var keys = Object.keys(cart);
       var size = 0;
-      console.log(cart);
       keys.forEach(function (key) {
         var shirt = cart[key];
         var shirtKeys = Object.keys(shirt);
@@ -135,8 +142,16 @@ var Shop = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'banner' },
-            React.createElement('img', { src: './iconImages/banner_left_desktop.png', id: 'leftBannerIcon' }),
-            this.state.sel == -1 ? React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
+            React.createElement('img', { src: './iconImages/banner_left_desktop.png',
+              id: 'leftBannerIcon',
+              onClick: this.state.sel == -1 ? function () {
+                return _this2.props.goToHome();
+              } : console.log(1) }),
+            this.state.sel == -1 ? this.state.mode == 'bag' ? React.createElement(
+              'span',
+              { id: 'shopProductName' },
+              'SHOPPING BAG'
+            ) : React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
               'span',
               { id: 'shopProductName' },
               catalog.items[this.state.sel].name
@@ -156,7 +171,7 @@ var Shop = function (_React$Component) {
               )
             )
           ),
-          this.state.sel == -1 ? React.createElement(
+          this.state.sel == -1 ? this.state.mode == 'shop' ? React.createElement(
             'div',
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
@@ -164,7 +179,9 @@ var Shop = function (_React$Component) {
                   return _this2.setState({ sel: id });
                 }, key: item.name });
             })
-          ) : React.createElement(Item, { item: catalog.items[this.state.sel],
+          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index) {
+              return _this2.removeFromCart(index);
+            } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
             add: function add(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }
@@ -177,8 +194,7 @@ var Shop = function (_React$Component) {
                   return _this2.setState({ sel: id });
                 }, key: item.name });
             })
-          ),
-          this.state.mode === 'bag' ? React.createElement(Bag, { cart: this.state.cart }) : React.createElement('p', null)
+          )
         )
       );
     }

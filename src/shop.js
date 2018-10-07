@@ -11,11 +11,12 @@ class Shop extends React.Component {
   constructor(props) {
     super(props);
     this.goToBag = props.goToBag;
+    this.goToHome = props.goToHome;
     this.state = {
-      mode: 'shop',
+      mode: 'bag',
       pos: 0,
       sel: -1,
-      cart: {}
+      cart: {0: {'L': 1}, 1: {'M': 5}}
     };
   }
 
@@ -53,11 +54,16 @@ class Shop extends React.Component {
     });
   }
 
+  removeFromCart(index) {
+    let cart = this.state.cart;
+    delete cart[index];
+    this.setState({cart: cart});
+  }
+
   getCartSize() {
     let cart = this.state.cart;
     let keys = Object.keys(cart);
     let size = 0;
-    console.log(cart);
     keys.forEach((key) => {
       let shirt = cart[key];
       let shirtKeys = Object.keys(shirt);
@@ -103,10 +109,17 @@ class Shop extends React.Component {
         </div>
         <div className='shopBox'>
           <div className='banner'>
-            <img src='./iconImages/banner_left_desktop.png' id='leftBannerIcon' />
+            <img src='./iconImages/banner_left_desktop.png'
+                 id='leftBannerIcon'
+                 onClick={this.state.sel == -1 ? () => this.props.goToHome() : console.log(1)} />
             {
             this.state.sel == -1 ?
-              <img src='./iconImages/SHOP.png' id='shopBannerText' />
+              (this.state.mode == 'bag' ?
+                <span id='shopProductName'>SHOPPING BAG</span>
+                :
+                <img src='./iconImages/SHOP.png' id='shopBannerText' />
+              )
+
               :
               <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
             }
@@ -119,23 +132,26 @@ class Shop extends React.Component {
 
           </div>
           {
-            this.state.sel == -1 ?
-              <div className='desktop scroller'>
-                {catalog.items.map((item, id) =>
-                  <img src={'./product/'+item.image_urls[0]+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
-                )}
-              </div>
+            this.state.sel == -1 ? (
+              this.state.mode == 'shop' ?
+                <div className='desktop scroller'>
+                  {catalog.items.map((item, id) =>
+                    <img src={'./product/'+item.image_urls[0]+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
+                  )}
+                </div>
+              :
+                <Bag cart={this.state.cart} remove={(index) => this.removeFromCart(index)} />
+            )
             :
-            <Item item={catalog.items[this.state.sel]}
-                  add={(size, qty) => this.addToCart(this.state.sel, size, qty)}
-            />
+              <Item item={catalog.items[this.state.sel]}
+                    add={(size, qty) => this.addToCart(this.state.sel, size, qty)}
+              />
           }
           <div className='mobile itemList'>
             {catalog.items.map((item, id) =>
               <img src={'./product/'+item.image_urls[0]+'.png'} onClick={() => this.setState({sel: id})} key={item.name}/>
             )}
           </div>
-          {this.state.mode === 'bag' ? <Bag cart={this.state.cart}/> : <p></p>}
         </div>
       </div>
     );

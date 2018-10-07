@@ -23,7 +23,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      shitemode: 'shop'
+      mode: 'shop'
     };
     return _this;
   }
@@ -31,7 +31,7 @@ var Press = function (_React$Component) {
   _createClass(Press, [{
     key: 'handleClick',
     value: function handleClick(link) {
-      this.setState({ shitemode: link });
+      this.setState({ mode: link });
     }
   }, {
     key: 'render',
@@ -41,7 +41,7 @@ var Press = function (_React$Component) {
       window.onload = function () {
         return alert(window.innerWidth > 0 ? window.innerWidth : screen.width);
       };
-      switch (this.state.shitemode) {
+      switch (this.state.mode) {
         case 'shop':
           return React.createElement(Shop, { goToBag: function goToBag() {
               return _this2.handleClick('bag');

@@ -11,17 +11,17 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      shitemode: 'shop'
+      mode: 'shop'
     };
   }
 
   handleClick(link) {
-    this.setState({shitemode: link});
+    this.setState({mode: link});
   }
 
   render() {
     window.onload = () => alert((window.innerWidth > 0) ? window.innerWidth : screen.width);
-    switch (this.state.shitemode) {
+    switch (this.state.mode) {
       case 'shop':
         return <Shop goToBag={() => this.handleClick('bag')}/>
         break;

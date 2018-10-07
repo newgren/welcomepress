@@ -10,28 +10,29 @@ class BagItem extends React.Component {
     this.id = props.id;
     this.size = props.size;
     this.qty = props.qty;
-    this.name = props.name;
+    this.name = props.name.toLowerCase();
     this.image_url = props.image_url;
     this.price = props.price;
+    this.remove = props.remove;
   }
 
   render() {
     return (
       <div className='bagItem'>
-        <div className='left'>
-          <div className='imagebox'>
-            <img src={this.image_url}/>
-          </div>
-          <div className='text'>
-            <div>{this.name}</div>
-            <div>{this.size}</div>
-            <div>{this.qty}</div>
-          </div>
+        <div className='pic'>
+          <img src={this.image_url}/>
         </div>
-        <div className='right'>
-          <div className='price'>${this.price}</div>
-          <div className='total'>${this.price * this.qty}</div>
+        <div className='details'>
+          <div>{this.name}</div>
+          <div>{this.size}</div>
         </div>
+        <span className='price'>${this.price}</span>
+        <div className='qty'>
+          <span>{this.qty}</span>
+          <br/>
+          <span className='remove' onClick={() => this.remove(this.id)}>x <span>remove</span></span>
+        </div>
+        <span className='total'>${this.price * this.qty}</span>
       </div>
     );
   }

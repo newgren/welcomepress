@@ -23,61 +23,73 @@ var BagItem = function (_React$Component) {
     _this.id = props.id;
     _this.size = props.size;
     _this.qty = props.qty;
-    _this.name = props.name;
+    _this.name = props.name.toLowerCase();
     _this.image_url = props.image_url;
     _this.price = props.price;
+    _this.remove = props.remove;
     return _this;
   }
 
   _createClass(BagItem, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         'div',
         { className: 'bagItem' },
         React.createElement(
           'div',
-          { className: 'left' },
+          { className: 'pic' },
+          React.createElement('img', { src: this.image_url })
+        ),
+        React.createElement(
+          'div',
+          { className: 'details' },
           React.createElement(
             'div',
-            { className: 'imagebox' },
-            React.createElement('img', { src: this.image_url })
+            null,
+            this.name
           ),
           React.createElement(
             'div',
-            { className: 'text' },
+            null,
+            this.size
+          )
+        ),
+        React.createElement(
+          'span',
+          { className: 'price' },
+          '$',
+          this.price
+        ),
+        React.createElement(
+          'div',
+          { className: 'qty' },
+          React.createElement(
+            'span',
+            null,
+            this.qty
+          ),
+          React.createElement('br', null),
+          React.createElement(
+            'span',
+            { className: 'remove', onClick: function onClick() {
+                return _this2.remove(_this2.id);
+              } },
+            'x ',
             React.createElement(
-              'div',
+              'span',
               null,
-              this.name
-            ),
-            React.createElement(
-              'div',
-              null,
-              this.size
-            ),
-            React.createElement(
-              'div',
-              null,
-              this.qty
+              'remove'
             )
           )
         ),
         React.createElement(
-          'div',
-          { className: 'right' },
-          React.createElement(
-            'div',
-            { className: 'price' },
-            '$',
-            this.price
-          ),
-          React.createElement(
-            'div',
-            { className: 'total' },
-            '$',
-            this.price * this.qty
-          )
+          'span',
+          { className: 'total' },
+          '$',
+          this.price * this.qty
         )
       );
     }

@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
+import Start from './start.js';
 import Home from './home.js';
 import Shop from './shop.js';
 
@@ -22,31 +23,40 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      shitemode: 'shop'
+      mode: 'shop',
+      homeEntered: 'false'
     };
     return _this;
   }
 
   _createClass(Press, [{
-    key: 'handleClick',
-    value: function handleClick(link) {
-      this.setState({ shitemode: link });
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      switch (this.state.shitemode) {
+      switch (this.state.mode) {
+        case 'start':
+          return React.createElement(Start, { goToHome: function goToHome() {
+              return _this2.setState({ 'mode': 'home' });
+            } });
+          break;
         case 'shop':
           return React.createElement(Shop, { goToBag: function goToBag() {
-              return _this2.handleClick('bag');
+              return _this2.setState({ mode: 'bag' });
+            },
+            goToHome: function goToHome() {
+              return _this2.setState({ mode: 'home' });
+            } });
+          break;
+        case 'bag':
+          return React.createElement(Bag, { goToShop: function goToShop() {
+              return _this2.setState({ mode: 'shop' });
             } });
           break;
         default:
           //default to home
-          return React.createElement(Home, { onclick: function onclick() {
-              return _this2.handleClick('shop');
+          return React.createElement(Home, { goToShop: function goToShop() {
+              return _this2.setState({ mode: 'shop' });
             } });
       }
       /*

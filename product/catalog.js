@@ -1,20 +1,27 @@
 export default
 {
 	"items": [
-    {
-      "name":"welcome press promotional shirt",
+		{
+			"name": "welcome press promotional shirt",
+			"image_urls": ["wp_promo"],
+			"description": "shoot it, ... that's about all u can do w it",
+			"price": 25.0,
+			"tags": ["shirt", "clothes"]
+		},
+		{
+      "name":"JONAH WALLACH",
+      "image_urls": ["tyler"],
+      "description": "You won't feel like you're in Champaign when you're wearing our shirts.",
+      "price": 165,
+      "tags": ["shirt", "clothes"]
+    },
+		{
+      "name":"Shite shirt",
       "image_urls": ["modelA", "modelA_2"],
       "description": "You won't feel like you're in Champaign when you're wearing our shirts.",
       "price": 15,
       "tags": ["shirt", "clothes"]
     },
-    {
-			"name": "Shite shirt",
-			"image_urls": ["fish", "orange"],
-			"description": "shoot it, ... that's about all u can do w it",
-			"price": 25.0,
-			"tags": ["shirt", "clothes"]
-		},
 		{
 			"name": "privacy breach",
 			"image_urls": ["privacypolicy"],

@@ -22,44 +22,79 @@ var Bag = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Bag.__proto__ || Object.getPrototypeOf(Bag)).call(this, props));
 
     _this.cart = props.cart;
+    _this.remove = props.remove;
     return _this;
   }
 
   _createClass(Bag, [{
+    key: 'formatMoney',
+    value: function formatMoney(val) {
+      return Math.round(val * 100) / 100;
+    }
+  }, {
+    key: 'getSubtotal',
+    value: function getSubtotal() {
+      var cart = this.cart;
+      var keys = Object.keys(cart);
+      var subtotal = 0;
+      keys.forEach(function (key) {
+        var price = catalog.items[key].price;
+        var shirt = cart[key];
+        var shirtKeys = Object.keys(shirt);
+        shirtKeys.forEach(function (shirtkey) {
+          subtotal += shirt[shirtkey] * price;
+        });
+      });
+      return subtotal;
+    }
+  }, {
+    key: 'getShipping',
+    value: function getShipping() {
+      return 9.0;
+    }
+  }, {
+    key: 'getEstimatedTax',
+    value: function getEstimatedTax() {
+      return this.formatMoney(0.07 * this.getSubtotal());
+    }
+  }, {
+    key: 'getTotal',
+    value: function getTotal() {
+      return this.getSubtotal() + this.getShipping() + this.getEstimatedTax();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       return React.createElement(
         'div',
-        { className: 'bagCenter' },
+        { className: 'bag' },
         React.createElement(
           'div',
-          { className: 'bag' },
+          { className: 'items' },
           React.createElement(
             'div',
             { className: 'bagItem legend' },
             React.createElement(
-              'div',
-              { className: 'right' },
-              React.createElement(
-                'div',
-                { className: 'price' },
-                React.createElement(
-                  'span',
-                  null,
-                  'PRICE'
-                )
-              ),
-              React.createElement(
-                'div',
-                { className: 'total' },
-                React.createElement(
-                  'span',
-                  null,
-                  'TOTAL'
-                )
-              )
+              'span',
+              { className: 'itemText' },
+              'item'
+            ),
+            React.createElement(
+              'span',
+              { className: 'price' },
+              'item price'
+            ),
+            React.createElement(
+              'span',
+              { className: 'qty' },
+              'quantity'
+            ),
+            React.createElement(
+              'span',
+              { className: 'total' },
+              'total'
             )
           ),
           Object.keys(this.cart).map(function (id) {
@@ -69,32 +104,93 @@ var Bag = function (_React$Component) {
                 size: size,
                 qty: _this2.cart[id][size],
                 name: catalog.items[id].name.toUpperCase(),
-                image_url: './product/' + catalog.items[id].image_url + '.png',
+                image_url: './product/' + catalog.items[id].image_urls[0] + '.png',
                 price: catalog.items[id].price,
-                key: id + size + _this2.cart[id][size]
+                key: id + size + _this2.cart[id][size],
+                remove: function remove(index) {
+                  return _this2.remove(index);
+                }
               });
             });
-          }),
+          })
+        ),
+        React.createElement(
+          'div',
+          { className: 'summary' },
+          React.createElement(
+            'span',
+            { className: 'title' },
+            'ORDER SUMMARY'
+          ),
           React.createElement(
             'div',
-            { className: 'center checkoutbox' },
+            { className: 'bar' },
             React.createElement(
-              'button',
-              { onClick: function onClick() {
-                  return alert(2);
-                } },
-              React.createElement(
-                'div',
-                null,
-                'CHECK'
-              ),
-              React.createElement(
-                'div',
-                null,
-                'OUT'
-              )
+              'span',
+              { className: 'key' },
+              'subtotal'
+            ),
+            React.createElement(
+              'span',
+              { className: 'val' },
+              '$',
+              this.getSubtotal()
             )
-          )
+          ),
+          React.createElement(
+            'div',
+            { className: 'bar' },
+            React.createElement(
+              'span',
+              { className: 'key' },
+              'shipping'
+            ),
+            React.createElement(
+              'span',
+              { className: 'val' },
+              '$',
+              this.getShipping()
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: 'bar' },
+            React.createElement(
+              'span',
+              { className: 'key' },
+              'estimated tax'
+            ),
+            React.createElement(
+              'span',
+              { className: 'val' },
+              '$',
+              this.getEstimatedTax()
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: 'bar' },
+            React.createElement(
+              'span',
+              { className: 'key' },
+              'total'
+            ),
+            React.createElement(
+              'span',
+              { className: 'val' },
+              '$',
+              this.getTotal()
+            )
+          ),
+          React.createElement(
+            'button',
+            { type: 'button',
+              onClick: function onClick() {
+                return alert(2);
+              } },
+            'CHECK OUT'
+          ),
+          React.createElement('img', { src: '../payment/venmo.png' })
         )
       );
     }

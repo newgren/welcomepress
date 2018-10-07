@@ -23,7 +23,6 @@ class Item extends React.Component {
     this.setState({qty: parseInt(e.target.value)});
   }
 
-
   render() {
     return (
         <div className='item'>

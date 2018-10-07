@@ -132,17 +132,6 @@ svg text {
   top: 50px;
 }
 
-.shopbutton {
-  background-color: blue;
-  border:none;
-  color:white;
-  font-size: 30px;
-  height:50px;
-  position: relative;
-  top: 10px;
-  width: 100px;
-}
-
 .disabled {
   opacity: 0.5;
 }
@@ -180,40 +169,6 @@ svg text {
   font-size: 2vw;
 }
 
-.banner {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
-  font-size: 80px;
-  padding: 0px 0px;
-}
-
-.shopText {
-  flex:1;
-  color: #FFBDFB;
-  letter-spacing: -19px;
-}
-
-.bagText {
-  flex:1;
-  color: #ffffff;
-  letter-spacing: -11px;
-  text-align: right;
-}
-
-.shopText {
-  flex:1;
-  color: #FFBDFB;
-  letter-spacing: -19px;
-}
-
-.bagText {
-  flex:1;
-  color: #ffffff;
-  letter-spacing: -11px;
-  text-align: right;
-}
-
 .bagText:hover {
   cursor: pointer;
 }
@@ -246,108 +201,6 @@ svg text {
   padding: 10px;
 }
 
-.bagCenter {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 100px;
-  width: 100%;
-}
-
-.bag {
-  background-color: #FFBDFB;
-  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  max-width: 1100px;
-  padding: 20px 0px;
-  pointer-events: all;
-  width: 90%;
-}
-
-.bagItem {
-  float:left;
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.bagItem > div {
-  background-color: #ffffff;
-  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  box-sizing: border-box;
-  position:relative;
-}
-
-.bagItem > .left {
-  align-items: start;
-  display: flex;
-  float: left;
-  left: -10px;
-  width: 50%;
-}
-
-.bagItem .imagebox {
-  flex:initial;
-  max-width: 50%;
-}
-
-.bagItem img {
-  float: left;
-  max-height: 100%;
-  max-width: 100%;
-}
-
-.bagItem .text {
-  flex: initial;
-}
-.bagItem .text > div{
-  word-wrap: break-word;
-}
-
-.bagItem > .right {
-  float:right;
-  left: 10px;
-  width: 50%;
-}
-
-.text > span {
-  overflow-wrap: word;
-}
-
-.bagItem > .right > div {
-  float:left;
-  width: 50%;
-}
-
-.legend > .right {
-  background-color: inherit;
-  box-shadow: none;
-  color: white;
-}
-
-.legend > .right > div > span {
-  background-color: #B8E986;
-  box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  font-size: 24px;
-  padding:5px;
-  text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
-}
-
-.itemList > img{
-  max-width: 100%;
-}
-
-.checkoutbox {
-  width:100%;
-}
-.checkoutbox button {
-  background-color: var(--green);
-  color:white;
-  font-size:50px;
-  box-shadow: -3px 5px 5px rgba(0,0,0,0.5);
-  border:none;
-  height: 100%;
-  text-shadow: -5px 3px 2px rgba(0,0,0,0.5);
-}
-
 @media only screen
 and (min-device-width : 375px)
 and (max-device-width : 812px)
@@ -367,8 +220,15 @@ and (orientation : portrait) {
     }
 
     /* begin HOME */
+    .home {
+      height: 100%;
+      width: 100%;
+    }
+
     .homeDesktop {
       display: inherit;
+      height: 100%;
+      width: 100%;
     }
     .homeMobile {
       display:none;
@@ -376,59 +236,46 @@ and (orientation : portrait) {
     .mobile {
       display: none;
     }
-    .over {
-      background-color: yellow;
-      height: 100%;
-      opacity: 0;
-      position: fixed;
-      top: 0px;
-      width: 100%;
-    }
-    .over.entered {
-      opacity:1;
-      transition: opacity 0.3s;
-      -webkit-transition: opacity 0.3s;
-    }
-    .over div {
+    .homeDesktop div {
       background-color: white;
       border: 0.36vw solid blue;
       color: blue;
       display: inline-block;
       font-size: 10.5vw;
-      /* max padding?? */
       padding: 0 2.4vw 1vh 2.4vw;
       position: fixed;
     }
-    .over div:hover {
+    .homeDesktop div:hover {
       background-color: yellow;
     }
-    .over .work {
+    .homeDesktop .work {
       display: none;
       left: 38vw;
       top: 11vh;
     }
 
-    .over .shopText {
+    .homeDesktop .shopText {
       display: none;
       right: 6vw;
       top: 38vh;
     }
 
-    .over .mark {
+    .homeDesktop .mark {
       bottom: 6vh;
+      display: none;
       left: 48vw;
     }
 
-    .over .mark span {
+    .homeDesktop .mark span {
       pointer-events: none;
     }
 
-    .over .mark:hover {
+    .homeDesktop .mark:hover {
       background-color: yellow;
     }
 
 
-    .over .info {
+    .homeDesktop .info {
       display: none;
       bottom: 25vh;
       font-family: questrial;
@@ -442,7 +289,7 @@ and (orientation : portrait) {
       display: block;
     }
 
-    .over .layer {
+    .homeDesktop .layer {
 
     }
 
@@ -461,7 +308,7 @@ and (orientation : portrait) {
       font-size: 80px;
     }
 
-    .over text{
+    .homeDesktop text{
       fill: yellow;
     }
 
@@ -521,7 +368,7 @@ and (orientation : portrait) {
       border: .36vw solid blue;
       flex: 40;
       min-width: 0;
-      height: 100%;
+      height: calc(100% - .72vw);
     }
 
     .banner {
@@ -533,6 +380,7 @@ and (orientation : portrait) {
     }
 
     .banner img#leftBannerIcon {
+      cursor: pointer;
       height: 40%;
       left: 0px;
       padding-left: 2vw;
@@ -553,6 +401,7 @@ and (orientation : portrait) {
 
     .banner #bagbannericon {
       align-items: center;
+      cursor: pointer;
       display: flex;
       height: 55%;
       justify-content: center;
@@ -572,6 +421,7 @@ and (orientation : portrait) {
       font-size: 2vw;
       padding-right: 0.55vw;
       padding-top: 1.3vw;
+      pointer-events: none;
       position: absolute;
     }
 
@@ -586,11 +436,138 @@ and (orientation : portrait) {
       height: 100%;
     }
 
+      /* begin BAG (child of SHOP)*/
+      .shop .bag {
+        display: flex;
+        font-size: 1.9vw;
+
+        height: 82%;
+      }
+
+      .shop .bag > div {
+        padding: 0 2vw;
+      }
+
+      .bag .items {
+        flex: 7;
+      }
+
+      .bag .items .bagItem {
+        color:blue;
+        display: flex;
+        font-family: questrial;
+        height: 20vh;
+        margin-bottom: 3vh;
+        width: 100%;
+      }
+
+      .bag .items .bagItem.legend {
+        border-bottom: 0.4vh solid blue;
+        height: 5vh;
+      }
+
+      .bagItem.legend .itemText {
+        flex: 386;
+        height: 5vh;
+      }
+
+      .bagItem .pic {
+        align-items: center;
+        display: flex;
+        flex: 176;
+        justify-content: center;
+      }
+
+      .bagItem .pic img {
+        height: 100%;
+      }
+
+      .bagItem .details {
+        flex: 210;
+      }
+
+      .bagItem .price {
+        flex: 156;
+      }
+      .bagItem .total {
+        flex: 80;
+      }
+      .bagItem .qty {
+        flex: 114;
+      }
+      .bagItem .qty .remove {
+        color: red;
+        cursor: pointer;
+        font-size: 1.3vw;
+        position: relative;
+        top: 1vh;
+      }
+      .bagItem .qty .remove > span {
+        border-bottom: 1px solid red;
+      }
+
+
+      .bag .summary {
+        color: blue;
+        flex: 3;
+        font-family: questrial;
+      }
+
+      .bag .summary .title {
+        border-bottom: 0.4vh solid blue;
+        display: block;
+        font-family: galderglynn;
+        font-size: 2vw;
+        padding-bottom: 0.7vh;
+        width: 100%;
+      }
+
+      .bag .summary .bar {
+        padding: 0.8vh 0;
+      }
+
+      .bag .summary .bar:first-of-type {
+        padding-top: 2.5vh;
+      }
+      .bag .summary .bar:nth-of-type(3) {
+        border-bottom: 0.4vh solid blue;
+        padding-bottom: 2.5vh;
+      }
+      .bag .summary .bar:nth-of-type(4) {
+        padding: 2.5vh 0;
+      }
+
+      .bag .summary .bar .key {
+      }
+      .bag .summary .bar .val {
+        float: right;
+      }
+
+      .bag .summary button {
+        background-color: blue;
+        border: 0;
+        color:white;
+        display: block;
+        font-size: 1.7vw;
+        padding: 1vw;
+        width: 100%;
+      }
+
+      .bag .summary button:active {
+        background-color: yellow;
+        color:blue;
+      }
+      .bag .summary button:focus {
+        outline: 0;
+      }
+      .bag .summary > img {
+        width: 100%;
+      }
+
+      /* end BAG */
+
     /* end SHOP */
 
-    .shopbutton {
-      font-size: 50px;
-    }
     .adjuster {
       position: relative;
       top: -100px;
@@ -721,11 +698,19 @@ and (orientation : portrait) {
 
     .item .right button {
       background-color: blue;
+      border: 0;
       color:white;
       display: block;
       font-family: Arial;
       font-size: 2.2vw;
       padding: 1vw;
+    }
+    .item .right button:active {
+      background-color: yellow;
+      color:blue;
+    }
+    .item .right button:focus {
+      outline: 0;
     }
 
     .item .right #sizeError {
@@ -737,9 +722,9 @@ and (orientation : portrait) {
     }
 
     .item .right #sizeError.visible {
-      
-    }
 
+    }
+/*
     .bagItem {
       max-height: 150px;
     }
@@ -752,6 +737,6 @@ and (orientation : portrait) {
       left: -25px;
       position: relative;
       top: -25px;
-    }
+    } */
 
 }

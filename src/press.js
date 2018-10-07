@@ -2,6 +2,7 @@
 
 const e = React.createElement;
 
+import Start from './start.js'
 import Home from './home.js'
 import Shop from './shop.js'
 
@@ -10,21 +11,25 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      shitemode: 'shop'
+      mode: 'shop',
+      homeEntered: 'false'
     };
   }
 
-  handleClick(link) {
-    this.setState({shitemode: link});
-  }
-
   render() {
-    switch (this.state.shitemode) {
+    switch (this.state.mode) {
+      case 'start':
+        return <Start goToHome={() => this.setState({'mode': 'home'})}/>
+        break;
       case 'shop':
-        return <Shop goToBag={() => this.handleClick('bag')}/>
+        return <Shop goToBag={() => this.setState({mode: 'bag'})}
+                     goToHome={() => this.setState({mode: 'home'})}/>
+        break;
+      case 'bag':
+        return <Bag goToShop={() => this.setState({mode: 'shop'})}/>
         break;
       default: //default to home
-        return <Home onclick={() => this.handleClick('shop')}/>
+        return <Home goToShop={() => this.setState({mode: 'shop'})}/>
     }
     /*
     if (this.state.liked) {
