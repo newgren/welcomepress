@@ -633,6 +633,7 @@ svg text {
 
   .mobileShop .shopBox {
     flex: 9;
+    padding: 3vw;
   }
 
   .mobileShop .banner {
@@ -641,7 +642,7 @@ svg text {
 
   .mobileShop .banner img#leftBannerIcon {
     height: 50%;
-    padding-left: 3vw;
+    padding-left: 1vw;
   }
 
   .mobileShop .banner img#shopBannerText{
@@ -649,13 +650,49 @@ svg text {
     padding: 4vh 0;
   }
 
-  .mobileShop .scroller {
-    height: inherit;
+  .mobileItem .mid {
+    align-items: center;
+    border: 0.8vw solid blue;
+    display: flex;
+    justify-content: center;
+    padding: 5vw;
   }
 
-  .mobileItem img {
+  .mobileItem .mid img {
     width: 100%;
   }
+
+  .mobileItem .low {
+    display: flex;
+    width: 100%;
+  }
+
+  .mobileItem span {
+    align-items: center;
+    color:blue;
+    display: inline-flex;
+    flex: 68.5;
+  }
+
+  .mobileItem button {
+    background-color: blue;
+    border: 0;
+    color:white;
+    float: right;
+    font-family: galderglynn;
+    font-size: 4vw;
+    height: 6vh;
+    padding: 1.9vh 8.3vw 2.1vh 8.3vw;
+    flex: 31.5;
+  }
+  .mobileItem button:active {
+    background-color: yellow;
+    color:blue;
+  }
+  .mobileItem button:focus {
+    outline: 0;
+  }
+
 
 
 /*

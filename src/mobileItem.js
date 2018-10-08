@@ -28,20 +28,24 @@ class MobileItem extends React.Component {
     return (
         <div className='mobileItem'>
           <div className='mid'>
-              <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
+            <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
           </div>
-          <button
-            type='button'
-            onClick={() => {
-              if(this.state.size === '') {
-                this.setState({sizeError: true})
-              } else {
-                this.setState({sizeError: false})
-                this.props.add(this.state.size, this.state.qty)
-              }
-            }}>
-              BUY • {this.item.price}
-          </button>
+          <div className='low'>
+            <span>WELCOME SHIRT</span>
+            <button
+              type='button'
+              onClick={() => {
+                if(this.state.size === '') {
+                  this.setState({sizeError: true})
+                } else {
+                  this.setState({sizeError: false})
+                  this.props.add(this.state.size, this.state.qty)
+                }
+              }}>
+                BUY • ${this.item.price}
+            </button>
+          </div>
+
         </div>
     );
   }

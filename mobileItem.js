@@ -54,19 +54,28 @@ var MobileItem = function (_React$Component) {
           React.createElement('img', { src: './product/' + this.props.item.image_urls[this.state.imageIndex] + '.png' })
         ),
         React.createElement(
-          'button',
-          {
-            type: 'button',
-            onClick: function onClick() {
-              if (_this2.state.size === '') {
-                _this2.setState({ sizeError: true });
-              } else {
-                _this2.setState({ sizeError: false });
-                _this2.props.add(_this2.state.size, _this2.state.qty);
-              }
-            } },
-          'BUY \u2022 ',
-          this.item.price
+          'div',
+          { className: 'low' },
+          React.createElement(
+            'span',
+            null,
+            'WELCOME SHIRT'
+          ),
+          React.createElement(
+            'button',
+            {
+              type: 'button',
+              onClick: function onClick() {
+                if (_this2.state.size === '') {
+                  _this2.setState({ sizeError: true });
+                } else {
+                  _this2.setState({ sizeError: false });
+                  _this2.props.add(_this2.state.size, _this2.state.qty);
+                }
+              } },
+            'BUY \u2022 $',
+            this.item.price
+          )
         )
       );
     }
