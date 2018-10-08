@@ -436,6 +436,24 @@ and (orientation : portrait) {
       height: 100%;
     }
 
+    .shop .slowdownkiddo {
+      color: blue;
+      font-family: courier;
+      left: 105vw;
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .shop .slowdownkiddo:nth-of-type(2) {
+      color:red;
+      left: 220vw;
+      top: 100px;
+    }
+
+    .shop .slowdownkiddo a {
+      text-decoration: underline;
+    }
+
       /* begin BAG (child of SHOP)*/
       .shop .bag {
         display: flex;

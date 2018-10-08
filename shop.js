@@ -26,7 +26,7 @@ var Shop = function (_React$Component) {
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
     _this.state = {
-      mode: 'bag',
+      mode: 'browse', // 'browse' | 'item' | 'bag'
       pos: 0,
       sel: -1,
       cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
@@ -69,14 +69,15 @@ var Shop = function (_React$Component) {
       cart[id][size] = qty + (size in cart[id] ? cart[id][size] : 0);
       this.setState({
         cart: cart,
+        mode: 'bag',
         sel: -1
       });
     }
   }, {
     key: 'removeFromCart',
-    value: function removeFromCart(index) {
+    value: function removeFromCart(index, size) {
       var cart = this.state.cart;
-      delete cart[index];
+      delete cart[index][size];
       this.setState({ cart: cart });
     }
   }, {
@@ -118,13 +119,20 @@ var Shop = function (_React$Component) {
     */
 
   }, {
-    key: 'handleClick',
-    value: function handleClick(e) {
-      if (this.state.sel > -1 && this.state.mode === 'shop' && !this.hasParentClass(e.target, 'item')) {
-        this.setState({ sel: -1 });
-      }
-      if (this.state.mode === 'bag' && !this.hasParentClass(e.target, 'bag')) {
-        this.setState({ mode: 'shop' });
+    key: 'handleBack',
+    value: function handleBack() {
+      // in item, go back to browse
+      switch (this.state.mode) {
+        case 'item':
+          this.setState({ mode: 'browse', sel: -1 });
+          break;
+        case 'bag':
+          this.setState({ mode: 'browse' });
+          break;
+        case 'browse':
+          this.goToHome();
+        default:
+          return;
       }
     }
   }, {
@@ -134,7 +142,7 @@ var Shop = function (_React$Component) {
 
       return React.createElement(
         'div',
-        { className: 'shop', onClick: this.handleClick.bind(this) },
+        { className: 'shop' },
         React.createElement('div', { className: 'shopLeft' }),
         React.createElement(
           'div',
@@ -144,10 +152,10 @@ var Shop = function (_React$Component) {
             { className: 'banner' },
             React.createElement('img', { src: './iconImages/banner_left_desktop.png',
               id: 'leftBannerIcon',
-              onClick: this.state.sel == -1 ? function () {
-                return _this2.props.goToHome();
-              } : console.log(1) }),
-            this.state.sel == -1 ? this.state.mode == 'bag' ? React.createElement(
+              onClick: function onClick() {
+                return _this2.handleBack();
+              } }),
+            this.state.mode != 'item' ? this.state.mode == 'bag' ? React.createElement(
               'span',
               { id: 'shopProductName' },
               'SHOPPING BAG'
@@ -171,16 +179,17 @@ var Shop = function (_React$Component) {
               )
             )
           ),
-          this.state.sel == -1 ? this.state.mode == 'shop' ? React.createElement(
+          this.state.sel == -1 ? this.state.mode == 'browse' ? React.createElement(
             'div',
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png', onClick: function onClick() {
-                  return _this2.setState({ sel: id });
+              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+                onClick: function onClick() {
+                  return _this2.setState({ sel: id, mode: 'item' });
                 }, key: item.name });
             })
-          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index) {
-              return _this2.removeFromCart(index);
+          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
+              return _this2.removeFromCart(index, size);
             } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
             add: function add(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
@@ -195,6 +204,22 @@ var Shop = function (_React$Component) {
                 }, key: item.name });
             })
           )
+        ),
+        React.createElement(
+          'span',
+          { className: 'slowdownkiddo' },
+          'oh.. the site\'s not supposed to do that. click ',
+          React.createElement(
+            'a',
+            { href: 'https://welcomepress.xyz' },
+            'here'
+          ),
+          ' to go to back to a version of WELCOME PRESS that\'s identical to this one except it won\'t let you do this'
+        ),
+        React.createElement(
+          'span',
+          { className: 'slowdownkiddo' },
+          'Re: that message above and to the left.  ok so we\'ve gotten WAY too many emails regarding the above message. people are saying things like, "why don\'t you just update this version of the site to the new version so this isn\'t a problem in the first place?? you clearly already have fixed the bug, so just update it." well, we\'re never going to change it so we hope that give you an idea of the type of business we\'re operating here. thank you. ~WP'
         )
       );
     }

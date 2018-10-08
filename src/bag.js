@@ -63,7 +63,7 @@ class Bag extends React.Component {
                 image_url={'./product/' + catalog.items[id].image_urls[0] + '.png'}
                 price={catalog.items[id].price}
                 key={id+size+this.cart[id][size]}
-                remove={(index) => this.remove(index)}
+                remove={(index, size) => this.remove(index, size)}
               />
             )
           )}
@@ -89,7 +89,6 @@ class Bag extends React.Component {
           <button type='button'
                   onClick={()=>alert(2)}>CHECK OUT
           </button>
-          <img src='../payment/venmo.png'/>
         </div>
       </div>
     );

@@ -6,6 +6,7 @@ import Start from './start.js'
 import Home from './home.js'
 import Shop from './shop.js'
 
+
 class Press extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +26,7 @@ class Press extends React.Component {
         return <Shop goToBag={() => this.setState({mode: 'bag'})}
                      goToHome={() => this.setState({mode: 'home'})}/>
         break;
-      case 'bag':
-        return <Bag goToShop={() => this.setState({mode: 'shop'})}/>
-        break;
+      case 'home':
       default: //default to home
         return <Home goToShop={() => this.setState({mode: 'shop'})}/>
     }

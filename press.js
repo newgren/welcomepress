@@ -48,11 +48,7 @@ var Press = function (_React$Component) {
               return _this2.setState({ mode: 'home' });
             } });
           break;
-        case 'bag':
-          return React.createElement(Bag, { goToShop: function goToShop() {
-              return _this2.setState({ mode: 'shop' });
-            } });
-          break;
+        case 'home':
         default:
           //default to home
           return React.createElement(Home, { goToShop: function goToShop() {

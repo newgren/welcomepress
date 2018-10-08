@@ -75,7 +75,7 @@ var BagItem = function (_React$Component) {
           React.createElement(
             'span',
             { className: 'remove', onClick: function onClick() {
-                return _this2.remove(_this2.id);
+                return _this2.remove(_this2.id, _this2.size);
               } },
             'x ',
             React.createElement(

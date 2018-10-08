@@ -27,14 +27,13 @@ class Item extends React.Component {
     return (
         <div className='item'>
           <div className='left'>
-              {
-                this.props.item.image_urls.map((url, i) =>
-                    <img src={'./product/'+url+'.png'}
-                         key={i}
-                         onClick={() => this.setState({imageIndex: i})}
-                    />
-              )}
-
+            {
+              this.props.item.image_urls.map((url, i) =>
+                  <img src={'./product/'+url+'.png'}
+                       key={i}
+                       onClick={() => this.setState({imageIndex: i})}
+                  />
+            )}
           </div>
           <div className='mid'>
               <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>

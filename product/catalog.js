@@ -3,9 +3,9 @@ export default
 	"items": [
 		{
 			"name": "welcome press promotional shirt",
-			"image_urls": ["wp_promo"],
+			"image_urls": ["wp_promo", "main"],
 			"description": "shoot it, ... that's about all u can do w it",
-			"price": 25.0,
+			"price": 15.0,
 			"tags": ["shirt", "clothes"]
 		},
 		{

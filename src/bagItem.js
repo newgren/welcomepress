@@ -30,7 +30,7 @@ class BagItem extends React.Component {
         <div className='qty'>
           <span>{this.qty}</span>
           <br/>
-          <span className='remove' onClick={() => this.remove(this.id)}>x <span>remove</span></span>
+          <span className='remove' onClick={() => this.remove(this.id, this.size)}>x <span>remove</span></span>
         </div>
         <span className='total'>${this.price * this.qty}</span>
       </div>

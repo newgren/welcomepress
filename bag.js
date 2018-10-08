@@ -107,8 +107,8 @@ var Bag = function (_React$Component) {
                 image_url: './product/' + catalog.items[id].image_urls[0] + '.png',
                 price: catalog.items[id].price,
                 key: id + size + _this2.cart[id][size],
-                remove: function remove(index) {
-                  return _this2.remove(index);
+                remove: function remove(index, size) {
+                  return _this2.remove(index, size);
                 }
               });
             });
@@ -189,8 +189,7 @@ var Bag = function (_React$Component) {
                 return alert(2);
               } },
             'CHECK OUT'
-          ),
-          React.createElement('img', { src: '../payment/venmo.png' })
+          )
         )
       );
     }
