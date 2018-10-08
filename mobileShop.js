@@ -8,20 +8,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import Item from './item.js';
+import MobileItem from './mobileItem.js';
 import Bag from './bag.js';
 
 import catalog from './product/catalog.js';
 
 var e = React.createElement;
 
-var Shop = function (_React$Component) {
-  _inherits(Shop, _React$Component);
+var MobileShop = function (_React$Component) {
+  _inherits(MobileShop, _React$Component);
 
-  function Shop(props) {
-    _classCallCheck(this, Shop);
+  function MobileShop(props) {
+    _classCallCheck(this, MobileShop);
 
-    var _this = _possibleConstructorReturn(this, (Shop.__proto__ || Object.getPrototypeOf(Shop)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MobileShop.__proto__ || Object.getPrototypeOf(MobileShop)).call(this, props));
 
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
@@ -34,7 +34,7 @@ var Shop = function (_React$Component) {
     return _this;
   }
 
-  _createClass(Shop, [{
+  _createClass(MobileShop, [{
     key: 'canGoLeft',
     value: function canGoLeft() {
       return this.state.pos < 0;
@@ -137,7 +137,7 @@ var Shop = function (_React$Component) {
 
       return React.createElement(
         'div',
-        { className: 'shop' },
+        { className: 'mobileShop' },
         React.createElement('div', { className: 'shopLeft' }),
         React.createElement(
           'div',
@@ -158,69 +158,19 @@ var Shop = function (_React$Component) {
               'span',
               { id: 'shopProductName' },
               catalog.items[this.state.sel].name
-            ),
-            React.createElement(
-              'div',
-              { id: 'bagbannericon' },
-              React.createElement('img', { src: './iconImages/bag_desktop.png',
-                onClick: function onClick() {
-                  return _this2.setState({ mode: 'bag', sel: -1 });
-                }
-              }),
-              React.createElement(
-                'span',
-                null,
-                this.getCartSize()
-              )
             )
           ),
-          this.state.sel == -1 ? this.state.mode == 'browse' ? React.createElement(
-            'div',
-            { className: 'desktop scroller' },
-            catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
-                onClick: function onClick() {
-                  return _this2.setState({ sel: id, mode: 'item' });
-                }, key: item.name });
-            })
-          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
-              return _this2.removeFromCart(index, size);
-            } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
-            add: function add(size, qty) {
-              return _this2.addToCart(_this2.state.sel, size, qty);
-            }
-          }),
-          React.createElement(
-            'div',
-            { className: 'mobile itemList' },
-            catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png', onClick: function onClick() {
-                  return _this2.setState({ sel: id });
-                }, key: item.name });
-            })
-          )
-        ),
-        React.createElement(
-          'span',
-          { className: 'slowdownkiddo' },
-          'oh.. the site\'s not supposed to do that. click ',
-          React.createElement(
-            'a',
-            { href: 'https://welcomepress.xyz' },
-            'here'
-          ),
-          ' to go to back to a version of WELCOME PRESS that\'s identical to this one except it won\'t let you do this'
-        ),
-        React.createElement(
-          'span',
-          { className: 'slowdownkiddo' },
-          'Re: that message above and to the left.  ok so we\'ve gotten WAY too many emails regarding the above message. people are saying things like, "why don\'t you just update this version of the site to the new version so this isn\'t a problem in the first place?? you clearly already have fixed the bug, so just update it." well, we\'re never going to change it so we hope that give you an idea of the type of business we\'re operating here. thank you. ~WP'
+          catalog.items.map(function (item, id) {
+            return React.createElement(MobileItem, { item: item, onClick: function onClick() {
+                return _this2.setState({ sel: id });
+              }, key: item.name });
+          })
         )
       );
     }
   }]);
 
-  return Shop;
+  return MobileShop;
 }(React.Component);
 
-export default Shop;
+export default MobileShop;
