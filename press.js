@@ -14,6 +14,7 @@ import Start from './start.js';
 import Home from './home.js';
 import Shop from './shop.js';
 
+import MobileStart from './mobileStart.js';
 import MobileShop from './mobileShop.js';
 
 var Press = function (_React$Component) {
@@ -59,7 +60,7 @@ var Press = function (_React$Component) {
       var _this2 = this;
 
       if (this.state.windowWidth < 650) {
-        return React.createElement(MobileShop, null);
+        return React.createElement(MobileStart, null);
       } else {
         switch (this.state.mode) {
           case 'start':

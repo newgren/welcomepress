@@ -6,6 +6,7 @@ import Start from './start.js'
 import Home from './home.js'
 import Shop from './shop.js'
 
+import MobileStart from './mobileStart.js'
 import MobileShop from './mobileShop.js'
 
 
@@ -40,7 +41,7 @@ class Press extends React.Component {
 
   render() {
     if(this.state.windowWidth < 650) {
-      return <MobileShop />
+      return <MobileStart />
     } else {
       switch (this.state.mode) {
         case 'start':
