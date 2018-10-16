@@ -22,10 +22,10 @@ var MobileItem = function (_React$Component) {
     _this.item = props.item;
     _this.no = props.no;
     _this.state = {
+      mode: 'buy', // 'buy' | 'size'
       imageIndex: 0,
       size: '',
-      qty: 1,
-      sizeError: false
+      qty: 1
     };
     return _this;
   }
@@ -53,29 +53,43 @@ var MobileItem = function (_React$Component) {
           { className: 'mid' },
           React.createElement('img', { src: './product/' + this.props.item.image_urls[this.state.imageIndex] + '.png' })
         ),
-        React.createElement(
+        this.state.mode == 'buy' ? React.createElement(
           'div',
           { className: 'low' },
           React.createElement(
             'span',
-            null,
-            'WELCOME SHIRT'
+            { className: 'itemName' },
+            this.item.name
           ),
           React.createElement(
             'button',
             {
               type: 'button',
               onClick: function onClick() {
-                if (_this2.state.size === '') {
-                  _this2.setState({ sizeError: true });
-                } else {
-                  _this2.setState({ sizeError: false });
-                  _this2.props.add(_this2.state.size, _this2.state.qty);
-                }
+                return _this2.setState({ mode: 'size' });
               } },
             'BUY \u2022 $',
             this.item.price
           )
+        ) : React.createElement(
+          'div',
+          { className: 'low sizebar' },
+          ['S', 'M', 'L', 'XL'].map(function (s) {
+            return React.createElement(
+              'div',
+              { key: s,
+                onClick: function onClick() {
+                  return _this2.setState({ size: s, sizeError: false });
+                },
+                className: s == _this2.state.size ? 'selected' : ''
+              },
+              React.createElement(
+                'span',
+                null,
+                s
+              )
+            );
+          })
         )
       );
     }

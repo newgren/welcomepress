@@ -502,12 +502,12 @@ svg text {
   margin: 2vh 0;
 }
 
-.item .sizebar {
+.sizebar {
   height: 3.5vw;
   width: 100%;
 }
 
-.item .sizebar div {
+.sizebar div {
   align-items: center;
   border: 0.2vw solid blue;
   cursor: pointer;
@@ -521,20 +521,20 @@ svg text {
   width: 3.5vw;
 }
 
-.item .sizebar div:hover {
+.sizebar div:hover {
   background-color: blue;
   color:white;
 }
 
-.item .sizebar div.selected {
+.sizebar div.selected {
   background-color: yellow;
 }
 
-.item .sizebar div.selected:hover {
+.sizebar div.selected:hover {
   color:blue;
 }
 
-.item .sizebar div > span {
+.sizebar div > span {
   font-size: 2vw;
 }
 
@@ -617,9 +617,14 @@ svg text {
   a {
     text-decoration: none;
   }
+  body {
+
+  }
 
   .mobileShop {
     display: flex;
+    /* overflow:auto; */
+
   }
 
   .mobileShop .shopBox {
@@ -633,11 +638,12 @@ svg text {
 
   .mobileShop .shopBox {
     flex: 9;
+    height: inherit;
     padding: 3vw;
   }
 
   .mobileShop .banner {
-    height: 10%;
+    height: 20vw;
   }
 
   .mobileShop .banner img#leftBannerIcon {
@@ -647,7 +653,6 @@ svg text {
 
   .mobileShop .banner img#shopBannerText{
     height: 60%;
-    padding: 4vh 0;
   }
 
   .mobileItem .mid {
@@ -664,14 +669,22 @@ svg text {
 
   .mobileItem .low {
     display: flex;
+    /* height: 14vw; */
+    padding: 1.4vw 0;
     width: 100%;
   }
 
-  .mobileItem span {
-    align-items: center;
+  .mobileItem .itemName {
+    /* un-comment two comments below to active vertical centering */
+    /* align-items: center; */
     color:blue;
-    display: inline-flex;
+    /* display: inline-flex; */
     flex: 68.5;
+    flex-shrink: 0;
+    font-size: 5vw;
+    max-width: 68.5%;
+    padding-right: 1vw;
+    word-wrap: break-word;
   }
 
   .mobileItem button {
@@ -681,9 +694,10 @@ svg text {
     float: right;
     font-family: galderglynn;
     font-size: 4vw;
-    height: 6vh;
+    height: 13vw;
     padding: 1.9vh 8.3vw 2.1vh 8.3vw;
     flex: 31.5;
+    flex-shrink: 0;
   }
   .mobileItem button:active {
     background-color: yellow;
@@ -691,6 +705,25 @@ svg text {
   }
   .mobileItem button:focus {
     outline: 0;
+  }
+
+  .mobileItem .sizebar {
+    /* background-color: red; */
+    color: blue;
+    flex: 70;
+    height: 14vw;
+    width: inherit;
+  }
+
+  .mobileItem .sizebar div {
+    border: 0.6vw solid blue;
+    height: 12.6vw;
+    margin-right: 2vw;
+    width: 12vw;
+  }
+
+  .mobileItem .sizebar div > span {
+    font-size: 5vw;
   }
 
 

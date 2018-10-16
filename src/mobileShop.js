@@ -13,7 +13,7 @@ class MobileShop extends React.Component {
     this.goToBag = props.goToBag;
     this.goToHome = props.goToHome;
     this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag'
+      mode: 'browse', // 'browse' | 'buy'
       pos: 0,
       sel: -1,
       cart: {0: {'L': 1}, 1: {'M': 5}}
@@ -117,20 +117,14 @@ class MobileShop extends React.Component {
             <img src='./iconImages/banner_left_desktop.png'
                  id='leftBannerIcon'
                  onClick={() => this.handleBack()} />
-            {
-            this.state.mode != 'item' ?
-              (this.state.mode == 'bag' ?
-                <span id='shopProductName'>SHOPPING BAG</span>
-                :
-                <img src='./iconImages/SHOP.png' id='shopBannerText' />
-              )
-              :
-              <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
-            }
+            <img src='./iconImages/SHOP.png' id='shopBannerText' />
           </div>
           {catalog.items.map((item, id) =>
-            <MobileItem item={item} onClick={() => this.setState({sel: id})} key={item.name}/>
+            <MobileItem item={item} addToCart={() => this.setState({sel: id})} key={item.name}/>
           )}
+        </div>
+        <div className='buyBox'>
+
         </div>
       </div>
     );

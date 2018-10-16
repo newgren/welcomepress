@@ -26,7 +26,8 @@ var Press = function (_React$Component) {
 
     _this.state = {
       mode: 'start',
-      homeEntered: 'false'
+      homeEntered: 'false',
+      windowWidth: 0
     };
     return _this;
   }
@@ -34,14 +35,30 @@ var Press = function (_React$Component) {
   _createClass(Press, [{
     key: 'isMobile',
     value: function isMobile() {
-      return true;
+      return this.state.width < 650;
+    }
+  }, {
+    key: 'updateWidth',
+    value: function updateWidth() {
+      this.setState({ windowWidth: window.innerWidth });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updateWidth();
+      window.addEventListener('resize', this.updateWidth.bind(this));
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      window.removeEventListener('resize', this.updateWidth.bind(this));
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      if (this.isMobile()) {
+      if (this.state.windowWidth < 650) {
         return React.createElement(MobileShop, null);
       } else {
         switch (this.state.mode) {

@@ -16,16 +16,30 @@ class Press extends React.Component {
 
     this.state = {
       mode: 'start',
-      homeEntered: 'false'
+      homeEntered: 'false',
+      windowWidth: 0,
     };
   }
 
   isMobile() {
-    return true;
+    return this.state.width < 650;
+  }
+
+  updateWidth() {
+    this.setState({windowWidth: window.innerWidth});
+  }
+
+  componentDidMount() {
+    this.updateWidth();
+    window.addEventListener('resize', this.updateWidth.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWidth.bind(this));
   }
 
   render() {
-    if(this.isMobile()) {
+    if(this.state.windowWidth < 650) {
       return <MobileShop />
     } else {
       switch (this.state.mode) {

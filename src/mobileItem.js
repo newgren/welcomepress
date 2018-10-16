@@ -9,10 +9,10 @@ class MobileItem extends React.Component {
     this.item = props.item;
     this.no = props.no;
     this.state = {
+      mode: 'buy', // 'buy' | 'size'
       imageIndex: 0,
       size: '',
       qty: 1,
-      sizeError: false,
     };
   }
 
@@ -30,23 +30,30 @@ class MobileItem extends React.Component {
           <div className='mid'>
             <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
           </div>
-          <div className='low'>
-            <span>WELCOME SHIRT</span>
-            <button
-              type='button'
-              onClick={() => {
-                if(this.state.size === '') {
-                  this.setState({sizeError: true})
-                } else {
-                  this.setState({sizeError: false})
-                  this.props.add(this.state.size, this.state.qty)
-                }
-              }}>
-                BUY • ${this.item.price}
-            </button>
-          </div>
-
+          {
+            this.state.mode == 'buy' ?
+              <div className='low'>
+                <span className='itemName'>{this.item.name}</span>
+                <button
+                  type='button'
+                  onClick={() => this.setState({mode: 'size'})}>
+                    BUY • ${this.item.price}
+                </button>
+              </div>
+            :
+              <div className='low sizebar'>
+                {['S','M','L','XL'].map((s) =>
+                  <div key={s}
+                       onClick={() => this.setState({size: s, sizeError: false})}
+                       className={s == this.state.size ? 'selected' : ''}
+                  >
+                    <span>{s}</span>
+                  </div>
+                )}
+              </div>
+          }
         </div>
+
     );
   }
 }

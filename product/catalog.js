@@ -12,7 +12,7 @@ export default
       "name":"JONAH WALLACH",
       "image_urls": ["tyler"],
       "description": "You won't feel like you're in Champaign when you're wearing our shirts.",
-      "price": 165,
+      "price": 99,
       "tags": ["shirt", "clothes"]
     },
 		{
@@ -26,11 +26,11 @@ export default
 			"name": "privacy breach",
 			"image_urls": ["privacypolicy"],
 			"description": "\"you messed with the wrong kid\"",
-			"price": 5000000.0,
+			"price": 50.0,
 			"tags": ["shirt", "clothes", "data"]
 		},
 		{
-			"name": "redlippedbatfish",
+			"name": "red lipped batfish",
 			"image_urls": ["redlip"],
 			"description": "ee",
 			"price": 25.0,
@@ -40,7 +40,7 @@ export default
 			"name": "orange",
 			"image_urls": ["orange"],
 			"description": "\"I got this for $1, but actually $0.50 because it was Arbor Day 😏\"",
-			"price": 0.50,
+			"price": 2.00,
 			"tags": ["shirt", "clothes"]
 		}
 	]

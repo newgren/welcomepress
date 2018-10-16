@@ -26,7 +26,7 @@ var MobileShop = function (_React$Component) {
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag'
+      mode: 'browse', // 'browse' | 'buy'
       pos: 0,
       sel: -1,
       cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
@@ -150,22 +150,15 @@ var MobileShop = function (_React$Component) {
               onClick: function onClick() {
                 return _this2.handleBack();
               } }),
-            this.state.mode != 'item' ? this.state.mode == 'bag' ? React.createElement(
-              'span',
-              { id: 'shopProductName' },
-              'SHOPPING BAG'
-            ) : React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
-              'span',
-              { id: 'shopProductName' },
-              catalog.items[this.state.sel].name
-            )
+            React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' })
           ),
           catalog.items.map(function (item, id) {
-            return React.createElement(MobileItem, { item: item, onClick: function onClick() {
+            return React.createElement(MobileItem, { item: item, addToCart: function addToCart() {
                 return _this2.setState({ sel: id });
               }, key: item.name });
           })
-        )
+        ),
+        React.createElement('div', { className: 'buyBox' })
       );
     }
   }]);

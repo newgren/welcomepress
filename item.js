@@ -20,6 +20,7 @@ var Item = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
     _this.no = props.no;
+    _this.addToCart = _this.props.addToCart;
     _this.state = {
       imageIndex: 0,
       size: '',

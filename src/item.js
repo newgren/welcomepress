@@ -7,6 +7,7 @@ class Item extends React.Component {
   constructor(props) {
     super(props);
     this.no = props.no;
+    this.addToCart = this.props.addToCart;
     this.state = {
       imageIndex: 0,
       size: '',
