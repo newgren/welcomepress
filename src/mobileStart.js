@@ -28,7 +28,7 @@ class MobileStart extends React.Component {
     // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
     var ball = document.getElementById('press');
-    ball.style.position = 'relative';
+    ball.style.position = 'fixed';
     var garden = document.getElementById('home');
     var output = document.getElementById('output');
 
