@@ -47,8 +47,7 @@ var MobileStart = function (_React$Component) {
 
       var startLaggyAnimation = function startLaggyAnimation() {
         return window.setInterval(function () {
-          console.log('go');
-          i = (i + 1) % tailLength;
+          // i = ((i+1)%tailLength);
           i = i === 0 ? 1 : i;
           var thing = document.getElementById('n' + i);
           thing.style.left = x + "px";
@@ -65,7 +64,6 @@ var MobileStart = function (_React$Component) {
       var ballWidth = ballHeight * 4.417519909;
 
       var garden = document.getElementById('mobileStart');
-      var output = document.getElementById('output');
 
       var maxGamma = garden.clientWidth - ballWidth;
       var maxBeta = garden.clientHeight - ballText.clientHeight;
@@ -104,13 +102,10 @@ var MobileStart = function (_React$Component) {
         x = maxGamma * gamma / (maxTilt * 2);
         ball.style.left = x;
         ball.style.top = y;
-
-        output.innerHTML = "x': " + x + "\n";
-        output.innerHTML += "y': " + y + "\n";
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
-      startLaggyAnimation();
+      // startLaggyAnimation();
     }
   }, {
     key: 'render',
@@ -153,8 +148,7 @@ var MobileStart = function (_React$Component) {
               )
             )
           );
-        }),
-        React.createElement('pre', { id: 'output' })
+        })
       );
     }
   }]);

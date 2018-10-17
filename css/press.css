@@ -596,7 +596,7 @@ svg text {
     text-decoration: none;
   }
   body {
-
+    overflow: hidden;
   }
 
   #output {

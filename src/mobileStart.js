@@ -30,8 +30,7 @@ class MobileStart extends React.Component {
 
     let startLaggyAnimation = () => {
       return window.setInterval(() => {
-        console.log('go');
-        i = ((i+1)%tailLength);
+        // i = ((i+1)%tailLength);
         i = i === 0 ? 1 : i;
         let thing = document.getElementById('n'+i);
         thing.style.left = x + "px";
@@ -48,7 +47,6 @@ class MobileStart extends React.Component {
     let ballWidth = ballHeight * 4.417519909;
 
     let garden = document.getElementById('mobileStart');
-    let output = document.getElementById('output');
 
     let maxGamma = garden.clientWidth - ballWidth;
     let maxBeta = garden.clientHeight - ballText.clientHeight;
@@ -79,13 +77,10 @@ class MobileStart extends React.Component {
       x = (maxGamma*gamma/(maxTilt*2));
       ball.style.left = x;
       ball.style.top = y;
-
-      output.innerHTML  = "x': " + x + "\n";
-      output.innerHTML += "y': " + y + "\n";
     }
 
     window.addEventListener('deviceorientation', handleOrientation);
-    startLaggyAnimation();
+    // startLaggyAnimation();
   }
 
 
@@ -106,7 +101,6 @@ class MobileStart extends React.Component {
               </svg>
             </div>)
           }
-          <pre id="output"></pre>
       </div>
     );
   }
