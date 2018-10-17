@@ -618,6 +618,10 @@ svg text {
     width: 66%;
   }
 
+  #welcome svg text, .press svg text {
+    stroke-width: 0.8vw;
+  }
+
   /* .press {
     font-size: 100px;
     position: relative;
