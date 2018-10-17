@@ -60,22 +60,27 @@ var MobileStart = function (_React$Component) {
       var startBeta = null;
       function handleOrientation(event) {
         if (!startBeta) {
-          startBeta = (event.beta + 360) % 360 - 180;
+          startBeta = event.beta;
         }
         var x = event.gamma; // In degree in the range [-180,180]
-        var y = event.beta; // In degree in the range [-90,90]
-
+        var y = event.beta - startBeta; // In degree in the range [-90,90]
 
         output.innerHTML = "beta : " + x + "\n";
         output.innerHTML += "gamma: " + y + "\n";
 
         // Because we don't want to have the device upside down
-        // We constrain the x value to the range [-90,90]
+        // We constrain the x value to a range
         if (x > maxTilt) {
           x = maxTilt;
         };
         if (x < -maxTilt) {
           x = -maxTilt;
+        };
+        if (y > maxTilt) {
+          y = maxTilt;
+        };
+        if (y < -maxTilt) {
+          y = -maxTilt;
         };
 
         // To make computation easier we shift the range of
@@ -85,7 +90,7 @@ var MobileStart = function (_React$Component) {
 
         // 10 is half the size of the ball
         // It center the positioning point to the center of the ball
-        ball.style.top = maxY * (startBeta + y) / (maxTilt * 2) + "px";
+        ball.style.top = maxY * y / (maxTilt * 2) + "px";
         ball.style.left = maxX * x / (maxTilt * 2) + "px";
       }
 
