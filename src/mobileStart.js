@@ -40,7 +40,7 @@ class MobileStart extends React.Component {
 
     var maxX = garden.clientWidth - ballWidth;
     var maxY = garden.clientHeight - ball.clientHeight;
-    let maxTilt = 30; // max tilt magnitude
+    let maxTilt = 35; // max tilt magnitude
     let startBeta = null;
     function handleOrientation(event) {
       if(!startBeta) {
