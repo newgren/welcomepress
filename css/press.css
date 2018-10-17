@@ -607,9 +607,9 @@ svg text {
     background-color: red;
     /* font-size: 18vw; */
     font-size: inherit;
-    left: 120%; /* off screen to start */
+    left: 38%; /* off screen to start */
     position: fixed;
-    top: 0;
+    top: 55%;
     width: 100%;
   }
 

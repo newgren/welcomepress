@@ -77,10 +77,13 @@ class MobileStart extends React.Component {
       x = (maxGamma*gamma/(maxTilt*2));
       ball.style.left = x;
       ball.style.top = y;
-    }
 
+      if(!animationIsActive) {
+        startLaggyAnimation();
+        animationIsActive = true;
+      }
+    }
     window.addEventListener('deviceorientation', handleOrientation);
-    startLaggyAnimation();
   }
 
 
