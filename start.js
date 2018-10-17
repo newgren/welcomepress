@@ -92,10 +92,10 @@ var Start = function (_React$Component) {
           } },
         React.createElement(
           'div',
-          { className: 'home center' },
+          { className: 'center' },
           React.createElement(
             'div',
-            { className: 'welcome' },
+            { id: 'welcome' },
             React.createElement(
               'svg',
               { viewBox: '0 0 417 60' },
@@ -112,12 +112,16 @@ var Start = function (_React$Component) {
             'div',
             { id: 'n' + j, key: j, className: 'press', ref: j === 0 ? 'elem' : '' },
             React.createElement(
-              'svg',
-              { viewBox: '0 0 417 60' },
+              'div',
+              { id: 'press' },
               React.createElement(
-                'text',
-                { y: '57' },
-                'PRESS'
+                'svg',
+                { viewBox: '0 0 417 60' },
+                React.createElement(
+                  'text',
+                  { y: '57' },
+                  'PRESS'
+                )
               )
             )
           );

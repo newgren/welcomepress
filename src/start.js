@@ -69,8 +69,8 @@ class Start extends React.Component {
   render() {
     return (
       <div className='home' onClick={() => this.goToHome()}>
-          <div className='home center'>
-            <div className='welcome'>
+          <div className='center'>
+            <div id='welcome'>
               <svg viewBox="0 0 417 60">
                 <text y="57">WELCOME</text>
               </svg>
@@ -78,9 +78,11 @@ class Start extends React.Component {
           </div>
           {
             Array.apply(null, Array(tailLength)).map((i, j) => <div id={'n'+j} key={j} className='press' ref={j === 0 ? 'elem' : ''}>
-              <svg viewBox="0 0 417 60">
-                <text y="57">PRESS</text>
-              </svg>
+              <div id='press'>
+                <svg viewBox="0 0 417 60">
+                  <text y="57">PRESS</text>
+                </svg>
+              </div>
             </div>)
           }
         </div>

@@ -44,17 +44,17 @@ var MobileStart = function (_React$Component) {
       // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
       var ball = document.getElementById('press');
-      ball.style.position = 'fixed';
-
+      var ballHeight = ball.clientHeight;
+      var ballWidth = ballHeight * 4.417519909;
       // let a = prompt("top");
       // ball.style.top  = (a) + "px";
       // let b = prompt("left");
       // ball.style.left = (b) + "px";
 
-      var garden = document.getElementById('home');
+      var garden = document.getElementById('mobileStart');
       var output = document.getElementById('output');
 
-      var maxX = garden.clientWidth;
+      var maxX = garden.clientWidth - ballWidth;
       var maxY = garden.clientHeight - ball.clientHeight;
 
       function handleOrientation(event) {
@@ -80,8 +80,8 @@ var MobileStart = function (_React$Component) {
 
         // 10 is half the size of the ball
         // It center the positioning point to the center of the ball
-        ball.style.top = maxX * x / 180 + "px";
-        ball.style.left = maxY * y / 180 + "px";
+        ball.style.top = maxY * y / 180 + "px";
+        ball.style.left = maxX * x / 180 + "px";
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
@@ -93,33 +93,37 @@ var MobileStart = function (_React$Component) {
 
       return React.createElement(
         'div',
-        { id: 'home', className: 'home', onClick: function onClick() {
+        { id: 'mobileStart', onClick: function onClick() {
             return _this2.goToHome();
           } },
         React.createElement(
           'div',
-          { className: 'home center' },
+          { className: 'center' },
           React.createElement(
             'div',
-            { className: 'welcome' },
+            { id: 'welcome' },
             React.createElement(
               'svg',
               { viewBox: '0 0 417 60' },
               React.createElement(
                 'text',
-                { y: '57' },
+                { id: 'welcomeText', y: '57' },
                 'WELCOME'
               )
             )
           )
         ),
         React.createElement(
-          'svg',
-          { viewBox: '0 0 417 60', id: 'press' },
+          'div',
+          { id: 'press' },
           React.createElement(
-            'text',
-            { y: '57' },
-            'PRESS'
+            'svg',
+            { id: 'pressText', viewBox: '0 0 417 60' },
+            React.createElement(
+              'text',
+              { y: '57' },
+              'PRESS'
+            )
           )
         ),
         React.createElement('pre', { id: 'output' })

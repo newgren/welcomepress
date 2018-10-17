@@ -142,22 +142,22 @@ body {
 }
 
 
-.welcome svg, .press svg {
+#welcome svg, #press svg {
   font-size: 75px;
+  padding-left: 3px;
   width: 66%;
   z-index: 2;
 }
 
+#welcome svg text, #press svg text{
+  stroke-width:2px;
+}
 
 .press {
   font-size: 100px;
   position: relative;
   top: 0;
   left: 0;
-}
-
-.rot svg {
-  font-size: 80px;
 }
 
 .homeDesktop text{
@@ -170,29 +170,8 @@ svg text {
   stroke-width:2.5px;
 }
 
-.welcome svg {
-  padding-left: 3px;
-}
-
-.welcome svg text {
-  stroke-width:2px;
-}
-
 #n0 {
   z-index: 999999999;
-}
-.welcome.rot {
-  background-color: red;
-  position: fixed;
-  z-index: 22;
-}
-.press.rot {
-  background-color: green;
-  position: fixed;
-  width: 300px;
-}
-.rot text {
-  fill: white;
 }
 .press {
   font-size: 100px;
@@ -620,6 +599,20 @@ svg text {
   body {
 
   }
+
+  #mobileStart #press {
+    /* background-color: red; */
+    /* font-size: 18vw; */
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  #mobileStart #press svg {
+    width: 66%;
+  }
+
 
   .mobileShop {
     display: flex;

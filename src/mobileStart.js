@@ -28,17 +28,17 @@ class MobileStart extends React.Component {
     // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
     var ball = document.getElementById('press');
-    ball.style.position = 'fixed';
-
+    let ballHeight = ball.clientHeight;
+    let ballWidth = ballHeight * 4.417519909;
     // let a = prompt("top");
     // ball.style.top  = (a) + "px";
     // let b = prompt("left");
     // ball.style.left = (b) + "px";
 
-    var garden = document.getElementById('home');
+    var garden = document.getElementById('mobileStart');
     var output = document.getElementById('output');
 
-    var maxX = garden.clientWidth;
+    var maxX = garden.clientWidth - ballWidth;
     var maxY = garden.clientHeight - ball.clientHeight;
 
     function handleOrientation(event) {
@@ -60,8 +60,8 @@ class MobileStart extends React.Component {
 
       // 10 is half the size of the ball
       // It center the positioning point to the center of the ball
-      ball.style.top  = (maxX*x/180) + "px";
-      ball.style.left = (maxY*y/180) + "px";
+      ball.style.top  = (maxY*y/180) + "px";
+      ball.style.left = (maxX*x/180) + "px";
     }
 
     window.addEventListener('deviceorientation', handleOrientation);
@@ -70,17 +70,19 @@ class MobileStart extends React.Component {
 
   render() {
     return (
-      <div id='home' className='home' onClick={() => this.goToHome()}>
-          <div className='home center'>
-            <div className='welcome'>
+      <div id='mobileStart' onClick={() => this.goToHome()}>
+          <div className='center'>
+            <div id='welcome'>
               <svg viewBox="0 0 417 60">
-                <text y="57">WELCOME</text>
+                <text id='welcomeText' y="57">WELCOME</text>
               </svg>
             </div>
           </div>
-          <svg viewBox="0 0 417 60" id='press'>
-            <text y="57">PRESS</text>
-          </svg>
+          <div id='press'>
+            <svg id='pressText' viewBox="0 0 417 60">
+              <text  y="57">PRESS</text>
+            </svg>
+          </div>
           <pre id="output"></pre>
       </div>
     );
