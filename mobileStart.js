@@ -105,7 +105,7 @@ var MobileStart = function (_React$Component) {
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
-      // startLaggyAnimation();
+      startLaggyAnimation();
     }
   }, {
     key: 'render',

@@ -80,7 +80,7 @@ class MobileStart extends React.Component {
     }
 
     window.addEventListener('deviceorientation', handleOrientation);
-    // startLaggyAnimation();
+    startLaggyAnimation();
   }
 
 
