@@ -600,6 +600,10 @@ svg text {
 
   }
 
+  #output {
+    color:blue;
+  }
+
   #mobileStart #press {
     /* background-color: red; */
     /* font-size: 18vw; */
