@@ -53,7 +53,7 @@ class MobileStart extends React.Component {
     var maxBeta = garden.clientHeight - ball.clientHeight;
     let maxTilt = 30; // max tilt magnitude
     let startBeta = null;
-    
+
     function handleOrientation(event) {
       if(!startBeta) {
         startBeta = event.beta;
@@ -77,9 +77,11 @@ class MobileStart extends React.Component {
       // It center the positioning point to the center of the ball
       y  = (maxBeta*(beta)/(maxTilt*2));
       x = (maxGamma*gamma/(maxTilt*2));
+      ball.style.left = x;
+      ball.style.top = y;
 
-      output.innerHTML  = "x : " + x + "\n";
-      output.innerHTML += "y: " + y + "\n";
+      output.innerHTML  = "x': " + x + "\n";
+      output.innerHTML += "y': " + y + "\n";
     }
 
     window.addEventListener('deviceorientation', handleOrientation);

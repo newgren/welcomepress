@@ -102,9 +102,11 @@ var MobileStart = function (_React$Component) {
         // It center the positioning point to the center of the ball
         y = maxBeta * beta / (maxTilt * 2);
         x = maxGamma * gamma / (maxTilt * 2);
+        ball.style.left = x;
+        ball.style.top = y;
 
-        output.innerHTML = "x : " + x + "\n";
-        output.innerHTML += "y: " + y + "\n";
+        output.innerHTML = "x': " + x + "\n";
+        output.innerHTML += "y': " + y + "\n";
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
