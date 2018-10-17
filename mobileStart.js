@@ -60,7 +60,7 @@ var MobileStart = function (_React$Component) {
       var startBeta = null;
       function handleOrientation(event) {
         if (!startBeta) {
-          startBeta = event.beta + 90;
+          startBeta = event.beta + 180;
         }
         var x = event.gamma; // In degree in the range [-180,180]
         var y = event.beta; // In degree in the range [-90,90]
