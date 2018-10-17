@@ -45,10 +45,16 @@ var MobileStart = function (_React$Component) {
 
       var ball = document.getElementById('press');
       ball.style.position = 'fixed';
+
+      // let a = prompt("top");
+      // ball.style.top  = (a) + "px";
+      // let b = prompt("left");
+      // ball.style.left = (b) + "px";
+
       var garden = document.getElementById('home');
       var output = document.getElementById('output');
 
-      var maxX = garden.clientWidth - ball.clientWidth;
+      var maxX = garden.clientWidth;
       var maxY = garden.clientHeight - ball.clientHeight;
 
       function handleOrientation(event) {
@@ -74,8 +80,8 @@ var MobileStart = function (_React$Component) {
 
         // 10 is half the size of the ball
         // It center the positioning point to the center of the ball
-        ball.style.top = maxX * x / 180 - 10 + "px";
-        ball.style.left = maxY * y / 180 - 10 + "px";
+        ball.style.top = maxX * x / 180 + "px";
+        ball.style.left = maxY * y / 180 + "px";
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
