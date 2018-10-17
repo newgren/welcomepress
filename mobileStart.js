@@ -59,7 +59,7 @@ var MobileStart = function (_React$Component) {
       // thing.style.left = (x - (thing.offsetWidth/4)) + "px";
       // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
-      var ball = document.getElementsByClassName('press')[0];
+      var ball = document.getElementById('n0');
       var ballHeight = ball.clientHeight;
       var ballWidth = ballHeight * 4.417519909;
 
@@ -70,7 +70,8 @@ var MobileStart = function (_React$Component) {
       var maxBeta = garden.clientHeight - ball.clientHeight;
       var maxTilt = 30; // max tilt magnitude
       var startBeta = null;
-
+      x = 50;
+      y = 50;
       function handleOrientation(event) {
         if (!startBeta) {
           startBeta = event.beta;
