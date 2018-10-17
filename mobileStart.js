@@ -38,63 +38,77 @@ var MobileStart = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var element = this.refs.elem;
+      var animationIsActive = false;
+      var framesPerSecond = 60;
+      var stutterIntervalDelay = Math.round(1000 / framesPerSecond);
 
+      var i = 0;
+      var z = 0;
+
+      var startLaggyAnimation = function startLaggyAnimation() {
+        return window.setInterval(function () {
+          console.log('go');
+          i = (i + 1) % tailLength;
+          i = i === 0 ? 1 : i;
+          var thing = document.getElementById('n' + i);
+          thing.style.left = x + "px";
+          thing.style.top = y + "px";
+          thing.style.zIndex = z++;
+        }, Math.floor(stutterIntervalDelay));
+      };
       // thing.style.left = (x - (thing.offsetWidth/4)) + "px";
       // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
-      var ball = document.getElementById('press');
+      var ball = document.getElementsByClassName('press')[0];
       var ballHeight = ball.clientHeight;
       var ballWidth = ballHeight * 4.417519909;
-      // let a = prompt("top");
-      // ball.style.top  = (a) + "px";
-      // let b = prompt("left");
-      // ball.style.left = (b) + "px";
 
       var garden = document.getElementById('mobileStart');
       var output = document.getElementById('output');
 
-      var maxX = garden.clientWidth - ballWidth;
-      var maxY = garden.clientHeight - ball.clientHeight;
+      var maxGamma = garden.clientWidth - ballWidth;
+      var maxBeta = garden.clientHeight - ball.clientHeight;
       var maxTilt = 30; // max tilt magnitude
       var startBeta = null;
+
       function handleOrientation(event) {
         if (!startBeta) {
           startBeta = event.beta;
         }
-        var x = event.gamma; // In degree in the range [-180,180]
-        var y = event.beta - startBeta; // In degree in the range [-90,90]
+        var gamma = event.gamma; // In degree in the range [-180,180]
+        var beta = event.beta - startBeta; // In degree in the range [-90,90]
 
-        output.innerHTML = "beta : " + x + "\n";
-        output.innerHTML += "gamma: " + y + "\n";
+        output.innerHTML = "beta : " + gamma + "\n";
+        output.innerHTML += "gamma: " + beta + "\n";
 
         // Because we don't want to have the device upside down
         // We constrain the x value to a range
-        if (x > maxTilt) {
-          x = maxTilt;
+        if (gamma > maxTilt) {
+          gamma = maxTilt;
         };
-        if (x < -maxTilt) {
-          x = -maxTilt;
+        if (gamma < -maxTilt) {
+          gamma = -maxTilt;
         };
-        if (y > maxTilt) {
-          y = maxTilt;
+        if (beta > maxTilt) {
+          beta = maxTilt;
         };
-        if (y < -maxTilt) {
-          y = -maxTilt;
+        if (beta < -maxTilt) {
+          beta = -maxTilt;
         };
 
         // To make computation easier we shift the range of
         // x and y to [0,180]
-        x += maxTilt;
-        y += maxTilt;
+        gamma += maxTilt;
+        beta += maxTilt;
 
         // 10 is half the size of the ball
         // It center the positioning point to the center of the ball
-        ball.style.top = maxY * y / (maxTilt * 2) + "px";
-        ball.style.left = maxX * x / (maxTilt * 2) + "px";
+        y = maxBeta * beta / (maxTilt * 2);
+        x = maxGamma * gamma / (maxTilt * 2);
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
+      startLaggyAnimation();
     }
   }, {
     key: 'render',
@@ -123,19 +137,25 @@ var MobileStart = function (_React$Component) {
             )
           )
         ),
-        React.createElement(
-          'div',
-          { id: 'press' },
-          React.createElement(
-            'svg',
-            { id: 'pressText', viewBox: '0 0 417 60' },
+        Array.apply(null, Array(tailLength)).map(function (i, j) {
+          return React.createElement(
+            'div',
+            { id: 'n' + j, key: j, className: 'press', ref: j === 0 ? 'elem' : '' },
             React.createElement(
-              'text',
-              { y: '57' },
-              'PRESS'
+              'div',
+              { id: 'press', className: 'press' },
+              React.createElement(
+                'svg',
+                { id: 'pressText', viewBox: '0 0 417 60' },
+                React.createElement(
+                  'text',
+                  { y: '57' },
+                  'PRESS'
+                )
+              )
             )
-          )
-        ),
+          );
+        }),
         React.createElement('pre', { id: 'output' })
       );
     }
