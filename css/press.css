@@ -142,14 +142,14 @@ body {
 }
 
 
-#welcome svg, #press svg {
+#welcome svg, .press svg {
   font-size: 75px;
   padding-left: 3px;
   width: 66%;
   z-index: 2;
 }
 
-#welcome svg text, #press svg text{
+#welcome svg text, .press svg text{
   stroke-width:2px;
 }
 
@@ -158,6 +158,9 @@ body {
   position: relative;
   top: 0;
   left: 0;
+}
+.press svg {
+  position: fixed;
 }
 
 .homeDesktop text{
@@ -173,12 +176,8 @@ svg text {
 #n0 {
   z-index: 999999999;
 }
-.press {
-  font-size: 100px;
-}
-.press svg {
-  position: fixed;
-}
+
+
 
 /* end HOME */ /* (i think!) */
 
@@ -605,8 +604,9 @@ svg text {
   }
 
   #mobileStart .press {
-    /* background-color: red; */
+    background-color: red;
     /* font-size: 18vw; */
+    font-size: inherit;
     left: 0;
     position: fixed;
     top: 0;
@@ -614,8 +614,19 @@ svg text {
   }
 
   #mobileStart .press svg {
+    position: inherit;
     width: 66%;
   }
+
+  /* .press {
+    font-size: 100px;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .press svg {
+    position: fixed;
+  } */
 
 
   .mobileShop {
