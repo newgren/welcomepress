@@ -58,8 +58,8 @@ var MobileStart = function (_React$Component) {
       var maxY = garden.clientHeight - ball.clientHeight;
 
       function handleOrientation(event) {
-        var x = event.beta; // In degree in the range [-180,180]
-        var y = event.gamma; // In degree in the range [-90,90]
+        var x = event.gamma; // In degree in the range [-180,180]
+        var y = event.beta; // In degree in the range [-90,90]
 
         output.innerHTML = "beta : " + x + "\n";
         output.innerHTML += "gamma: " + y + "\n";
