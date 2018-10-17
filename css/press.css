@@ -613,7 +613,7 @@ svg text {
     width: 100%;
   }
 
-  #mobileStart #press svg {
+  #mobileStart .press svg {
     width: 66%;
   }
 

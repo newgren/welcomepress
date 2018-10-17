@@ -143,16 +143,12 @@ var MobileStart = function (_React$Component) {
             'div',
             { id: 'n' + j, key: j, className: 'press', ref: j === 0 ? 'elem' : '' },
             React.createElement(
-              'div',
-              { id: 'press', className: 'press' },
+              'svg',
+              { id: 'pressText', viewBox: '0 0 417 60' },
               React.createElement(
-                'svg',
-                { id: 'pressText', viewBox: '0 0 417 60' },
-                React.createElement(
-                  'text',
-                  { y: '57' },
-                  'PRESS'
-                )
+                'text',
+                { y: '57' },
+                'PRESS'
               )
             )
           );

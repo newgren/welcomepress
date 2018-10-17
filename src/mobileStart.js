@@ -100,11 +100,9 @@ class MobileStart extends React.Component {
           </div>
           {
             Array.apply(null, Array(tailLength)).map((i, j) => <div id={'n'+j} key={j} className='press' ref={j === 0 ? 'elem' : ''}>
-              <div id='press' className='press'>
-                <svg id='pressText' viewBox="0 0 417 60">
-                  <text y="57">PRESS</text>
-                </svg>
-              </div>
+              <svg id='pressText' viewBox="0 0 417 60">
+                <text y="57">PRESS</text>
+              </svg>
             </div>)
           }
           <pre id="output"></pre>
