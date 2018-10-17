@@ -70,7 +70,8 @@ var MobileStart = function (_React$Component) {
       var maxBeta = garden.clientHeight - ball.clientHeight;
       var maxTilt = 30; // max tilt magnitude
       var startBeta = null;
-
+      x = 20;
+      y = 20;
       function handleOrientation(event) {
         if (!startBeta) {
           startBeta = event.beta;

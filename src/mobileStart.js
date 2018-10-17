@@ -42,18 +42,19 @@ class MobileStart extends React.Component {
     // thing.style.left = (x - (thing.offsetWidth/4)) + "px";
     // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
-    var ball = document.getElementById('n0');
+    let ball = document.getElementById('n0');
     let ballHeight = ball.clientHeight;
     let ballWidth = ballHeight * 4.417519909;
 
-    var garden = document.getElementById('mobileStart');
-    var output = document.getElementById('output');
+    let garden = document.getElementById('mobileStart');
+    let output = document.getElementById('output');
 
-    var maxGamma = garden.clientWidth - ballWidth;
-    var maxBeta = garden.clientHeight - ball.clientHeight;
+    let maxGamma = garden.clientWidth - ballWidth;
+    let maxBeta = garden.clientHeight - ball.clientHeight;
     let maxTilt = 30; // max tilt magnitude
     let startBeta = null;
-
+    x = 20;
+    y = 20;
     function handleOrientation(event) {
       if(!startBeta) {
         startBeta = event.beta;
