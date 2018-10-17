@@ -43,14 +43,15 @@ class MobileStart extends React.Component {
     // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
     let ball = document.getElementById('n0');
-    let ballHeight = ball.clientHeight;
+    let ballText = document.getElementById('pressText0');
+    let ballHeight = ballText.clientHeight;
     let ballWidth = ballHeight * 4.417519909;
 
     let garden = document.getElementById('mobileStart');
     let output = document.getElementById('output');
 
     let maxGamma = garden.clientWidth - ballWidth;
-    let maxBeta = garden.clientHeight - ball.clientHeight;
+    let maxBeta = garden.clientHeight - ballText.clientHeight;
     let maxTilt = 30; // max tilt magnitude
     let startBeta = null;
     x = 20;
@@ -102,7 +103,7 @@ class MobileStart extends React.Component {
           </div>
           {
             Array.apply(null, Array(tailLength)).map((i, j) => <div id={'n'+j} key={j} className='press' ref={j === 0 ? 'elem' : ''}>
-              <svg id='pressText' viewBox="0 0 417 60">
+              <svg id={'pressText'+j} viewBox="0 0 417 60">
                 <text y="57">PRESS</text>
               </svg>
             </div>)

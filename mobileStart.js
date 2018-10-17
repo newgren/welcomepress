@@ -60,14 +60,15 @@ var MobileStart = function (_React$Component) {
       // thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
 
       var ball = document.getElementById('n0');
-      var ballHeight = ball.clientHeight;
+      var ballText = document.getElementById('pressText0');
+      var ballHeight = ballText.clientHeight;
       var ballWidth = ballHeight * 4.417519909;
 
       var garden = document.getElementById('mobileStart');
       var output = document.getElementById('output');
 
       var maxGamma = garden.clientWidth - ballWidth;
-      var maxBeta = garden.clientHeight - ball.clientHeight;
+      var maxBeta = garden.clientHeight - ballText.clientHeight;
       var maxTilt = 30; // max tilt magnitude
       var startBeta = null;
       x = 20;
@@ -146,7 +147,7 @@ var MobileStart = function (_React$Component) {
             { id: 'n' + j, key: j, className: 'press', ref: j === 0 ? 'elem' : '' },
             React.createElement(
               'svg',
-              { id: 'pressText', viewBox: '0 0 417 60' },
+              { id: 'pressText' + j, viewBox: '0 0 417 60' },
               React.createElement(
                 'text',
                 { y: '57' },
