@@ -32,8 +32,6 @@ var MobileStart = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       clearInterval(interval);
-      clearTimeout(timeout);
-      window.removeEventListener('mousemove', mousemoveHandler, false);
     }
   }, {
     key: 'componentDidMount',
@@ -47,7 +45,7 @@ var MobileStart = function (_React$Component) {
 
       var startLaggyAnimation = function startLaggyAnimation() {
         return window.setInterval(function () {
-          // i = ((i+1)%tailLength);
+          i = (i + 1) % tailLength;
           i = i === 0 ? 1 : i;
           var thing = document.getElementById('n' + i);
           thing.style.left = x + "px";
@@ -102,12 +100,12 @@ var MobileStart = function (_React$Component) {
         x = maxGamma * gamma / (maxTilt * 2);
         ball.style.left = x;
         ball.style.top = y;
-
         if (!animationIsActive) {
-          startLaggyAnimation();
+          interval = startLaggyAnimation();
           animationIsActive = true;
         }
       }
+
       window.addEventListener('deviceorientation', handleOrientation);
     }
   }, {

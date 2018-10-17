@@ -16,8 +16,6 @@ class MobileStart extends React.Component {
 
   componentWillUnmount() {
     clearInterval(interval);
-    clearTimeout(timeout);
-    window.removeEventListener('mousemove', mousemoveHandler, false);
   }
 
   componentDidMount() {
@@ -30,7 +28,7 @@ class MobileStart extends React.Component {
 
     let startLaggyAnimation = () => {
       return window.setInterval(() => {
-        // i = ((i+1)%tailLength);
+        i = ((i+1)%tailLength);
         i = i === 0 ? 1 : i;
         let thing = document.getElementById('n'+i);
         thing.style.left = x + "px";
@@ -77,12 +75,12 @@ class MobileStart extends React.Component {
       x = (maxGamma*gamma/(maxTilt*2));
       ball.style.left = x;
       ball.style.top = y;
-
       if(!animationIsActive) {
-        startLaggyAnimation();
+        interval = startLaggyAnimation();
         animationIsActive = true;
       }
     }
+
     window.addEventListener('deviceorientation', handleOrientation);
   }
 
