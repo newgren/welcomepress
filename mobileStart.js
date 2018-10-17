@@ -66,22 +66,22 @@ var MobileStart = function (_React$Component) {
 
         // Because we don't want to have the device upside down
         // We constrain the x value to the range [-90,90]
-        if (x > 90) {
-          x = 90;
+        if (x > 45) {
+          x = 45;
         };
-        if (x < -90) {
-          x = -90;
+        if (x < -45) {
+          x = -45;
         };
 
         // To make computation easier we shift the range of
         // x and y to [0,180]
-        x += 90;
-        y += 90;
+        x += 45;
+        y += 45;
 
         // 10 is half the size of the ball
         // It center the positioning point to the center of the ball
-        ball.style.top = maxY * y / 180 + "px";
-        ball.style.left = maxX * x / 180 + "px";
+        ball.style.top = maxY * y / 90 + "px";
+        ball.style.left = maxX * x / 90 + "px";
       }
 
       window.addEventListener('deviceorientation', handleOrientation);
