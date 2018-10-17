@@ -62,9 +62,6 @@ class MobileStart extends React.Component {
       let gamma = event.gamma;  // In degree in the range [-180,180]
       let beta = event.beta - startBeta; // In degree in the range [-90,90]
 
-      output.innerHTML  = "beta : " + gamma + "\n";
-      output.innerHTML += "gamma: " + beta + "\n";
-
       // Because we don't want to have the device upside down
       // We constrain the x value to a range
       if (gamma > maxTilt) { gamma =  maxTilt};
@@ -81,6 +78,9 @@ class MobileStart extends React.Component {
       // It center the positioning point to the center of the ball
       y  = (maxBeta*(beta)/(maxTilt*2));
       x = (maxGamma*gamma/(maxTilt*2));
+
+      output.innerHTML  = "x : " + x + "\n";
+      output.innerHTML += "y: " + y + "\n";
     }
 
     window.addEventListener('deviceorientation', handleOrientation);
