@@ -1,7 +1,7 @@
 'use strict';
 
 import MobileItem from './mobileItem.js';
-import Bag from './bag.js';
+import MobileBag from './mobileBag.js';
 
 import catalog from './product/catalog.js';
 
@@ -119,9 +119,15 @@ class MobileShop extends React.Component {
                  onClick={() => this.handleBack()} />
             <img src='./iconImages/SHOP.png' id='shopBannerText' />
           </div>
-          {catalog.items.map((item, id) =>
-            <MobileItem item={item} addToCart={() => this.setState({sel: id})} key={item.name}/>
-          )}
+          {
+            this.state.mode == 'browse' ?
+              catalog.items.map((item, id) =>
+                <MobileItem item={item} addToCart={(size, qty) => this.addToCart(id, size, qty)} key={item.name}/>
+              )
+            :
+              <MobileBag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />
+          }
+
         </div>
         <div className='buyBox'>
 

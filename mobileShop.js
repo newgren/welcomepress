@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import MobileItem from './mobileItem.js';
-import Bag from './bag.js';
+import MobileBag from './mobileBag.js';
 
 import catalog from './product/catalog.js';
 
@@ -152,11 +152,13 @@ var MobileShop = function (_React$Component) {
               } }),
             React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' })
           ),
-          catalog.items.map(function (item, id) {
-            return React.createElement(MobileItem, { item: item, addToCart: function addToCart() {
-                return _this2.setState({ sel: id });
+          this.state.mode == 'browse' ? catalog.items.map(function (item, id) {
+            return React.createElement(MobileItem, { item: item, addToCart: function addToCart(size, qty) {
+                return _this2.addToCart(id, size, qty);
               }, key: item.name });
-          })
+          }) : React.createElement(MobileBag, { cart: this.state.cart, remove: function remove(index, size) {
+              return _this2.removeFromCart(index, size);
+            } })
         ),
         React.createElement('div', { className: 'buyBox' })
       );

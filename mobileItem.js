@@ -19,6 +19,7 @@ var MobileItem = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (MobileItem.__proto__ || Object.getPrototypeOf(MobileItem)).call(this, props));
 
+    _this.addToCart = props.addToCart;
     _this.item = props.item;
     _this.no = props.no;
     _this.state = {
@@ -79,7 +80,8 @@ var MobileItem = function (_React$Component) {
               'div',
               { key: s,
                 onClick: function onClick() {
-                  return _this2.setState({ size: s, sizeError: false });
+                  _this2.setState({ size: s, sizeError: false });
+                  _this2.addToCart(_this2.state.size, _this2.state.qty);
                 },
                 className: s == _this2.state.size ? 'selected' : ''
               },

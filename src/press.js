@@ -8,15 +8,14 @@ import Shop from './shop.js'
 
 import MobileStart from './mobileStart.js'
 import MobileShop from './mobileShop.js'
-
-
+import MobileBag from './mobileBag.js'
 
 class Press extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mode: 'start',
+      mode: 'shop',
       homeEntered: 'false',
       windowWidth: 0,
     };
@@ -41,7 +40,16 @@ class Press extends React.Component {
 
   render() {
     if(this.state.windowWidth < 650) {
-      return <MobileStart />
+      switch (this.state.mode) {
+        case 'start':
+          return <MobileStart />
+          break;
+        case 'shop':
+          return <MobileShop />
+          break;
+        default:
+          return <MobileStart />
+      }
     } else {
       switch (this.state.mode) {
         case 'start':

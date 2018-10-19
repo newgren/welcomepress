@@ -124,7 +124,7 @@ var Item = function (_React$Component) {
                   _this2.setState({ sizeError: true });
                 } else {
                   _this2.setState({ sizeError: false });
-                  _this2.props.add(_this2.state.size, _this2.state.qty);
+                  _this2.addToCart(_this2.state.size, _this2.state.qty);
                 }
               } },
             'ADD TO BAG'

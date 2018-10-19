@@ -149,7 +149,7 @@ class Shop extends React.Component {
             )
             :
               <Item item={catalog.items[this.state.sel]}
-                    add={(size, qty) => this.addToCart(this.state.sel, size, qty)}
+                    addToCart={(size, qty) => this.addToCart(this.state.sel, size, qty)}
               />
           }
           <div className='mobile itemList'>

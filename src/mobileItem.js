@@ -6,6 +6,7 @@ const n = <br/>
 class MobileItem extends React.Component {
   constructor(props) {
     super(props);
+    this.addToCart = props.addToCart;
     this.item = props.item;
     this.no = props.no;
     this.state = {
@@ -44,7 +45,10 @@ class MobileItem extends React.Component {
               <div className='low sizebar'>
                 {['S','M','L','XL'].map((s) =>
                   <div key={s}
-                       onClick={() => this.setState({size: s, sizeError: false})}
+                       onClick={() => {
+                         this.setState({size: s, sizeError: false});
+                         this.addToCart(this.state.size, this.state.qty);
+                       }}
                        className={s == this.state.size ? 'selected' : ''}
                   >
                     <span>{s}</span>

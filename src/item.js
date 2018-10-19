@@ -63,7 +63,7 @@ class Item extends React.Component {
                   this.setState({sizeError: true})
                 } else {
                   this.setState({sizeError: false})
-                  this.props.add(this.state.size, this.state.qty)
+                  this.addToCart(this.state.size, this.state.qty)
                 }
               }}>
                 ADD TO BAG

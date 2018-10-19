@@ -16,6 +16,7 @@ import Shop from './shop.js';
 
 import MobileStart from './mobileStart.js';
 import MobileShop from './mobileShop.js';
+import MobileBag from './mobileBag.js';
 
 var Press = function (_React$Component) {
   _inherits(Press, _React$Component);
@@ -26,7 +27,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      mode: 'start',
+      mode: 'shop',
       homeEntered: 'false',
       windowWidth: 0
     };
@@ -60,7 +61,16 @@ var Press = function (_React$Component) {
       var _this2 = this;
 
       if (this.state.windowWidth < 650) {
-        return React.createElement(MobileStart, null);
+        switch (this.state.mode) {
+          case 'start':
+            return React.createElement(MobileStart, null);
+            break;
+          case 'shop':
+            return React.createElement(MobileShop, null);
+            break;
+          default:
+            return React.createElement(MobileStart, null);
+        }
       } else {
         switch (this.state.mode) {
           case 'start':

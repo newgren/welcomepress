@@ -186,7 +186,7 @@ var Shop = function (_React$Component) {
           ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
               return _this2.removeFromCart(index, size);
             } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
-            add: function add(size, qty) {
+            addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }
           }),
