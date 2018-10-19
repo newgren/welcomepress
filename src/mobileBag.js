@@ -44,6 +44,7 @@ class MobileBag extends React.Component {
   }
 
   render() {
+    console.log(this.cart);
     return (
       <div className='bag'>
         <div className='items'>

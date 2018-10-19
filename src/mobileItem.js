@@ -47,7 +47,7 @@ class MobileItem extends React.Component {
                   <div key={s}
                        onClick={() => {
                          this.setState({size: s, sizeError: false});
-                         this.addToCart(this.state.size, this.state.qty);
+                         this.addToCart(s, 1);
                        }}
                        className={s == this.state.size ? 'selected' : ''}
                   >

@@ -81,7 +81,7 @@ var MobileItem = function (_React$Component) {
               { key: s,
                 onClick: function onClick() {
                   _this2.setState({ size: s, sizeError: false });
-                  _this2.addToCart(_this2.state.size, _this2.state.qty);
+                  _this2.addToCart(s, 1);
                 },
                 className: s == _this2.state.size ? 'selected' : ''
               },

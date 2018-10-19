@@ -67,6 +67,7 @@ var MobileBag = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      console.log(this.cart);
       return React.createElement(
         'div',
         { className: 'bag' },
