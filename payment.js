@@ -73,7 +73,7 @@ var Payment = function (_React$Component) {
         React.createElement(
           'button',
           { id: 'submit-button' },
-          'Request payment method [NEW]'
+          'Request payment method [NEW!]'
         )
       );
     }
