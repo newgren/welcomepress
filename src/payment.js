@@ -33,12 +33,12 @@ class Payment extends React.Component {
             }
 
             // Send payload.nonce to your server
-            let params = payload.nonce;
+            let params = payload;//payload.nonce;
             console.log(params);
 
 
             const Http = new XMLHttpRequest();
-            const url='http://' +server +':'+port+'/checkout';
+            const url='https://' +server +':'+port+'/checkout';
             Http.open("POST", url);
             // Http.setRequestHeader("Access-Control-Allow-Origin", "*");
             // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
