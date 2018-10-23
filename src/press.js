@@ -17,7 +17,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'payment',
+      mode: 'shop',
       homeEntered: 'false',
       windowWidth: 0,
     };
