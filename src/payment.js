@@ -1,8 +1,8 @@
 'use strict';
 
 const e = React.createElement;
-const server = '178.128.145.7';
-const port = '3000';
+const server = 'welcomepresspayment.tk';
+const port = '443';
 
 class Payment extends React.Component {
   constructor(props) {
