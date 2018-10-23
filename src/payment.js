@@ -33,7 +33,7 @@ class Payment extends React.Component {
             }
 
             // Send payload.nonce to your server
-            let params = payload;//payload.nonce;
+            let params = payload.nonce;
             console.log(params);
 
 
@@ -55,7 +55,7 @@ class Payment extends React.Component {
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
-        <button id="submit-button">Request payment method [NEW!]</button>
+        <button id="submit-button">Request payment method [NEW.]</button>
       </div>
     );
   }

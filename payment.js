@@ -47,7 +47,7 @@ var Payment = function (_React$Component) {
             }
 
             // Send payload.nonce to your server
-            var params = payload; //payload.nonce;
+            var params = payload.nonce;
             console.log(params);
 
             var Http = new XMLHttpRequest();
@@ -73,7 +73,7 @@ var Payment = function (_React$Component) {
         React.createElement(
           'button',
           { id: 'submit-button' },
-          'Request payment method [NEW!]'
+          'Request payment method [NEW.]'
         )
       );
     }
