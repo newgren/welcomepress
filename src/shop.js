@@ -18,7 +18,10 @@ class Shop extends React.Component {
       mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout'
       pos: 0,
       sel: -1,
-      cart: {0: {'L': 1}, 1: {'M': 5}}
+      cart: {
+        0: {'L': 1},
+        1: {'M': 5}
+      }
     };
   }
 

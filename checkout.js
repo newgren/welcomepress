@@ -26,8 +26,22 @@ var Checkout = function (_React$Component) {
     _this.cart = props.cart;
     _this.remove = props.remove;
     _this.buttonRef = React.createRef();
+    _this.handleInputChange = _this.handleInputChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.state = {
-      mode: 'shipping' // 'shipping' | 'payment'
+      mode: 'shipping', // 'shipping' | 'payment'
+      addressVerificationError: false,
+      ship: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        street1: '',
+        street2: '',
+        city: '',
+        state: '',
+        zip5: '',
+        country: 'USA'
+      }
     };
     return _this;
   }
@@ -56,35 +70,6 @@ var Checkout = function (_React$Component) {
   }, {
     key: 'getShipping',
     value: function getShipping() {
-      var pounds = 0;
-      var ounces = 6;
-      var userid = "711WELCO2258"; //"[userid]";
-      var url = "http://production.shippingapis.com/ShippingAPI.dll?\
-API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
-<Revision>2</Revision>\
-<Package ID=\"1ST\"><Service>FIRST CLASS</Service>\
-<FirstClassMailType>FLAT</FirstClassMailType>\
-<ZipOrigination>61801</ZipOrigination>\
-<ZipDestination>04019</ZipDestination>\
-<Pounds>0</Pounds>\
-<Ounces>6</Ounces>\
-<Container/>\
-<Size>REGULAR</Size>\
-<Machinable>true</Machinable>\
-</Package>\
-</RateV4Request>";
-
-      console.log(String(url));
-      var http = new XMLHttpRequest();
-      http.open("GET", url);
-      //http.setRequestHeader("Access-Control-Allow-Origin", "*");
-      // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      http.send();
-      http.onreadystatechange = function (e) {
-        console.log(http.responseText);
-      };
-
-      // TODO: get shipping price from returned XML
       return 2.05;
     }
   }, {
@@ -93,10 +78,55 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
       return this.getSubtotal() + this.getShipping();
     }
   }, {
+    key: 'verifyAddress',
+    value: function verifyAddress() {
+      var userid = "711WELCO2258"; //"[userid]";
+      var url = 'http://production.shippingapis.com/ShippingAPITest.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
+
+      console.log(url);
+      var http = new XMLHttpRequest();
+      http.open("GET", url);
+      http.send();
+      http.onreadystatechange = function (e) {
+        console.log(http.status);
+        if (http.readyState === 4 && http.status === 200) {
+          var xml = http.responseXML;
+          var valid = xml.getElementsByTagName("Error").length === 0;
+          console.log('valid: ' + valid);
+          return true;
+        } else {
+          return false;
+        }
+      };
+      return false;
+    }
+  }, {
+    key: 'handleInputChange',
+    value: function handleInputChange(event) {
+      var ship = this.state.ship;
+      var target = event.target;
+      var value = target.type === 'checkbox' ? target.checked : target.value;
+      var name = target.name;
+
+      ship[name] = value;
+      this.setState({ ship: ship });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+
+      if (this.verifyAddress()) {
+        console.log(this.state.ship);
+        this.setState({ addressVerificationError: false });
+        this.setState({ mode: 'payment' });
+      } else {
+        console.log('Invalid Address');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return React.createElement(
         'div',
         { className: 'checkout' },
@@ -110,10 +140,14 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
             { className: 'formform' },
             React.createElement(
               'form',
-              { id: 'finalform' },
+              { id: 'finalform', onSubmit: this.handleSubmit },
               'email*:',
               React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'email' }),
+              React.createElement('input', {
+                type: 'text',
+                name: 'email',
+                value: this.state.ship.email,
+                onChange: this.handleInputChange }),
               React.createElement('br', null),
               React.createElement(
                 'div',
@@ -123,23 +157,35 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
                   { className: 'one' },
                   'first name*:',
                   React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'firstname' })
+                  React.createElement('input', {
+                    type: 'text',
+                    name: 'firstName',
+                    value: this.state.ship.firstName,
+                    onChange: this.handleInputChange })
                 ),
                 React.createElement(
                   'div',
                   { className: 'two' },
                   'last name*:',
                   React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'lastname' })
+                  React.createElement('input', {
+                    type: 'text',
+                    name: 'lastName',
+                    value: this.state.ship.lastName,
+                    onChange: this.handleInputChange })
                 )
               ),
               'street address*:',
               React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'streetaddress' }),
+              React.createElement('input', { type: 'text', name: 'street1',
+                value: this.state.ship.street1,
+                onChange: this.handleInputChange }),
               React.createElement('br', null),
               'address2:',
               React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'streetaddress2' }),
+              React.createElement('input', { type: 'text', name: 'street2',
+                value: this.state.ship.street2,
+                onChange: this.handleInputChange }),
               React.createElement('br', null),
               React.createElement(
                 'div',
@@ -149,14 +195,18 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
                   { className: 'one' },
                   'city*:',
                   React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'city' })
+                  React.createElement('input', { type: 'text', name: 'city',
+                    value: this.state.ship.city,
+                    onChange: this.handleInputChange })
                 ),
                 React.createElement(
                   'div',
                   { className: 'two' },
                   'state*:',
                   React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'state' })
+                  React.createElement('input', { type: 'text', name: 'state',
+                    value: this.state.ship.state,
+                    onChange: this.handleInputChange })
                 )
               ),
               React.createElement(
@@ -167,7 +217,9 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
                   { className: 'one' },
                   'zip code*:',
                   React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'zip' })
+                  React.createElement('input', { type: 'text', name: 'zip5',
+                    value: this.state.ship.zip5,
+                    onChange: this.handleInputChange })
                 ),
                 React.createElement(
                   'div',
@@ -246,13 +298,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
             'button',
             { type: 'button',
               ref: this.buttonRef,
-              onClick: function onClick() {
-                var data = new FormData(document.getElementById('finalform'));
-                console.log(data.get('email'));
-                var currentMode = _this2.state.mode;
-                console.log(currentMode);
-                _this2.setState({ mode: 'payment' });
-              } },
+              onClick: this.handleSubmit },
             this.state.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
         )

@@ -592,11 +592,15 @@ svg text {
   font-size: 1.5vw;
   height: 3vw;
   margin-bottom: 1vw;
+  padding-left: 1vw;
   width: 100%;
 }
 
-.checkout input {
-  padding-left: 1vw;
+.checkout input:-webkit-autofill, .checkout select:-webkit-autofill {
+  /* Change the white to any color  */
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  /* Change text in autofill textbox */
+  -webkit-text-fill-color: blue !important;
 }
 
 .formform select {

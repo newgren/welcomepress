@@ -14,8 +14,22 @@ class Checkout extends React.Component {
     this.cart = props.cart;
     this.remove = props.remove;
     this.buttonRef = React.createRef();
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      mode: 'shipping' // 'shipping' | 'payment'
+      mode: 'shipping', // 'shipping' | 'payment'
+      addressVerificationError: false,
+      ship: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        street1: '',
+        street2: '',
+        city: '',
+        state: '',
+        zip5: '',
+        country: 'USA'
+      }
     }
   }
 
@@ -39,42 +53,72 @@ class Checkout extends React.Component {
   }
 
   getShipping() {
-    let pounds = 0;
-    let ounces = 6;
-    let userid = "711WELCO2258"; //"[userid]";
-    let url = "http://production.shippingapis.com/ShippingAPI.dll?\
-API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
-<Revision>2</Revision>\
-<Package ID=\"1ST\"><Service>FIRST CLASS</Service>\
-<FirstClassMailType>FLAT</FirstClassMailType>\
-<ZipOrigination>61801</ZipOrigination>\
-<ZipDestination>04019</ZipDestination>\
-<Pounds>0</Pounds>\
-<Ounces>6</Ounces>\
-<Container/>\
-<Size>REGULAR</Size>\
-<Machinable>true</Machinable>\
-</Package>\
-</RateV4Request>";
-
-
-    console.log(String(url));
-    const http = new XMLHttpRequest();
-    http.open("GET", url);
-    //http.setRequestHeader("Access-Control-Allow-Origin", "*");
-    // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    http.send();
-    http.onreadystatechange = (e) => {
-      console.log(http.responseText);
-    }
-
-      // TODO: get shipping price from returned XML
     return 2.05;
   }
 
   getTotal() {
     return this.getSubtotal() + this.getShipping();
   }
+
+  async verifyAddress() {
+    let userid = "711WELCO2258"; //"[userid]";
+    let url = `http://production.shippingapis.com/ShippingAPITest.dll\
+    ?API=Verify\
+    &XML=\
+    <AddressValidateRequest USERID="${userid}">\
+      <Address ID="0">\
+        <Address1>${this.state.ship.street1}</Address1>\
+        <Address2>${this.state.ship.street2}</Address2>\
+        <City>${this.state.ship.city}</City>\
+        <State>${this.state.ship.state}</State>\
+        <Zip5>${this.state.ship.zip5}</Zip5>\
+        <Zip4></Zip4>\
+      </Address>\
+    </AddressValidateRequest>`;
+
+    console.log(url);
+    const http = new XMLHttpRequest();
+    http.open("GET", url);
+    http.send();
+    http.onreadystatechange = (e) => {
+      console.log(http.status);
+      if(http.readyState === 4 && http.status === 200) {
+        let xml = http.responseXML;
+        let valid = xml.getElementsByTagName("Error").length === 0;
+        console.log('valid: ' + valid);
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  handleInputChange(event) {
+    let ship = this.state.ship;
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    ship[name] =  value;
+    this.setState({ship: ship});
+  }
+
+  // **** * ****
+  // ***** TODO async
+
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let valid = await this.verifyAddress();
+    if(valid) {
+      console.log(this.state.ship);
+      this.setState({addressVerificationError: false});
+      this.setState({mode: 'payment'});
+    } else {
+      console.log('Invalid Address');
+    }
+ }
 
   render() {
     return (
@@ -84,37 +128,59 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
           this.state.mode == 'shipping' ?
             // SHIPPING
             <div className='formform'>
-              <form id='finalform'>
+              <form id='finalform' onSubmit={this.handleSubmit}>
                 email*:<br/>
-                <input type="text" name="email"/><br/>
+                <input
+                  type="text"
+                  name="email"
+                  value={this.state.ship.email}
+                  onChange={this.handleInputChange}/><br/>
                 <div className='twofer'>
                   <div className='one'>
                     first name*:<br/>
-                    <input type="text" name="firstname"/>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={this.state.ship.firstName}
+                      onChange={this.handleInputChange}/>
                   </div>
                   <div className='two'>
                     last name*:<br/>
-                    <input type="text" name="lastname"/>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={this.state.ship.lastName}
+                      onChange={this.handleInputChange}/>
                   </div>
                 </div>
                 street address*:<br/>
-                <input type="text" name="streetaddress"/><br/>
+              <input type="text" name="street1"
+                  value={this.state.ship.street1}
+                  onChange={this.handleInputChange}/><br/>
                 address2:<br/>
-                <input type="text" name="streetaddress2"/><br/>
+                <input type="text" name="street2"
+                  value={this.state.ship.street2}
+                  onChange={this.handleInputChange}/><br/>
                 <div className='twofer'>
                   <div className='one'>
                     city*:<br/>
-                    <input type="text" name="city"/>
+                    <input type="text" name="city"
+                      value={this.state.ship.city}
+                      onChange={this.handleInputChange}/>
                   </div>
                   <div className='two'>
                     state*:<br/>
-                    <input type="text" name="state"/>
+                    <input type="text" name="state"
+                      value={this.state.ship.state}
+                      onChange={this.handleInputChange}/>
                   </div>
                 </div>
                 <div className='twofer'>
                   <div className='one'>
                     zip code*:<br/>
-                    <input type="text" name="zip"/>
+                    <input type="text" name="zip5"
+                      value={this.state.ship.zip5}
+                      onChange={this.handleInputChange}/>
                   </div>
                   <div className='two'>
                     country*:<br/>
@@ -146,13 +212,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
           </div>
           <button type='button'
                   ref={this.buttonRef}
-                  onClick={()=> {
-                    let data = new FormData(document.getElementById('finalform'));
-                    console.log(data.get('email'));
-                    let currentMode = this.state.mode;
-                    console.log(currentMode);
-                    this.setState({mode: 'payment'});
-                  }}>
+                  onClick={this.handleSubmit}>
             {
               this.state.mode == 'shipping' ?
                 "CONTINUE TO PAYMENT"
