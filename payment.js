@@ -18,13 +18,17 @@ var Payment = function (_React$Component) {
   function Payment(props) {
     _classCallCheck(this, Payment);
 
-    return _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
+
+    _this.payTrigger = props.payTrigger;
+    _this.buttonRef = props.buttonRef;
+    return _this;
   }
 
   _createClass(Payment, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var submitButton = document.querySelector('#submit-button');
+      var submitButton = this.buttonRef.current;
 
       braintree.dropin.create({
         authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
@@ -66,15 +70,11 @@ var Payment = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      this.props.payTrigger == true ? {} : {};
       return React.createElement(
         'div',
         { className: 'payment' },
-        React.createElement('div', { id: 'dropin-container' }),
-        React.createElement(
-          'button',
-          { id: 'submit-button' },
-          'Request payment method [NEW..!]'
-        )
+        React.createElement('div', { id: 'dropin-container' })
       );
     }
   }]);

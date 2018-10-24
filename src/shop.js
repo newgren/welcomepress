@@ -2,6 +2,8 @@
 
 import Item from './item.js';
 import Bag from './bag.js';
+import Checkout from './checkout.js';
+
 
 import catalog from './product/catalog.js';
 
@@ -13,7 +15,7 @@ class Shop extends React.Component {
     this.goToBag = props.goToBag;
     this.goToHome = props.goToHome;
     this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout'
       pos: 0,
       sel: -1,
       cart: {0: {'L': 1}, 1: {'M': 5}}
@@ -145,8 +147,11 @@ class Shop extends React.Component {
                   )}
                 </div>
               :
-                <Bag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />
-            )
+                this.state.mode == 'bag' ?
+                  <Bag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />
+                  :
+                  <Checkout cart={this.state.cart}/>
+              )
             :
               <Item item={catalog.items[this.state.sel]}
                     addToCart={(size, qty) => this.addToCart(this.state.sel, size, qty)}

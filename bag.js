@@ -53,14 +53,9 @@ var Bag = function (_React$Component) {
       return 9.0;
     }
   }, {
-    key: 'getEstimatedTax',
-    value: function getEstimatedTax() {
-      return this.formatMoney(0.07 * this.getSubtotal());
-    }
-  }, {
     key: 'getTotal',
     value: function getTotal() {
-      return this.getSubtotal() + this.getShipping() + this.getEstimatedTax();
+      return this.getSubtotal() + this.getShipping();
     }
   }, {
     key: 'render',
@@ -150,21 +145,6 @@ var Bag = function (_React$Component) {
               { className: 'val' },
               '$',
               this.getShipping()
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'bar' },
-            React.createElement(
-              'span',
-              { className: 'key' },
-              'estimated tax'
-            ),
-            React.createElement(
-              'span',
-              { className: 'val' },
-              '$',
-              this.getEstimatedTax()
             )
           ),
           React.createElement(

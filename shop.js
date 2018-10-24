@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import Item from './item.js';
 import Bag from './bag.js';
+import Checkout from './checkout.js';
 
 import catalog from './product/catalog.js';
 
@@ -26,7 +27,7 @@ var Shop = function (_React$Component) {
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout'
       pos: 0,
       sel: -1,
       cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
@@ -183,9 +184,9 @@ var Shop = function (_React$Component) {
                   return _this2.setState({ sel: id, mode: 'item' });
                 }, key: item.name });
             })
-          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
+          ) : this.state.mode == 'bag' ? React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
               return _this2.removeFromCart(index, size);
-            } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
+            } }) : React.createElement(Checkout, { cart: this.state.cart }) : React.createElement(Item, { item: catalog.items[this.state.sel],
             addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }

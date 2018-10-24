@@ -291,18 +291,17 @@ svg text {
 }
 
   /* begin BAG (child of SHOP)*/
-  .shop .bag {
+  .shop .bag, .shop .checkout {
     display: flex;
     font-size: 1.9vw;
-
     height: 82%;
   }
 
-  .shop .bag > div {
+  .shop .bag > div, .shop .checkout > div {
     padding: 0 2vw;
   }
 
-  .bag .items {
+  .bag .items, .checkout .left {
     flex: 7;
   }
 
@@ -361,13 +360,13 @@ svg text {
   }
 
 
-  .bag .summary {
+  .summary {
     color: blue;
     flex: 3;
     font-family: questrial;
   }
 
-  .bag .summary .title {
+  .summary .title {
     border-bottom: 0.4vh solid blue;
     display: block;
     font-family: galderglynn;
@@ -376,28 +375,28 @@ svg text {
     width: 100%;
   }
 
-  .bag .summary .bar {
+  .summary .bar {
     padding: 0.8vh 0;
   }
 
-  .bag .summary .bar:first-of-type {
+  .summary .bar:first-of-type {
     padding-top: 2.5vh;
   }
-  .bag .summary .bar:nth-of-type(3) {
+  .summary .bar:nth-of-type(3) {
     border-bottom: 0.4vh solid blue;
     padding-bottom: 2.5vh;
   }
-  .bag .summary .bar:nth-of-type(4) {
+  .summary .bar:nth-of-type(4) {
     padding: 2.5vh 0;
   }
 
-  .bag .summary .bar .key {
+  .summary .bar .key {
   }
-  .bag .summary .bar .val {
+  .summary .bar .val {
     float: right;
   }
 
-  .bag .summary button {
+  .summary button {
     background-color: blue;
     border: 0;
     color:white;
@@ -407,14 +406,14 @@ svg text {
     width: 100%;
   }
 
-  .bag .summary button:active {
+  .summary button:active {
     background-color: yellow;
     color:blue;
   }
-  .bag .summary button:focus {
+  .summary button:focus {
     outline: 0;
   }
-  .bag .summary > img {
+  .summary > img {
     width: 100%;
   }
 
@@ -575,6 +574,77 @@ svg text {
 .item .right #sizeError.visible {
 
 }
+
+.checkout {
+  color: blue;
+  font-family: questrial;
+}
+
+.checkout > .formform {
+  font-size: 1.5vw;
+  width: 100%;
+}
+
+.checkout input {
+  border: 0.2vw solid blue;
+  color:blue;
+  font-family: questrial;
+  font-size: 1.5vw;
+  height: 3vw;
+  margin-bottom: 1vw;
+  width: 100%;
+}
+
+.checkout input {
+  padding-left: 1vw;
+}
+
+.formform select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: white;
+  border: 0.2vw solid blue;
+  border-radius: 0;
+  color:blue;
+  font-family: questrial;
+  font-size: 1.5vw;
+  height: 3vw;
+  margin-bottom: 2vh;
+  padding: 0.5vw 1vw;
+  width: 100%;
+  /* size:4; */
+
+  /* arrow things */
+  background: url('../iconImages/select_arrow_desktop.png');
+  background-position: right 1.7vw center;
+  background-repeat: no-repeat;
+  background-size: 1vw;
+}
+
+.formform select option {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: yellow;
+}
+
+.checkout .twofer {
+  display: flex;
+  width: 100%;
+}
+
+.checkout .twofer > div {
+  flex: 1;
+}
+.checkout .twofer > .one {
+  padding-right: 1vw;
+}
+.checkout .twofer > .two {
+  padding-left: 1vw;
+}
+
 /*
 .bagItem {
   max-height: 150px;

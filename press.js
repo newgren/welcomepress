@@ -13,7 +13,6 @@ var e = React.createElement;
 import Start from './start.js';
 import Home from './home.js';
 import Shop from './shop.js';
-import Payment from './payment.js';
 
 import MobileStart from './mobileStart.js';
 import MobileShop from './mobileShop.js';

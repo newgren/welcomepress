@@ -7,10 +7,12 @@ const port = '443';
 class Payment extends React.Component {
   constructor(props) {
     super(props);
+    this.payTrigger = props.payTrigger;
+    this.buttonRef = props.buttonRef;
   }
 
   componentDidMount() {
-    var submitButton = document.querySelector('#submit-button');
+    var submitButton = this.buttonRef.current;
 
       braintree.dropin.create({
         authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
@@ -52,10 +54,12 @@ class Payment extends React.Component {
   }
 
   render() {
+    this.props.payTrigger == true ? {
+
+    } : {}
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
-        <button id="submit-button">Request payment method [NEW..!]</button>
       </div>
     );
   }
