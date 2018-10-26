@@ -27,10 +27,15 @@ var Checkout = function (_React$Component) {
     _this.remove = props.remove;
     _this.buttonRef = React.createRef();
     _this.handleInputChange = _this.handleInputChange.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleShippingSubmit = _this.handleShippingSubmit.bind(_this);
+    _this.handlePaymentSuccess = _this.handlePaymentSuccess.bind(_this);
+    _this.mode = props.mode; // 'shipping' | 'payment'
+    _this.setCheckoutMode = props.setMode;
+    _this.completeCheckout = props.completeCheckout;
     _this.state = {
-      mode: 'shipping', // 'shipping' | 'payment'
-      addressVerificationError: false,
+      invalidShippingAddressError: false,
+      invalidEmailAddressError: false,
+      shippingInfoIsValidated: false,
       ship: {
         email: '',
         firstName: '',
@@ -54,6 +59,8 @@ var Checkout = function (_React$Component) {
   }, {
     key: 'getSubtotal',
     value: function getSubtotal() {
+      //TODO: this function seems to be called way more times than it should...
+      // potential problem with state update
       var cart = this.cart;
       var keys = Object.keys(cart);
       var subtotal = 0;
@@ -78,8 +85,8 @@ var Checkout = function (_React$Component) {
       return this.getSubtotal() + this.getShipping();
     }
   }, {
-    key: 'verifyAddress',
-    value: function verifyAddress() {
+    key: 'verifyShippingAddress',
+    value: function verifyShippingAddress(callbackTrue, callbackFalse) {
       var userid = "711WELCO2258"; //"[userid]";
       var url = 'http://production.shippingapis.com/ShippingAPITest.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
 
@@ -88,17 +95,20 @@ var Checkout = function (_React$Component) {
       http.open("GET", url);
       http.send();
       http.onreadystatechange = function (e) {
-        console.log(http.status);
+        // console.log('HTTP STATUS: ' + http.status);
+        // console.log('HTTP RDYSTATE: ' + http.readyState);
         if (http.readyState === 4 && http.status === 200) {
           var xml = http.responseXML;
           var valid = xml.getElementsByTagName("Error").length === 0;
-          console.log('valid: ' + valid);
-          return true;
-        } else {
-          return false;
+          valid ? callbackTrue() : callbackFalse();
         }
       };
-      return false;
+    }
+  }, {
+    key: 'validateEmail',
+    value: function validateEmail(email) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return regex.test(String(email).toLowerCase());
     }
   }, {
     key: 'handleInputChange',
@@ -111,36 +121,72 @@ var Checkout = function (_React$Component) {
       ship[name] = value;
       this.setState({ ship: ship });
     }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      event.preventDefault();
 
-      if (this.verifyAddress()) {
-        console.log(this.state.ship);
-        this.setState({ addressVerificationError: false });
-        this.setState({ mode: 'payment' });
+    // **** * ****
+    // ***** TODO async
+
+
+  }, {
+    key: 'handleShippingSubmit',
+    value: function handleShippingSubmit(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      this.setState({ shippingInfoIsValidated: false }); // just in case
+      if (this.validateEmail(this.state.ship.email)) {
+        this.setState({ invalidEmailAddressError: false });
+        console.log('VALID EMAIL');
       } else {
-        console.log('Invalid Address');
+        this.setState({ invalidEmailAddressError: true });
+        console.log('INVALID EMAIL');
+        return;
       }
+      var valid = this.verifyShippingAddress(function () {
+        // true callback
+        _this2.setState({
+          shippingInfoIsValidated: true, // all info validated only at this point
+          invalidShippingAddressError: false
+        });
+        _this2.setCheckoutMode('payment');
+        console.log('VALID SHIPPING ADDRESS');
+      }, function () {
+        // false callback
+        _this2.setState({
+          shippingInfoIsValidated: false,
+          invalidShippingAddressError: true
+        });
+        console.log('INVALID SHIPPING ADDRESS');
+      });
+    }
+  }, {
+    key: 'handlePaymentSuccess',
+    value: function handlePaymentSuccess() {
+      this.completeCheckout();
+    }
+  }, {
+    key: 'handlePaymentFailure',
+    value: function handlePaymentFailure() {
+      alert('Payment did not complete properly. Please try again.');
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       return React.createElement(
         'div',
         { className: 'checkout' },
         React.createElement(
           'div',
           { className: 'left' },
-          this.state.mode == 'shipping' ?
+          this.props.mode == 'shipping' ?
           // SHIPPING
           React.createElement(
             'div',
             { className: 'formform' },
             React.createElement(
               'form',
-              { id: 'finalform', onSubmit: this.handleSubmit },
+              { id: 'finalform', onSubmit: this.handleShippingSubmit },
               'email*:',
               React.createElement('br', null),
               React.createElement('input', {
@@ -236,10 +282,48 @@ var Checkout = function (_React$Component) {
                     )
                   )
                 )
-              )
-            )
+              ),
+              React.createElement('input', { type: 'submit', style: { display: "none" } })
+            ),
+            this.state.invalidEmailAddressError ? React.createElement(
+              'span',
+              null,
+              'The email address you entered is invalid. Please try again.'
+            ) : React.createElement('span', null),
+            this.state.invalidShippingAddressError ? React.createElement(
+              'span',
+              null,
+              'The shiping address you entered is invalid. Please try again.'
+            ) : React.createElement('span', null)
           ) : // PAYMENT
-          React.createElement(Payment, { buttonRef: this.buttonRef })
+          React.createElement(
+            'div',
+            { className: 'payAndVerify' },
+            React.createElement(
+              'div',
+              { className: 'shippingVerification' },
+              React.createElement(
+                'span',
+                { className: 'title' },
+                'Make sure this info is correct!'
+              ),
+              React.createElement('br', null),
+              React.createElement('br', null),
+              Object.keys(this.state.ship).map(function (a) {
+                return _this3.state.ship[a] ? React.createElement(
+                  'div',
+                  { className: 'bit' },
+                  _this3.state.ship[a]
+                ) : null;
+              })
+            ),
+            React.createElement(Payment, {
+              amount: this.getTotal(),
+              data: this.state.ship,
+              buttonRef: this.buttonRef,
+              handlePaymentSuccess: this.handlePaymentSuccess,
+              handlePaymentFailure: this.handlePaymentFailure })
+          )
         ),
         React.createElement(
           'div',
@@ -261,7 +345,7 @@ var Checkout = function (_React$Component) {
               'span',
               { className: 'val' },
               '$',
-              this.getSubtotal()
+              this.getSubtotal().toFixed(2)
             )
           ),
           React.createElement(
@@ -276,7 +360,7 @@ var Checkout = function (_React$Component) {
               'span',
               { className: 'val' },
               '$',
-              this.getShipping()
+              this.getShipping().toFixed(2)
             )
           ),
           React.createElement(
@@ -291,15 +375,15 @@ var Checkout = function (_React$Component) {
               'span',
               { className: 'val' },
               '$',
-              this.getTotal()
+              this.getTotal().toFixed(2)
             )
           ),
           React.createElement(
             'button',
             { type: 'button',
               ref: this.buttonRef,
-              onClick: this.handleSubmit },
-            this.state.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
+              onClick: this.props.mode == 'shipping' ? this.handleShippingSubmit : this.handlePaymentSubmit },
+            this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
         )
       );

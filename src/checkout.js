@@ -15,10 +15,15 @@ class Checkout extends React.Component {
     this.remove = props.remove;
     this.buttonRef = React.createRef();
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleShippingSubmit = this.handleShippingSubmit.bind(this);
+    this.handlePaymentSuccess = this.handlePaymentSuccess.bind(this);
+    this.mode = props.mode; // 'shipping' | 'payment'
+    this.setCheckoutMode = props.setMode;
+    this.completeCheckout = props.completeCheckout;
     this.state = {
-      mode: 'shipping', // 'shipping' | 'payment'
-      addressVerificationError: false,
+      invalidShippingAddressError: false,
+      invalidEmailAddressError: false,
+      shippingInfoIsValidated: false,
       ship: {
         email: '',
         firstName: '',
@@ -38,6 +43,8 @@ class Checkout extends React.Component {
   }
 
   getSubtotal() {
+    //TODO: this function seems to be called way more times than it should...
+        // potential problem with state update
     let cart = this.cart;
     let keys = Object.keys(cart);
     let subtotal = 0;
@@ -60,7 +67,7 @@ class Checkout extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  async verifyAddress() {
+  verifyShippingAddress(callbackTrue, callbackFalse) {
     let userid = "711WELCO2258"; //"[userid]";
     let url = `http://production.shippingapis.com/ShippingAPITest.dll\
     ?API=Verify\
@@ -81,17 +88,19 @@ class Checkout extends React.Component {
     http.open("GET", url);
     http.send();
     http.onreadystatechange = (e) => {
-      console.log(http.status);
+      // console.log('HTTP STATUS: ' + http.status);
+      // console.log('HTTP RDYSTATE: ' + http.readyState);
       if(http.readyState === 4 && http.status === 200) {
         let xml = http.responseXML;
         let valid = xml.getElementsByTagName("Error").length === 0;
-        console.log('valid: ' + valid);
-        return true;
-      } else {
-        return false;
+        valid ? callbackTrue() : callbackFalse();
       }
     }
-    return false;
+  }
+
+  validateEmail(email) {
+    let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(String(email).toLowerCase());
   }
 
   handleInputChange(event) {
@@ -108,16 +117,41 @@ class Checkout extends React.Component {
   // ***** TODO async
 
 
-  handleSubmit(event) {
+  handleShippingSubmit(event) {
     event.preventDefault();
-    let valid = await this.verifyAddress();
-    if(valid) {
-      console.log(this.state.ship);
-      this.setState({addressVerificationError: false});
-      this.setState({mode: 'payment'});
+    this.setState({shippingInfoIsValidated: false}); // just in case
+    if(this.validateEmail(this.state.ship.email)) {
+      this.setState({invalidEmailAddressError: false});
+      console.log('VALID EMAIL');
     } else {
-      console.log('Invalid Address');
+      this.setState({invalidEmailAddressError: true});
+      console.log('INVALID EMAIL');
+      return;
     }
+    let valid =  this.verifyShippingAddress(() => {
+      // true callback
+      this.setState({
+        shippingInfoIsValidated: true, // all info validated only at this point
+        invalidShippingAddressError: false
+      });
+      this.setCheckoutMode('payment');
+      console.log('VALID SHIPPING ADDRESS');
+    }, () => {
+      // false callback
+      this.setState({
+        shippingInfoIsValidated: false,
+        invalidShippingAddressError: true
+      });
+      console.log('INVALID SHIPPING ADDRESS');
+    });
+ }
+
+ handlePaymentSuccess() {
+   this.completeCheckout();
+ }
+
+ handlePaymentFailure() {
+   alert('Payment did not complete properly. Please try again.');
  }
 
   render() {
@@ -125,10 +159,10 @@ class Checkout extends React.Component {
       <div className='checkout'>
         <div className='left'>
         {
-          this.state.mode == 'shipping' ?
+          this.props.mode == 'shipping' ?
             // SHIPPING
             <div className='formform'>
-              <form id='finalform' onSubmit={this.handleSubmit}>
+              <form id='finalform' onSubmit={this.handleShippingSubmit}>
                 email*:<br/>
                 <input
                   type="text"
@@ -190,31 +224,65 @@ class Checkout extends React.Component {
 
                   </div>
                 </div>
+                <input type="submit" style={{display: "none"}} />
               </form>
+              {
+              this.state.invalidEmailAddressError ?
+                <span>The email address you entered is invalid. Please try again.</span> :
+              <span></span>
+              }
+              {
+              this.state.invalidShippingAddressError ?
+                <span>The shiping address you entered is invalid. Please try again.</span> :
+              <span></span>
+              }
             </div>
           : // PAYMENT
-            <Payment buttonRef={this.buttonRef}/>
+            <div className='payAndVerify'>
+              <div className='shippingVerification'>
+                <span className='title'>Make sure this info is correct!</span>
+                <br/><br/>
+                {
+                  Object.keys(this.state.ship).map((a)=> {
+                    return this.state.ship[a] ?
+                      <div className='bit'>{this.state.ship[a]}</div>
+                    :
+                      (null)
+                  })
+                }
+              </div>
+              <Payment
+                amount={this.getTotal()}
+                data={this.state.ship}
+                buttonRef={this.buttonRef}
+                handlePaymentSuccess={this.handlePaymentSuccess}
+                handlePaymentFailure={this.handlePaymentFailure}/>
+            </div>
         }
         </div>
         <div className='summary'>
           <span className='title'>ORDER SUMMARY</span>
           <div className='bar'>
             <span className='key'>subtotal</span>
-            <span className='val'>${this.getSubtotal()}</span>
+            <span className='val'>${this.getSubtotal().toFixed(2)}</span>
           </div>
           <div className='bar'>
             <span className='key'>shipping</span>
-            <span className='val'>${this.getShipping()}</span>
+            <span className='val'>${this.getShipping().toFixed(2)}</span>
           </div>
           <div className='bar'>
             <span className='key'>total</span>
-            <span className='val'>${this.getTotal()}</span>
+            <span className='val'>${this.getTotal().toFixed(2)}</span>
           </div>
           <button type='button'
                   ref={this.buttonRef}
-                  onClick={this.handleSubmit}>
+                  onClick={this.props.mode == 'shipping' ?
+                    this.handleShippingSubmit
+                  :
+                    this.handlePaymentSubmit
+                  }>
             {
-              this.state.mode == 'shipping' ?
+              this.props.mode == 'shipping' ?
                 "CONTINUE TO PAYMENT"
               :
                 'CONFIRM ORDER'

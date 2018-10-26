@@ -11,6 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var e = React.createElement;
 var server = 'welcomepresspayment.tk';
 var port = '443';
+var dropinInstance;
 
 var Payment = function (_React$Component) {
   _inherits(Payment, _React$Component);
@@ -20,16 +21,18 @@ var Payment = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
 
-    _this.payTrigger = props.payTrigger;
+    _this.amount = props.amount;
+    _this.data = props.data;
     _this.buttonRef = props.buttonRef;
+    _this.handlePaymentSuccess = props.handlePaymentSuccess;
+    _this.handlePaymentFailure = props.handlePaymentFailure;
+
     return _this;
   }
 
   _createClass(Payment, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var submitButton = this.buttonRef.current;
-
       braintree.dropin.create({
         authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
         container: '#dropin-container',
@@ -37,40 +40,63 @@ var Payment = function (_React$Component) {
           flow: 'vault'
         },
         venmo: {}
-      }, function (err, dropinInstance) {
+      }, function (err, instance) {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
           console.error(err);
           return;
         }
-        submitButton.addEventListener('click', function () {
-          dropinInstance.requestPaymentMethod(function (err, payload) {
-            if (err) {
-              // Handle errors in requesting payment method
-              console.log("requestPaymentMethodError: " + err);
-            }
-
-            // Send payload.nonce to your server
-            var params = payload.nonce;
-            console.log(params);
-
-            var Http = new XMLHttpRequest();
-            var url = 'https://' + server + ':' + port + '/checkout';
-            Http.open("POST", url);
-            // Http.setRequestHeader("Access-Control-Allow-Origin", "*");
-            // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            Http.send(JSON.stringify(params));
-            Http.onreadystatechange = function (e) {
-              console.log(Http.responseText);
-            };
-          });
-        });
+        dropinInstance = instance;
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      this.props.payTrigger == true ? {} : {};
+      var _this2 = this;
+
+      var submitButton = this.buttonRef.current;
+      submitButton.addEventListener('click', function () {
+        dropinInstance.requestPaymentMethod(function (err, payload) {
+          if (err) {
+            // Handle errors in requesting payment method
+            console.log("requestPaymentMethodError: " + err);
+          }
+
+          // Send payload.nonce to your server
+          var params = {
+            amount: _this2.amount,
+            nonce: payload.nonce,
+            email: _this2.data.email,
+            firstName: _this2.data.firstName,
+            lastName: _this2.data.lastName,
+            street1: _this2.data.street1,
+            street2: _this2.data.street2,
+            city: _this2.data.city,
+            state: _this2.data.state,
+            zip5: _this2.data.zip5,
+            country: _this2.data.country
+            //let params = payload.nonce;
+          };console.log(params);
+
+          var req = new XMLHttpRequest();
+          var url = 'https://' + server + ':' + port + '/checkout';
+          req.open("POST", url);
+          // req.setRequestHeader("Access-Control-Allow-Origin", "*");
+          // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          req.send(JSON.stringify(params));
+          req.onreadystatechange = function (e) {
+            if (req.readyState === 4) {
+              if (req.status === 200) {
+                console.log('GOOD transaction');
+                _this2.handlePaymentSuccess();
+              } else {
+                _this2.handlePaymentFailure();
+                console.log('BAD transaction');
+              }
+            }
+          };
+        });
+      });
       return React.createElement(
         'div',
         { className: 'payment' },

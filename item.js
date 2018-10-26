@@ -70,6 +70,11 @@ var Item = function (_React$Component) {
           { className: 'right' },
           React.createElement(
             'span',
+            { id: 'h3' },
+            this.props.item.description
+          ),
+          React.createElement(
+            'span',
             { id: 'h1' },
             '$',
             this.props.item.price

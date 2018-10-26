@@ -13,6 +13,7 @@ var e = React.createElement;
 import Start from './start.js';
 import Home from './home.js';
 import Shop from './shop.js';
+import Completed from './completed.js';
 
 import MobileStart from './mobileStart.js';
 import MobileShop from './mobileShop.js';
@@ -27,7 +28,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      mode: 'shop',
+      mode: 'start', // start | home | shop | completed
       homeEntered: 'false',
       windowWidth: 0
     };
@@ -68,9 +69,6 @@ var Press = function (_React$Component) {
           case 'shop':
             return React.createElement(MobileShop, null);
             break;
-          case 'payment':
-            return React.createElement(Payment, null);
-            break;
           default:
             return React.createElement(MobileStart, null);
         }
@@ -87,10 +85,15 @@ var Press = function (_React$Component) {
               },
               goToHome: function goToHome() {
                 return _this2.setState({ mode: 'home' });
+              },
+              goToCompleted: function goToCompleted() {
+                return _this2.setState({ mode: 'completed' });
               } });
             break;
-          case 'payment':
-            return React.createElement(Payment, null);
+          case 'completed':
+            return React.createElement(Completed, { goToHome: function goToHome() {
+                return _this2.setState({ mode: 'home' });
+              } });
             break;
           case 'home':
           default:

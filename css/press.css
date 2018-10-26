@@ -31,6 +31,14 @@ html {
   margin: 0;
 }
 
+/* no outline on form things */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 body {
   background-color: yellow;
   color:white;
@@ -41,6 +49,9 @@ body {
   padding:0;
 }
 
+.start {
+  cursor: none;
+}
 
 /* @media only screen
 and (min-device-width : 375px)
@@ -309,7 +320,7 @@ svg text {
     color:blue;
     display: flex;
     font-family: questrial;
-    height: 20vh;
+    height: 14vw;
     margin-bottom: 3vh;
     width: 100%;
   }
@@ -417,6 +428,15 @@ svg text {
     width: 100%;
   }
 
+  .payAndVerify {
+    display: flex;
+    width: 100%;
+  }
+  .payAndVerify > div {
+    flex: 1;
+    padding-right: 2vw;
+  }
+
   /* end BAG */
 
 /* end SHOP */
@@ -472,12 +492,18 @@ svg text {
   font-size: 4.5vw;
 }
 
-.item .right span#h2 {
+.item .right span#h2, .item .right span#h3 {
   display: block;
   font-family: questrial;
   font-size: 2.5vw;
   margin: 2vh 0;
 }
+
+.item .right span#h3 {
+  font-size: 1.5vw;
+  padding-right: 2vw;
+}
+
 
 .sizebar {
   height: 3.5vw;
@@ -585,6 +611,14 @@ svg text {
   width: 100%;
 }
 
+.formform > form {
+  margin-bottom: 0;
+}
+
+.formform > span {
+  color:red;
+}
+
 .checkout input {
   border: 0.2vw solid blue;
   color:blue;
@@ -649,20 +683,40 @@ svg text {
   padding-left: 1vw;
 }
 
-/*
-.bagItem {
-  max-height: 150px;
+.shippingVerification div.bit {
+  font-family: questrial;
+  font-size: 1.3vw;
 }
 
-.bagItem > .left {
-  height: 150px;
+.shippingVerification span.title {
+  font-size: 1.5vw;
+  font-weight: bold;
 }
 
-.bagItem img {
-  left: -25px;
-  position: relative;
-  top: -25px;
-} */
+.completed > div {
+  background-color: blue;
+  color:white;
+  display: inline-block;
+  font-family: galderglynn;
+  font-size: 10vw;
+}
+
+.completed button {
+  background-color: white;
+  border: 0.4vw solid blue;
+  color:blue;
+  display: inline-block;
+  font-family: questrial;
+  font-size: 5vw;
+  padding: 1vw 2vw;
+}
+
+.completed button:hover {
+  background-color: blue;
+  border: 0.2vw solid white;
+  color:white;
+
+}
 
 @media only screen and (max-width: 650px) {
 

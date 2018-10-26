@@ -5,6 +5,7 @@ const e = React.createElement;
 import Start from './start.js'
 import Home from './home.js'
 import Shop from './shop.js'
+import Completed from './completed.js'
 
 
 import MobileStart from './mobileStart.js'
@@ -16,7 +17,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'shop',
+      mode: 'start', // start | home | shop | completed
       homeEntered: 'false',
       windowWidth: 0,
     };
@@ -48,9 +49,6 @@ class Press extends React.Component {
         case 'shop':
           return <MobileShop />
           break;
-        case 'payment':
-          return <Payment />
-          break;
         default:
           return <MobileStart />
       }
@@ -61,10 +59,11 @@ class Press extends React.Component {
           break;
         case 'shop':
           return <Shop goToBag={() => this.setState({mode: 'bag'})}
-                       goToHome={() => this.setState({mode: 'home'})}/>
+                       goToHome={() => this.setState({mode: 'home'})}
+                       goToCompleted={() => this.setState({mode: 'completed'})}/>
           break;
-        case 'payment':
-          return <Payment />
+        case 'completed':
+          return <Completed goToHome={() => this.setState({mode: 'home'})} />
           break;
         case 'home':
         default: //default to home

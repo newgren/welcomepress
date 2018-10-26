@@ -21,8 +21,21 @@ class Start extends React.Component {
 
   }
 
+  getHeight(element) {
+      element.style.visibility = "hidden";
+      document.body.appendChild(element);
+      var height = element.offsetHeight + 0;
+      document.body.removeChild(element);
+      element.style.visibility = "visible";
+      return height;
+  }
+
+
   componentDidMount() {
     let element = this.refs.elem;
+    let whole = document.getElementById('start');
+
+
     let animationIsActive = false;
     let framesPerSecond = 60;
     let stutterIntervalDelay = Math.round(1000 / framesPerSecond);
@@ -37,13 +50,14 @@ class Start extends React.Component {
         i = i === 0 ? 1 : i;
         let thing = document.getElementById('n'+i);
         thing.style.left = (x - (thing.offsetWidth/4)) + "px";
-        thing.style.top = (y - 825 - (thing.offsetHeight/4)) + "px";
+        thing.style.top = (y - whole.offsetHeight - (thing.offsetHeight/4)) + "px";
         thing.style.zIndex = z++;
       }, Math.floor(stutterIntervalDelay));
     }
 
     timeout = null; // id of timeout callback to cancel animation
     interval = null; // id of interval callback to animate
+    let reference = document.getElementById('n1');
     mousemoveHandler = function (event) {
         window.clearTimeout(timeout);
         if(!animationIsActive) {
@@ -53,8 +67,8 @@ class Start extends React.Component {
         x = event.clientX;
         y = event.clientY;
         if ( typeof x !== 'undefined' ){
-            element.style.left = (x - (element.offsetWidth/4)) + "px";
-            element.style.top = (y - 825 - (element.offsetHeight/4)) + "px";
+            element.style.left = (x - (reference.offsetWidth/4)) + "px";
+            element.style.top = y - (whole.offsetHeight) + "px";
         }
         timeout = setTimeout(() => {
           clearInterval(interval);
@@ -68,7 +82,7 @@ class Start extends React.Component {
 
   render() {
     return (
-      <div className='home' onClick={() => this.goToHome()}>
+      <div className='start' onClick={() => this.goToHome()} id='start'>
           <div className='center'>
             <div id='welcome'>
               <svg viewBox="0 0 417 60">

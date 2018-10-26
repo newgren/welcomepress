@@ -10,33 +10,8 @@ class Bag extends React.Component {
     super(props);
     this.cart = props.cart;
     this.remove = props.remove;
-  }
-
-  formatMoney(val) {
-    return Math.round(val * 100) / 100;
-  }
-
-  getSubtotal() {
-    let cart = this.cart;
-    let keys = Object.keys(cart);
-    let subtotal = 0;
-    keys.forEach((key) => {
-      let price = catalog.items[key].price;
-      let shirt = cart[key];
-      let shirtKeys = Object.keys(shirt);
-      shirtKeys.forEach((shirtkey) => {
-        subtotal += shirt[shirtkey] * price;
-      });
-    });
-    return subtotal;
-  }
-
-  getShipping() {
-    return 9.0;
-  }
-
-  getTotal() {
-    return this.getSubtotal() + this.getShipping();
+    this.getSubtotal = props.getSubtotal;
+    this.goToCheckout = props.goToCheckout;
   }
 
   render() {
@@ -68,18 +43,24 @@ class Bag extends React.Component {
           <span className='title'>ORDER SUMMARY</span>
           <div className='bar'>
             <span className='key'>subtotal</span>
-            <span className='val'>${this.getSubtotal()}</span>
+            <span className='val'>${this.getSubtotal().toFixed(2)}</span>
           </div>
           <div className='bar'>
             <span className='key'>shipping</span>
-            <span className='val'>${this.getShipping()}</span>
+            <span className='val'>TBD</span>
           </div>
           <div className='bar'>
             <span className='key'>total</span>
-            <span className='val'>${this.getTotal()}</span>
+            <span className='val'>TBD</span>
           </div>
           <button type='button'
-                  onClick={()=>alert(2)}>CHECK OUT
+                  onClick={() => {
+                    this.getSubtotal() > 0 ?
+                      this.goToCheckout()
+                    :
+                      alert('you must have an item in your cart to checkout')}}>
+            CHECK OUT
+
           </button>
         </div>
       </div>

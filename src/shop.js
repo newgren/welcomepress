@@ -14,13 +14,13 @@ class Shop extends React.Component {
     super(props);
     this.goToBag = props.goToBag;
     this.goToHome = props.goToHome;
+    this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
       cart: {
-        0: {'L': 1},
-        1: {'M': 5}
       }
     };
   }
@@ -111,6 +111,39 @@ class Shop extends React.Component {
     }
   }
 
+  setCheckoutMode(newMode) {
+    console.log("sET");
+    this.setState({checkoutMode: newMode});
+  }
+
+  formatMoney(val) {
+  //  return Math.round(val * 100) / 100;
+    return val.toFixed(2);
+  }
+
+  getSubtotal() {
+    let cart = this.state.cart;
+    let keys = Object.keys(cart);
+    let subtotal = 0;
+    keys.forEach((key) => {
+      let price = catalog.items[key].price;
+      let shirt = cart[key];
+      let shirtKeys = Object.keys(shirt);
+      shirtKeys.forEach((shirtkey) => {
+        subtotal += shirt[shirtkey] * price;
+      });
+    });
+    return subtotal;
+  }
+
+  getShipping() {
+    return 2.05;
+  }
+
+  getTotal() {
+    return this.getSubtotal() + this.getShipping();
+  }
+
   render() {
     return (
       <div className='shop'>
@@ -127,14 +160,17 @@ class Shop extends React.Component {
               (this.state.mode == 'bag' ?
                 <span id='shopProductName'>SHOPPING BAG</span>
                 :
-                <img src='./iconImages/SHOP.png' id='shopBannerText' />
+                this.state.mode == 'checkout' ?
+                <span id='shopProductName'>CHECKOUT</span>
+                :
+                  <img src='./iconImages/SHOP.png' id='shopBannerText' />
               )
               :
               <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
             }
             <div id='bagbannericon'>
               <img src='./iconImages/bag_desktop.png'
-                   onClick={() => this.setState({mode: 'bag', sel: -1})}
+                   onClick={() => this.getCartSize > 0 ? this.setState({mode: 'bag', sel: -1}): alert('add something to your cart first!')}
               />
             <span>{this.getCartSize()}</span>
             </div>
@@ -151,9 +187,18 @@ class Shop extends React.Component {
                 </div>
               :
                 this.state.mode == 'bag' ?
-                  <Bag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />
+                  <Bag
+                    cart={this.state.cart}
+                    remove={(index, size) => this.removeFromCart(index, size)}
+                    goToCheckout={() => this.setState({mode: 'checkout'})}
+                    getSubtotal={this.getSubtotal.bind(this)} />                  :
+                  this.state.mode == 'checkout' ?
+                    <Checkout cart={this.state.cart}
+                              mode={this.state.checkoutMode}
+                              setMode={(newMode) => this.setCheckoutMode(newMode)}
+                              completeCheckout={this.goToCompleted} />
                   :
-                  <Checkout cart={this.state.cart}/>
+                    (null)
               )
             :
               <Item item={catalog.items[this.state.sel]}

@@ -23,41 +23,12 @@ var Bag = function (_React$Component) {
 
     _this.cart = props.cart;
     _this.remove = props.remove;
+    _this.getSubtotal = props.getSubtotal;
+    _this.goToCheckout = props.goToCheckout;
     return _this;
   }
 
   _createClass(Bag, [{
-    key: 'formatMoney',
-    value: function formatMoney(val) {
-      return Math.round(val * 100) / 100;
-    }
-  }, {
-    key: 'getSubtotal',
-    value: function getSubtotal() {
-      var cart = this.cart;
-      var keys = Object.keys(cart);
-      var subtotal = 0;
-      keys.forEach(function (key) {
-        var price = catalog.items[key].price;
-        var shirt = cart[key];
-        var shirtKeys = Object.keys(shirt);
-        shirtKeys.forEach(function (shirtkey) {
-          subtotal += shirt[shirtkey] * price;
-        });
-      });
-      return subtotal;
-    }
-  }, {
-    key: 'getShipping',
-    value: function getShipping() {
-      return 9.0;
-    }
-  }, {
-    key: 'getTotal',
-    value: function getTotal() {
-      return this.getSubtotal() + this.getShipping();
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -129,7 +100,7 @@ var Bag = function (_React$Component) {
               'span',
               { className: 'val' },
               '$',
-              this.getSubtotal()
+              this.getSubtotal().toFixed(2)
             )
           ),
           React.createElement(
@@ -143,8 +114,7 @@ var Bag = function (_React$Component) {
             React.createElement(
               'span',
               { className: 'val' },
-              '$',
-              this.getShipping()
+              'TBD'
             )
           ),
           React.createElement(
@@ -158,15 +128,14 @@ var Bag = function (_React$Component) {
             React.createElement(
               'span',
               { className: 'val' },
-              '$',
-              this.getTotal()
+              'TBD'
             )
           ),
           React.createElement(
             'button',
             { type: 'button',
               onClick: function onClick() {
-                return alert(2);
+                _this2.getSubtotal() > 0 ? _this2.goToCheckout() : alert('you must have an item in your cart to checkout');
               } },
             'CHECK OUT'
           )

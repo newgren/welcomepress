@@ -40,6 +40,7 @@ class Item extends React.Component {
               <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
           </div>
           <div className='right'>
+            <span id='h3'>{this.props.item.description}</span>
             <span id='h1'>${this.props.item.price}</span>
             <span id='h2'>size:</span>
             <div className='sizebar'>
