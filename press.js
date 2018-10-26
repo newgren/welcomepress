@@ -28,7 +28,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      mode: 'start', // start | home | shop | completed
+      mode: 'shop', // start | home | shop | completed
       homeEntered: 'false',
       windowWidth: 0
     };

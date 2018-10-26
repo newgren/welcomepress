@@ -16,7 +16,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-
     let chchch = (copies, duration) => {
       let copyIndex = copies.length - 1;
       let intervalPointer = window.setInterval(() => {
@@ -74,7 +73,11 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home'>
+        <div id='leftStacked'>
+          <img src='./iconImages/leftStacked.png'/>
+        </div>
         <div className='homeDesktop' id='homeDesktop'>
+
             {
               Array.apply(null, Array(numWorkCopies)).map((i, j) => <div
                 id={'work'+j}

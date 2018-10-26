@@ -36,7 +36,7 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+    outline: 0;
 }
 
 body {
@@ -136,6 +136,16 @@ body {
   padding: 2vw;
 }
 
+#leftStacked {
+  height: 100%;
+  padding: 4vh;
+  position: fixed;
+  z-index: -1000;
+}
+#leftStacked img {
+  height: 92vh;
+}
+
 .info span {
   display: block;
 }
@@ -199,10 +209,22 @@ svg text {
 }
 
 .shopLeft {
+  justify-content: center;
   background-color: yellow;
+  display: flex;
   flex: 7;
-  height: 100%;
 }
+
+.shopLeft > #sidescroll {
+  position: relative;
+  width: 80%;
+}
+
+#sidescroll > img {
+  margin-bottom: 5vw;
+  width: 100%;
+}
+
 
 .shopBox {
   background-color: white;
@@ -393,11 +415,11 @@ svg text {
   .summary .bar:first-of-type {
     padding-top: 2.5vh;
   }
-  .summary .bar:nth-of-type(3) {
+  .summary .bar:nth-of-type(2) {
     border-bottom: 0.4vh solid blue;
     padding-bottom: 2.5vh;
   }
-  .summary .bar:nth-of-type(4) {
+  .summary .bar:nth-of-type(3) {
     padding: 2.5vh 0;
   }
 
@@ -409,7 +431,7 @@ svg text {
 
   .summary button {
     background-color: blue;
-    border: 0;
+    border: 0.2vw solid blue;
     color:white;
     display: block;
     font-size: 1.7vw;
@@ -574,7 +596,7 @@ svg text {
 
 .item .right button {
   background-color: blue;
-  border: 0;
+  border: 0.2vw solid blue;
   color:white;
   display: block;
   font-family: Arial;
@@ -586,7 +608,6 @@ svg text {
   color:blue;
 }
 .item .right button:focus {
-  outline: 0;
 }
 
 .item .right #sizeError {
@@ -703,7 +724,7 @@ svg text {
 
 .completed button {
   background-color: white;
-  border: 0.4vw solid blue;
+  border: 0.2vw solid blue;
   color:blue;
   display: inline-block;
   font-family: questrial;
@@ -844,7 +865,7 @@ svg text {
     color:blue;
   }
   .mobileItem button:focus {
-    outline: 0;
+    outline:  0.2vw solid blue;
   }
 
   .mobileItem .sizebar {

@@ -69,7 +69,7 @@ class Checkout extends React.Component {
 
   verifyShippingAddress(callbackTrue, callbackFalse) {
     let userid = "711WELCO2258"; //"[userid]";
-    let url = `http://production.shippingapis.com/ShippingAPITest.dll\
+    let url = `https://secure.shippingapis.com/ShippingAPI.dll\
     ?API=Verify\
     &XML=\
     <AddressValidateRequest USERID="${userid}">\

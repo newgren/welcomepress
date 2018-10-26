@@ -88,7 +88,7 @@ var Checkout = function (_React$Component) {
     key: 'verifyShippingAddress',
     value: function verifyShippingAddress(callbackTrue, callbackFalse) {
       var userid = "711WELCO2258"; //"[userid]";
-      var url = 'http://production.shippingapis.com/ShippingAPITest.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
+      var url = 'https://secure.shippingapis.com/ShippingAPI.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
 
       console.log(url);
       var http = new XMLHttpRequest();

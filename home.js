@@ -32,7 +32,6 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-
       var chchch = function chchch(copies, duration) {
         var copyIndex = copies.length - 1;
         var intervalPointer = window.setInterval(function () {
@@ -91,6 +90,11 @@ var Home = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'home' },
+        React.createElement(
+          'div',
+          { id: 'leftStacked' },
+          React.createElement('img', { src: './iconImages/leftStacked.png' })
+        ),
         React.createElement(
           'div',
           { className: 'homeDesktop', id: 'homeDesktop' },

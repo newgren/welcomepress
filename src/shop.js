@@ -144,13 +144,33 @@ class Shop extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
+  componentDidMount() {
+    let thing = document.getElementById('sidescroll');
+    //TODO: MAKE THESE USE 'VH' INSTEAD OF 'PX' so that animation speed is constant when changing broswer size
+    // let shopHeight = document.getElementById('shopBox').clientHeight;
+    let amt = -1 * (thing.clientHeight/2);
+    thing.style.top = amt + 'px';
+
+    window.setInterval(() => {
+      if(amt > 0) {
+        amt = -1 * (thing.clientHeight/2);
+      }
+      thing.style.top = amt + 'px';
+      amt += 3;
+    },
+    10);
+  }
+
   render() {
     return (
       <div className='shop'>
         <div className='shopLeft'>
-
+          <div id='sidescroll'>
+            <img id='scrollimg' src='./iconImages/sidescroll.png'/>
+            <img src='./iconImages/sidescroll.png'/>
+          </div>
         </div>
-        <div className='shopBox'>
+        <div className='shopBox' id='shopBox'>
           <div className='banner'>
             <img src='./iconImages/banner_left_desktop.png'
                  id='leftBannerIcon'
