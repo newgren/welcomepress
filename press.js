@@ -12,6 +12,7 @@ var e = React.createElement;
 
 import Start from './start.js';
 import Home from './home.js';
+import Work from './work.js';
 import Shop from './shop.js';
 import Completed from './completed.js';
 
@@ -28,7 +29,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      mode: 'shop', // start | home | shop | completed
+      mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: 0
     };
@@ -64,13 +65,15 @@ var Press = function (_React$Component) {
       if (this.state.windowWidth < 650) {
         switch (this.state.mode) {
           case 'start':
-            return React.createElement(MobileStart, null);
+            return React.createElement(MobileStart, { goToHome: function goToHome() {
+                return _this2.setState({ 'mode': 'home' });
+              } });
             break;
           case 'shop':
             return React.createElement(MobileShop, null);
             break;
           default:
-            return React.createElement(MobileStart, null);
+            return React.createElement(MobileHome, null);
         }
       } else {
         switch (this.state.mode) {
@@ -79,6 +82,10 @@ var Press = function (_React$Component) {
                 return _this2.setState({ 'mode': 'home' });
               } });
             break;
+          case 'work':
+            return React.createElement(Work, { goToHome: function goToHome() {
+                return _this2.setState({ 'mode': 'home' });
+              } });
           case 'shop':
             return React.createElement(Shop, { goToBag: function goToBag() {
                 return _this2.setState({ mode: 'bag' });
@@ -100,6 +107,9 @@ var Press = function (_React$Component) {
             //default to home
             return React.createElement(Home, { goToShop: function goToShop() {
                 return _this2.setState({ mode: 'shop' });
+              },
+              goToWork: function goToWork() {
+                return _this2.setState({ mode: 'work' });
               } });
         }
       }

@@ -100,12 +100,14 @@ body {
   background-color: yellow;
 }
 .homeDesktop .work {
+  cursor: pointer;
   display: none;
   left: 38vw;
   top: 11vh;
 }
 
 .homeDesktop .shopText {
+  cursor: pointer;
   display: none;
   right: 6vw;
   top: 38vh;
@@ -113,6 +115,7 @@ body {
 
 .homeDesktop .mark {
   bottom: 6vh;
+  cursor: pointer;
   display: none;
   left: 48vw;
 }
@@ -202,20 +205,40 @@ svg text {
 
 /* end HOME */ /* (i think!) */
 
+.work {
+  display: flex;
+}
+
+.work .workLeft {
+  /* flex: 7; is defined below with '.shopLeft, .workLeft' */
+}
+
+.work .workRight {
+  background-color: white;
+  border: .36vw solid blue;
+  flex: 40;
+  height: 100%;
+}
+
+.work .workSlides img {
+  height: 50%;
+}
+
+
 /* begin SHOP */
 
 .shop {
   display: flex;
 }
 
-.shopLeft {
+.shopLeft, .workLeft {
   justify-content: center;
   background-color: yellow;
   display: flex;
   flex: 7;
 }
 
-.shopLeft > #sidescroll {
+#sidescroll {
   position: relative;
   width: 80%;
 }

@@ -4,9 +4,9 @@ const e = React.createElement;
 
 import Start from './start.js'
 import Home from './home.js'
+import Work from './work.js'
 import Shop from './shop.js'
 import Completed from './completed.js'
-
 
 import MobileStart from './mobileStart.js'
 import MobileShop from './mobileShop.js'
@@ -17,7 +17,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'shop', // start | home | shop | completed
+      mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: 0,
     };
@@ -44,19 +44,21 @@ class Press extends React.Component {
     if(this.state.windowWidth < 650) {
       switch (this.state.mode) {
         case 'start':
-          return <MobileStart />
+          return <MobileStart goToHome={() => this.setState({'mode': 'home'})} />
           break;
         case 'shop':
           return <MobileShop />
           break;
         default:
-          return <MobileStart />
+          return <MobileHome />
       }
     } else {
       switch (this.state.mode) {
         case 'start':
           return <Start goToHome={() => this.setState({'mode': 'home'})}/>
           break;
+        case 'work':
+          return <Work goToHome={() => this.setState({'mode': 'home'})}/>
         case 'shop':
           return <Shop goToBag={() => this.setState({mode: 'bag'})}
                        goToHome={() => this.setState({mode: 'home'})}
@@ -67,7 +69,8 @@ class Press extends React.Component {
           break;
         case 'home':
         default: //default to home
-          return <Home goToShop={() => this.setState({mode: 'shop'})}/>
+          return <Home goToShop={() => this.setState({mode: 'shop'})}
+                       goToWork={() => this.setState({mode: 'work'})}/>
       }
     }
     /*

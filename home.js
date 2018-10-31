@@ -10,10 +10,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-var numWorkCopies = 24;
-var numShopTextCopies = 29;
+var numWorkCopies = 25;
+var numShopTextCopies = 40;
 var numMarkCopies = 20;
-var numInfoCopies = 30;
+var numInfoCopies = 20;
 
 var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
 
@@ -26,6 +26,7 @@ var Home = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
     _this.goToShop = props.goToShop;
+    _this.goToWork = props.goToWork;
     return _this;
   }
 
@@ -79,7 +80,7 @@ var Home = function (_React$Component) {
         move(infos, masterIndex, true);
       };
       mark.onmouseout = function () {
-        move(infos, masterIndex, false);
+        //move(infos, masterIndex, false);
       };
     }
   }, {
@@ -105,6 +106,7 @@ var Home = function (_React$Component) {
                 id: 'work' + j,
                 key: j,
                 className: 'work layer',
+                onClick: _this2.goToWork,
                 style: {
                   transform: 'translate(' + -j + 'vw, ' + -j * 1.5 + 'vh)',
                   zIndex: -j

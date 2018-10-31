@@ -11,6 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import Item from './item.js';
 import Bag from './bag.js';
 import Checkout from './checkout.js';
+import Sidescroll from './sidescroll.js';
 
 import catalog from './product/catalog.js';
 
@@ -123,12 +124,20 @@ var Shop = function (_React$Component) {
       switch (this.state.mode) {
         case 'item':
           this.setState({ mode: 'browse', sel: -1 });
-          break;
+          return;
         case 'bag':
           this.setState({ mode: 'browse' });
-          break;
+          return;
         case 'browse':
           this.goToHome();
+          return;
+        case 'checkout':
+          if (this.state.checkoutMode == 'shipping') {
+            this.setState({ mode: 'bag' });
+          } else {
+            this.setState({ checkoutMode: 'shipping' });
+          }
+          return;
         default:
           return;
       }
@@ -172,23 +181,6 @@ var Shop = function (_React$Component) {
       return this.getSubtotal() + this.getShipping();
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var thing = document.getElementById('sidescroll');
-      //TODO: MAKE THESE USE 'VH' INSTEAD OF 'PX' so that animation speed is constant when changing broswer size
-      // let shopHeight = document.getElementById('shopBox').clientHeight;
-      var amt = -1 * (thing.clientHeight / 2);
-      thing.style.top = amt + 'px';
-
-      window.setInterval(function () {
-        if (amt > 0) {
-          amt = -1 * (thing.clientHeight / 2);
-        }
-        thing.style.top = amt + 'px';
-        amt += 3;
-      }, 10);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -199,12 +191,7 @@ var Shop = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'shopLeft' },
-          React.createElement(
-            'div',
-            { id: 'sidescroll' },
-            React.createElement('img', { id: 'scrollimg', src: './iconImages/sidescroll.png' }),
-            React.createElement('img', { src: './iconImages/sidescroll.png' })
-          )
+          React.createElement(Sidescroll, null)
         ),
         React.createElement(
           'div',
@@ -235,7 +222,7 @@ var Shop = function (_React$Component) {
               { id: 'bagbannericon' },
               React.createElement('img', { src: './iconImages/bag_desktop.png',
                 onClick: function onClick() {
-                  return _this2.getCartSize > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
+                  return _this2.getCartSize() > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
                 }
               }),
               React.createElement(

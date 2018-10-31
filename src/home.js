@@ -2,10 +2,10 @@
 
 const e = React.createElement;
 
-var numWorkCopies = 24;
-var numShopTextCopies = 29;
+var numWorkCopies = 25;
+var numShopTextCopies = 40;
 var numMarkCopies = 20;
-var numInfoCopies = 30;
+var numInfoCopies = 20;
 
 var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
 
@@ -13,6 +13,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.goToShop = props.goToShop;
+    this.goToWork = props.goToWork;
   }
 
   componentDidMount() {
@@ -65,7 +66,7 @@ class Home extends React.Component {
       move(infos, masterIndex, true);
     };
     mark.onmouseout = () => {
-      move(infos, masterIndex, false);
+      //move(infos, masterIndex, false);
     };
   }
 
@@ -83,6 +84,7 @@ class Home extends React.Component {
                 id={'work'+j}
                 key={j}
                 className='work layer'
+                onClick={this.goToWork}
                 style={{
                   transform: `translate(${-j}vw, ${-j*1.5}vh)`,
                   zIndex: -j

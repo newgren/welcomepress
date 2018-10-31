@@ -15,6 +15,23 @@ import Payment from './payment.js';
 
 var e = React.createElement;
 
+var state = {
+  invalidShippingAddressError: false,
+  invalidEmailAddressError: false,
+  shippingInfoIsValidated: false,
+  ship: {
+    email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  }
+};
+
 var Checkout = function (_React$Component) {
   _inherits(Checkout, _React$Component);
 
@@ -32,26 +49,17 @@ var Checkout = function (_React$Component) {
     _this.mode = props.mode; // 'shipping' | 'payment'
     _this.setCheckoutMode = props.setMode;
     _this.completeCheckout = props.completeCheckout;
-    _this.state = {
-      invalidShippingAddressError: false,
-      invalidEmailAddressError: false,
-      shippingInfoIsValidated: false,
-      ship: {
-        email: '',
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        state: '',
-        zip5: '',
-        country: 'USA'
-      }
-    };
+    _this.state = state;
     return _this;
   }
 
   _createClass(Checkout, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // Remember state for the next mount
+      state = this.state;
+    }
+  }, {
     key: 'formatMoney',
     value: function formatMoney(val) {
       return Math.round(val * 100) / 100;

@@ -3,6 +3,8 @@
 import Item from './item.js';
 import Bag from './bag.js';
 import Checkout from './checkout.js';
+import Sidescroll from './sidescroll.js';
+
 
 
 import catalog from './product/catalog.js';
@@ -100,12 +102,20 @@ class Shop extends React.Component {
     switch (this.state.mode) {
       case 'item':
         this.setState({mode: 'browse', sel: -1});
-        break;
+        return;
       case 'bag':
         this.setState({mode: 'browse'});
-        break;
+        return;
       case 'browse':
         this.goToHome();
+        return;
+      case 'checkout':
+        if(this.state.checkoutMode == 'shipping') {
+          this.setState({mode:'bag'});
+        } else {
+          this.setState({checkoutMode:'shipping'});
+        }
+        return;
       default:
         return;
     }
@@ -144,31 +154,13 @@ class Shop extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  componentDidMount() {
-    let thing = document.getElementById('sidescroll');
-    //TODO: MAKE THESE USE 'VH' INSTEAD OF 'PX' so that animation speed is constant when changing broswer size
-    // let shopHeight = document.getElementById('shopBox').clientHeight;
-    let amt = -1 * (thing.clientHeight/2);
-    thing.style.top = amt + 'px';
-
-    window.setInterval(() => {
-      if(amt > 0) {
-        amt = -1 * (thing.clientHeight/2);
-      }
-      thing.style.top = amt + 'px';
-      amt += 3;
-    },
-    10);
-  }
+  
 
   render() {
     return (
       <div className='shop'>
         <div className='shopLeft'>
-          <div id='sidescroll'>
-            <img id='scrollimg' src='./iconImages/sidescroll.png'/>
-            <img src='./iconImages/sidescroll.png'/>
-          </div>
+          <Sidescroll/>
         </div>
         <div className='shopBox' id='shopBox'>
           <div className='banner'>
@@ -190,11 +182,10 @@ class Shop extends React.Component {
             }
             <div id='bagbannericon'>
               <img src='./iconImages/bag_desktop.png'
-                   onClick={() => this.getCartSize > 0 ? this.setState({mode: 'bag', sel: -1}): alert('add something to your cart first!')}
+                   onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
               />
             <span>{this.getCartSize()}</span>
             </div>
-
           </div>
           {
             this.state.sel == -1 ? (

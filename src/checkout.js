@@ -8,6 +8,23 @@ import Payment from './payment.js'
 
 const e = React.createElement;
 
+let state = {
+  invalidShippingAddressError: false,
+  invalidEmailAddressError: false,
+  shippingInfoIsValidated: false,
+  ship: {
+    email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  }
+};
+
 class Checkout extends React.Component {
   constructor(props) {
     super(props);
@@ -20,22 +37,12 @@ class Checkout extends React.Component {
     this.mode = props.mode; // 'shipping' | 'payment'
     this.setCheckoutMode = props.setMode;
     this.completeCheckout = props.completeCheckout;
-    this.state = {
-      invalidShippingAddressError: false,
-      invalidEmailAddressError: false,
-      shippingInfoIsValidated: false,
-      ship: {
-        email: '',
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        state: '',
-        zip5: '',
-        country: 'USA'
-      }
-    }
+    this.state = state;
+  }
+
+  componentWillUnmount() {
+    // Remember state for the next mount
+    state = this.state;
   }
 
   formatMoney(val) {
