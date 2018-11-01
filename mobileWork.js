@@ -9,52 +9,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var e = React.createElement;
+import Sidescroll from './sidescroll.js';
 
-var Sidescroll = function (_React$Component) {
-  _inherits(Sidescroll, _React$Component);
+var Work = function (_React$Component) {
+  _inherits(Work, _React$Component);
 
-  function Sidescroll(props) {
-    _classCallCheck(this, Sidescroll);
+  function Work(props) {
+    _classCallCheck(this, Work);
 
-    var _this = _possibleConstructorReturn(this, (Sidescroll.__proto__ || Object.getPrototypeOf(Sidescroll)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Work.__proto__ || Object.getPrototypeOf(Work)).call(this, props));
 
-    _this.mobile = props.mobile;
+    _this.goToHome = props.goToHome;
     return _this;
   }
 
-  _createClass(Sidescroll, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var thing = document.getElementById('sidescroll');
-      //TODO: MAKE THESE USE 'VH' INSTEAD OF 'PX' so that animation speed is constant when changing broswer size
-      // let shopHeight = document.getElementById('shopBox').clientHeight;
-      var amt = -1 * (thing.clientHeight / 2);
-      thing.style.top = amt + 'px';
-
-      var increment = this.mobile ? 1 : 3;
-      window.setInterval(function () {
-        if (amt > 0) {
-          amt = -1 * (thing.clientHeight / 4);
-        }
-        thing.style.top = amt + 'px';
-        amt += increment;
-      }, 10);
-    }
-  }, {
+  _createClass(Work, [{
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        { id: 'sidescroll' },
-        React.createElement('img', { id: 'scrollimg', src: './iconImages/sidescroll.png' }),
-        React.createElement('img', { src: './iconImages/sidescroll.png' }),
-        React.createElement('img', { src: './iconImages/sidescroll.png' }),
-        React.createElement('img', { src: './iconImages/sidescroll.png' })
+        { className: 'work' },
+        React.createElement(
+          'div',
+          { className: 'workLeft' },
+          React.createElement(Sidescroll, { mobile: true })
+        ),
+        React.createElement(
+          'div',
+          { className: 'workRight' },
+          React.createElement(
+            'div',
+            { className: 'shopBox' },
+            React.createElement(
+              'div',
+              { className: 'banner' },
+              React.createElement('img', { src: './iconImages/banner_left_desktop.png',
+                id: 'leftBannerIcon',
+                onClick: this.goToHome }),
+              React.createElement('img', { src: './iconImages/WORK.png', id: 'shopBannerText' })
+            )
+          )
+        )
       );
     }
   }]);
 
-  return Sidescroll;
+  return Work;
 }(React.Component);
 
-export default Sidescroll;
+export default Work;

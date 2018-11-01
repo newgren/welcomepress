@@ -81,9 +81,6 @@ body {
   height: 100%;
   width: 100%;
 }
-.homeMobile {
-  display:none;
-}
 .mobile {
   display: none;
 }
@@ -805,38 +802,117 @@ svg text {
   } */
 
 
+  /*  mobile home */
+  .homeDesktop div {
+    border: 0.5vw solid blue;
+    padding: 0;
+  }
+
+  .homeDesktop .work, .homeDesktop .shopText, .homeDesktop .mark {
+    height: 10vw;
+    padding: 2.5vw;
+  }
+
+
+  .homeDesktop .work {
+    cursor: pointer;
+    display: none;
+    left: 50vw;
+    top: 20vh;
+  }
+
+  .homeDesktop div img {
+    height: 100%;
+  }
+
+  .homeDesktop .shopText {
+    cursor: pointer;
+    display: none;
+    right: 30vw;
+    top: 32vh;
+  }
+
+  .homeDesktop .mark {
+    bottom: 10vh;
+    cursor: pointer;
+    display: none;
+    left: 84vw;
+  }
+
+  .homeDesktop .info {
+    display: none;
+    bottom: 30vh;
+    font-family: questrial;
+    font-size: 4vw;
+    left: 12vw;
+    max-width: 68vw;
+    padding: 3vw;
+  }
+
+  .homeDesktop .info a {
+    text-decoration: underline;
+  }
+
+
+  #leftStacked {
+    bottom: 0;
+    height: 80%;
+    padding: 2vh;
+    position: absolute;
+    z-index: -1000;
+  }
+  #leftStacked img {
+    height: 80vh;
+  }
+
+
   .mobileShop {
     display: flex;
     /* overflow:auto; */
 
   }
 
-  .mobileShop .shopBox {
+  .shopBox {
     border: .7vw solid blue;
   }
 
-  .mobileShop .shopLeft {
+  .shopLeft {
     flex: 1;
     flex-shrink: 0;
   }
 
-  .mobileShop .shopBox {
+  .shopBox {
     flex: 9;
     height: inherit;
-    padding: 3vw;
+    padding: 6vw;
   }
 
-  .mobileShop .banner {
+  .banner {
     height: 20vw;
   }
 
-  .mobileShop .banner img#leftBannerIcon {
+  .banner img#leftBannerIcon {
     height: 50%;
     padding-left: 1vw;
   }
 
-  .mobileShop .banner img#shopBannerText{
+  .banner img#shopBannerText {
     height: 60%;
+  }
+
+  .itemPreview {
+    color:blue;
+    font-family: galderglynn;
+    font-size: 7vw;
+  }
+
+  .itemPreview .imageHolder {
+    border: 0.6vw solid blue;
+    margin-top: 3vw;
+  }
+
+  .itemPreview img {
+    width: 100%;
   }
 
   .mobileItem .mid {

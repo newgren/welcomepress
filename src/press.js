@@ -10,6 +10,8 @@ import Completed from './completed.js'
 
 import MobileStart from './mobileStart.js'
 import MobileShop from './mobileShop.js'
+import MobileHome from './mobileHome.js'
+import MobileWork from './mobileWork.js'
 import MobileBag from './mobileBag.js'
 
 class Press extends React.Component {
@@ -19,12 +21,12 @@ class Press extends React.Component {
     this.state = {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
-      windowWidth: 0,
+      windowWidth: null,
     };
   }
 
   isMobile() {
-    return this.state.width < 650;
+    return this.state.windowWidth < 650;
   }
 
   updateWidth() {
@@ -41,18 +43,29 @@ class Press extends React.Component {
   }
 
   render() {
-    if(this.state.windowWidth < 650) {
+    if(!this.state.windowWidth) {
+      // wait for state update (render will be called again)
+      return (null);
+    }
+
+    if(this.isMobile()) {
+      console.log("mobile");
       switch (this.state.mode) {
         case 'start':
           return <MobileStart goToHome={() => this.setState({'mode': 'home'})} />
           break;
+        case 'work':
+          return <MobileWork goToHome={() => this.setState({'mode': 'home'})} />
+          break;
         case 'shop':
-          return <MobileShop />
+          return <MobileShop goToHome={() => this.setState({'mode': 'home'})} />
           break;
         default:
-          return <MobileHome />
+          return <MobileHome goToShop={() => this.setState({'mode': 'shop'})}
+                            goToWork={() => this.setState({'mode': 'work'})} />
       }
     } else {
+      console.log("desktop");
       switch (this.state.mode) {
         case 'start':
           return <Start goToHome={() => this.setState({'mode': 'home'})}/>

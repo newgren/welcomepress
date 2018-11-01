@@ -88,7 +88,8 @@ class MobileBag extends React.Component {
             <span className='val'>${this.getTotal()}</span>
           </div>
           <button type='button'
-                  onClick={()=>alert(2)}>CHECK OUT
+                  onClick={() => alert(2)}>
+            CHECK OUT
           </button>
         </div>
       </div>

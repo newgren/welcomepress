@@ -2,10 +2,10 @@ export default
 {
 	"items": [
 		{
-			"name": "scream shirt",
+			"name": "happy welder",
 			"image_urls": ["scream1"],
 			"description": "happy halloween from WP",
-			"price": 15.0,
+			"price": 12.0,
 			"tags": ["shirt", "clothes"]
 		}
 	]

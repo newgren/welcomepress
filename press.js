@@ -18,6 +18,8 @@ import Completed from './completed.js';
 
 import MobileStart from './mobileStart.js';
 import MobileShop from './mobileShop.js';
+import MobileHome from './mobileHome.js';
+import MobileWork from './mobileWork.js';
 import MobileBag from './mobileBag.js';
 
 var Press = function (_React$Component) {
@@ -31,7 +33,7 @@ var Press = function (_React$Component) {
     _this.state = {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
-      windowWidth: 0
+      windowWidth: null
     };
     return _this;
   }
@@ -39,7 +41,7 @@ var Press = function (_React$Component) {
   _createClass(Press, [{
     key: 'isMobile',
     value: function isMobile() {
-      return this.state.width < 650;
+      return this.state.windowWidth < 650;
     }
   }, {
     key: 'updateWidth',
@@ -62,20 +64,39 @@ var Press = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (this.state.windowWidth < 650) {
+      if (!this.state.windowWidth) {
+        // wait for state update (render will be called again)
+        return null;
+      }
+
+      if (this.isMobile()) {
+        console.log("mobile");
         switch (this.state.mode) {
           case 'start':
             return React.createElement(MobileStart, { goToHome: function goToHome() {
                 return _this2.setState({ 'mode': 'home' });
               } });
             break;
+          case 'work':
+            return React.createElement(MobileWork, { goToHome: function goToHome() {
+                return _this2.setState({ 'mode': 'home' });
+              } });
+            break;
           case 'shop':
-            return React.createElement(MobileShop, null);
+            return React.createElement(MobileShop, { goToHome: function goToHome() {
+                return _this2.setState({ 'mode': 'home' });
+              } });
             break;
           default:
-            return React.createElement(MobileHome, null);
+            return React.createElement(MobileHome, { goToShop: function goToShop() {
+                return _this2.setState({ 'mode': 'shop' });
+              },
+              goToWork: function goToWork() {
+                return _this2.setState({ 'mode': 'work' });
+              } });
         }
       } else {
+        console.log("desktop");
         switch (this.state.mode) {
           case 'start':
             return React.createElement(Start, { goToHome: function goToHome() {

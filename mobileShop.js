@@ -11,6 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import MobileItem from './mobileItem.js';
 import MobileBag from './mobileBag.js';
 
+import Sidescroll from './sidescroll.js';
+
 import catalog from './product/catalog.js';
 
 var e = React.createElement;
@@ -29,7 +31,7 @@ var MobileShop = function (_React$Component) {
       mode: 'browse', // 'browse' | 'buy'
       pos: 0,
       sel: -1,
-      cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
+      cart: { 0: { 'L': 1 } }
     };
     return _this;
   }
@@ -138,7 +140,11 @@ var MobileShop = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'mobileShop' },
-        React.createElement('div', { className: 'shopLeft' }),
+        React.createElement(
+          'div',
+          { className: 'shopLeft' },
+          React.createElement(Sidescroll, { mobile: true })
+        ),
         React.createElement(
           'div',
           { className: 'shopBox' },
@@ -153,9 +159,26 @@ var MobileShop = function (_React$Component) {
             React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' })
           ),
           this.state.mode == 'browse' ? catalog.items.map(function (item, id) {
-            return React.createElement(MobileItem, { item: item, addToCart: function addToCart(size, qty) {
-                return _this2.addToCart(id, size, qty);
-              }, key: item.name });
+            return React.createElement(
+              'div',
+              { className: 'itemPreview' },
+              React.createElement(
+                'div',
+                null,
+                item.name
+              ),
+              React.createElement(
+                'div',
+                null,
+                '$',
+                item.price
+              ),
+              React.createElement(
+                'div',
+                { className: 'imageHolder' },
+                React.createElement('img', { src: './product/' + item.image_urls[0] + '.png' })
+              )
+            );
           }) : React.createElement(MobileBag, { cart: this.state.cart, remove: function remove(index, size) {
               return _this2.removeFromCart(index, size);
             } })

@@ -3,6 +3,9 @@
 import MobileItem from './mobileItem.js';
 import MobileBag from './mobileBag.js';
 
+import Sidescroll from './sidescroll.js';
+
+
 import catalog from './product/catalog.js';
 
 const e = React.createElement;
@@ -16,7 +19,7 @@ class MobileShop extends React.Component {
       mode: 'browse', // 'browse' | 'buy'
       pos: 0,
       sel: -1,
-      cart: {0: {'L': 1}, 1: {'M': 5}}
+      cart: {0: {'L': 1}}
     };
   }
 
@@ -110,7 +113,7 @@ class MobileShop extends React.Component {
     return (
       <div className='mobileShop'>
         <div className='shopLeft'>
-
+          <Sidescroll mobile={true} />
         </div>
         <div className='shopBox'>
           <div className='banner'>
@@ -122,7 +125,13 @@ class MobileShop extends React.Component {
           {
             this.state.mode == 'browse' ?
               catalog.items.map((item, id) =>
-                <MobileItem item={item} addToCart={(size, qty) => this.addToCart(id, size, qty)} key={item.name}/>
+                <div className='itemPreview'>
+                  <div>{item.name}</div>
+                  <div>${item.price}</div>
+                  <div className='imageHolder'>
+                    <img src={'./product/'+item.image_urls[0]+'.png'}/>
+                  </div>
+                </div>
               )
             :
               <MobileBag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />

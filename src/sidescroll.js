@@ -6,6 +6,7 @@ const e = React.createElement;
 class Sidescroll extends React.Component {
   constructor(props) {
     super(props);
+    this.mobile = props.mobile;
   }
 
   componentDidMount() {
@@ -15,12 +16,13 @@ class Sidescroll extends React.Component {
     let amt = -1 * (thing.clientHeight/2);
     thing.style.top = amt + 'px';
 
+    let increment = this.mobile ? 1 : 3;
     window.setInterval(() => {
       if(amt > 0) {
-        amt = -1 * (thing.clientHeight/2);
+        amt = -1 * (thing.clientHeight/4);
       }
       thing.style.top = amt + 'px';
-      amt += 3;
+      amt += increment;
     },
     10);
   }
@@ -29,6 +31,8 @@ class Sidescroll extends React.Component {
     return (
       <div id='sidescroll'>
         <img id='scrollimg' src='./iconImages/sidescroll.png'/>
+        <img src='./iconImages/sidescroll.png'/>
+        <img src='./iconImages/sidescroll.png'/>
         <img src='./iconImages/sidescroll.png'/>
       </div>
     );
