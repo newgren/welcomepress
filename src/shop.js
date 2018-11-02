@@ -5,8 +5,6 @@ import Bag from './bag.js';
 import Checkout from './checkout.js';
 import Sidescroll from './sidescroll.js';
 
-
-
 import catalog from './product/catalog.js';
 
 const e = React.createElement;
@@ -154,7 +152,7 @@ class Shop extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  
+
 
   render() {
     return (

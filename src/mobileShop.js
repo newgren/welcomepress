@@ -3,9 +3,8 @@
 import MobileItem from './mobileItem.js';
 import MobileBag from './mobileBag.js';
 
+import MobileCheckout from './mobileCheckout.js';
 import Sidescroll from './sidescroll.js';
-
-
 import catalog from './product/catalog.js';
 
 const e = React.createElement;
@@ -15,11 +14,13 @@ class MobileShop extends React.Component {
     super(props);
     this.goToBag = props.goToBag;
     this.goToHome = props.goToHome;
+    this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'browse', // 'browse' | 'buy'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
-      sel: -1,
-      cart: {0: {'L': 1}}
+      sel: 0,
+      cart: {}//{0: {'S': 2,'L': 1}}
     };
   }
 
@@ -78,6 +79,12 @@ class MobileShop extends React.Component {
     return size;
   }
 
+  setCheckoutMode(newMode) {
+    console.log("sET");
+    this.setState({checkoutMode: newMode});
+  }
+
+
   /**
   * return whether element has ancestor with class=className
   */
@@ -104,6 +111,13 @@ class MobileShop extends React.Component {
         break;
       case 'browse':
         this.goToHome();
+      case 'checkout':
+        if(this.state.checkoutMode == 'shipping') {
+          this.setState({mode:'bag'});
+        } else {
+          this.setState({checkoutMode:'shipping'});
+        }
+        return;
       default:
         return;
     }
@@ -120,21 +134,35 @@ class MobileShop extends React.Component {
             <img src='./iconImages/banner_left_desktop.png'
                  id='leftBannerIcon'
                  onClick={() => this.handleBack()} />
-            <img src='./iconImages/SHOP.png' id='shopBannerText' />
+            {
+              (this.state.mode == 'browse' || this.state.mode == 'item') ?
+                <img src='./iconImages/SHOP.png' id='shopBannerText' />
+              :
+                <span id='shopProductName'>BAG</span>
+            }
           </div>
           {
-            this.state.mode == 'browse' ?
-              catalog.items.map((item, id) =>
+            {
+              'browse': catalog.items.map((item, id) =>
                 <div className='itemPreview'>
                   <div>{item.name}</div>
                   <div>${item.price}</div>
                   <div className='imageHolder'>
-                    <img src={'./product/'+item.image_urls[0]+'.png'}/>
+                    <img src={'./product/'+item.image_urls[0]+'.png'}
+                         onClick={()=> this.setState({mode: 'item', sel: id})}/>
                   </div>
-                </div>
-              )
-            :
-              <MobileBag cart={this.state.cart} remove={(index, size) => this.removeFromCart(index, size)} />
+                </div>),
+              'bag': <MobileBag cart={this.state.cart}
+                                remove={(index, size) => this.removeFromCart(index, size)}
+                                goToCheckout={() => this.setState({mode: 'checkout'})} />,
+              'item': <MobileItem item={catalog.items[this.state.sel]}
+                                addToCart={(size, qty) => this.addToCart(this.state.sel, size, qty)}/>,
+              'checkout':  <MobileCheckout cart={this.state.cart}
+                          mode={this.state.checkoutMode}
+                          setMode={(newMode) => this.setCheckoutMode(newMode)}
+                          completeCheckout={this.goToCompleted} />
+
+            }[this.state.mode]
           }
 
         </div>

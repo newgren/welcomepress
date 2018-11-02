@@ -1,7 +1,7 @@
 'use strict';
 
 import catalog from './product/catalog.js';
-import BagItem from './bagItem.js'
+import MobileBagItem from './mobileBagItem.js'
 
 const e = React.createElement;
 
@@ -10,6 +10,7 @@ class MobileBag extends React.Component {
     super(props);
     this.cart = props.cart;
     this.remove = props.remove;
+    this.goToCheckout = props.goToCheckout;
   }
 
   formatMoney(val) {
@@ -48,15 +49,9 @@ class MobileBag extends React.Component {
     return (
       <div className='bag'>
         <div className='items'>
-          <div className='bagItem legend'>
-            <span className='itemText'>item</span>
-            <span className='price'>item price</span>
-            <span className='qty'>quantity</span>
-            <span className='total'>total</span>
-          </div>
           {Object.keys(this.cart).map(id =>
             Object.keys(this.cart[id]).map(size =>
-              <BagItem
+              <MobileBagItem
                 id={id}
                 size={size}
                 qty={this.cart[id][size]}
@@ -88,7 +83,7 @@ class MobileBag extends React.Component {
             <span className='val'>${this.getTotal()}</span>
           </div>
           <button type='button'
-                  onClick={() => alert(2)}>
+                  onClick={this.goToCheckout}>
             CHECK OUT
           </button>
         </div>

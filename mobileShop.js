@@ -11,8 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import MobileItem from './mobileItem.js';
 import MobileBag from './mobileBag.js';
 
+import MobileCheckout from './mobileCheckout.js';
 import Sidescroll from './sidescroll.js';
-
 import catalog from './product/catalog.js';
 
 var e = React.createElement;
@@ -27,11 +27,13 @@ var MobileShop = function (_React$Component) {
 
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
+    _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'browse', // 'browse' | 'buy'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
-      sel: -1,
-      cart: { 0: { 'L': 1 } }
+      sel: 0,
+      cart: {} //{0: {'S': 2,'L': 1}}
     };
     return _this;
   }
@@ -97,6 +99,12 @@ var MobileShop = function (_React$Component) {
       });
       return size;
     }
+  }, {
+    key: 'setCheckoutMode',
+    value: function setCheckoutMode(newMode) {
+      console.log("sET");
+      this.setState({ checkoutMode: newMode });
+    }
 
     /**
     * return whether element has ancestor with class=className
@@ -128,6 +136,13 @@ var MobileShop = function (_React$Component) {
           break;
         case 'browse':
           this.goToHome();
+        case 'checkout':
+          if (this.state.checkoutMode == 'shipping') {
+            this.setState({ mode: 'bag' });
+          } else {
+            this.setState({ checkoutMode: 'shipping' });
+          }
+          return;
         default:
           return;
       }
@@ -156,32 +171,57 @@ var MobileShop = function (_React$Component) {
               onClick: function onClick() {
                 return _this2.handleBack();
               } }),
-            React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' })
+            this.state.mode == 'browse' || this.state.mode == 'item' ? React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
+              'span',
+              { id: 'shopProductName' },
+              'BAG'
+            )
           ),
-          this.state.mode == 'browse' ? catalog.items.map(function (item, id) {
-            return React.createElement(
-              'div',
-              { className: 'itemPreview' },
-              React.createElement(
+          {
+            'browse': catalog.items.map(function (item, id) {
+              return React.createElement(
                 'div',
-                null,
-                item.name
-              ),
-              React.createElement(
-                'div',
-                null,
-                '$',
-                item.price
-              ),
-              React.createElement(
-                'div',
-                { className: 'imageHolder' },
-                React.createElement('img', { src: './product/' + item.image_urls[0] + '.png' })
-              )
-            );
-          }) : React.createElement(MobileBag, { cart: this.state.cart, remove: function remove(index, size) {
-              return _this2.removeFromCart(index, size);
-            } })
+                { className: 'itemPreview' },
+                React.createElement(
+                  'div',
+                  null,
+                  item.name
+                ),
+                React.createElement(
+                  'div',
+                  null,
+                  '$',
+                  item.price
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'imageHolder' },
+                  React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+                    onClick: function onClick() {
+                      return _this2.setState({ mode: 'item', sel: id });
+                    } })
+                )
+              );
+            }),
+            'bag': React.createElement(MobileBag, { cart: this.state.cart,
+              remove: function remove(index, size) {
+                return _this2.removeFromCart(index, size);
+              },
+              goToCheckout: function goToCheckout() {
+                return _this2.setState({ mode: 'checkout' });
+              } }),
+            'item': React.createElement(MobileItem, { item: catalog.items[this.state.sel],
+              addToCart: function addToCart(size, qty) {
+                return _this2.addToCart(_this2.state.sel, size, qty);
+              } }),
+            'checkout': React.createElement(MobileCheckout, { cart: this.state.cart,
+              mode: this.state.checkoutMode,
+              setMode: function setMode(newMode) {
+                return _this2.setCheckoutMode(newMode);
+              },
+              completeCheckout: this.goToCompleted })
+
+          }[this.state.mode]
         ),
         React.createElement('div', { className: 'buyBox' })
       );

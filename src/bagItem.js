@@ -18,7 +18,7 @@ class BagItem extends React.Component {
 
   render() {
     return (
-      <div className='bagItem'>
+      <div className='bagItem desktop'>
         <div className='pic'>
           <img src={this.image_url}/>
         </div>

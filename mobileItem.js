@@ -23,7 +23,7 @@ var MobileItem = function (_React$Component) {
     _this.item = props.item;
     _this.no = props.no;
     _this.state = {
-      mode: 'buy', // 'buy' | 'size'
+      mode: 'buy',
       imageIndex: 0,
       size: '',
       qty: 1
@@ -51,28 +51,30 @@ var MobileItem = function (_React$Component) {
         { className: 'mobileItem' },
         React.createElement(
           'div',
-          { className: 'mid' },
-          React.createElement('img', { src: './product/' + this.props.item.image_urls[this.state.imageIndex] + '.png' })
-        ),
-        this.state.mode == 'buy' ? React.createElement(
-          'div',
-          { className: 'low' },
+          { className: 'itemPreview' },
           React.createElement(
-            'span',
-            { className: 'itemName' },
+            'div',
+            null,
             this.item.name
           ),
           React.createElement(
-            'button',
-            {
-              type: 'button',
-              onClick: function onClick() {
-                return _this2.setState({ mode: 'size' });
-              } },
-            'BUY \u2022 $',
+            'div',
+            null,
+            '$',
             this.item.price
+          ),
+          React.createElement(
+            'div',
+            { className: 'imageHolder' },
+            React.createElement('img', { src: './product/' + this.props.item.image_urls[0] + '.png' })
           )
-        ) : React.createElement(
+        ),
+        React.createElement(
+          'div',
+          null,
+          'SELECT A SIZE'
+        ),
+        React.createElement(
           'div',
           { className: 'low sizebar' },
           ['S', 'M', 'L', 'XL'].map(function (s) {
@@ -81,7 +83,6 @@ var MobileItem = function (_React$Component) {
               { key: s,
                 onClick: function onClick() {
                   _this2.setState({ size: s, sizeError: false });
-                  _this2.addToCart(s, 1);
                 },
                 className: s == _this2.state.size ? 'selected' : ''
               },
@@ -92,6 +93,35 @@ var MobileItem = function (_React$Component) {
               )
             );
           })
+        ),
+        React.createElement(
+          'div',
+          null,
+          'HOW MANY?'
+        ),
+        React.createElement(
+          'select',
+          { value: this.state.qty, onChange: this.handleQtyChange.bind(this) },
+          [1, 2, 3, 4, 5].map(function (n) {
+            return React.createElement(
+              'option',
+              { value: n, key: n },
+              n
+            );
+          })
+        ),
+        React.createElement(
+          'div',
+          { className: 'low' },
+          React.createElement(
+            'button',
+            {
+              type: 'button',
+              onClick: function onClick() {
+                return _this2.addToCart(_this2.state.size, _this2.state.qty);
+              } },
+            'ADD TO BAG'
+          )
         )
       );
     }

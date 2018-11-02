@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import catalog from './product/catalog.js';
-import BagItem from './bagItem.js';
+import MobileBagItem from './mobileBagItem.js';
 
 var e = React.createElement;
 
@@ -23,6 +23,7 @@ var MobileBag = function (_React$Component) {
 
     _this.cart = props.cart;
     _this.remove = props.remove;
+    _this.goToCheckout = props.goToCheckout;
     return _this;
   }
 
@@ -74,33 +75,9 @@ var MobileBag = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'items' },
-          React.createElement(
-            'div',
-            { className: 'bagItem legend' },
-            React.createElement(
-              'span',
-              { className: 'itemText' },
-              'item'
-            ),
-            React.createElement(
-              'span',
-              { className: 'price' },
-              'item price'
-            ),
-            React.createElement(
-              'span',
-              { className: 'qty' },
-              'quantity'
-            ),
-            React.createElement(
-              'span',
-              { className: 'total' },
-              'total'
-            )
-          ),
           Object.keys(this.cart).map(function (id) {
             return Object.keys(_this2.cart[id]).map(function (size) {
-              return React.createElement(BagItem, {
+              return React.createElement(MobileBagItem, {
                 id: id,
                 size: size,
                 qty: _this2.cart[id][size],
@@ -186,9 +163,7 @@ var MobileBag = function (_React$Component) {
           React.createElement(
             'button',
             { type: 'button',
-              onClick: function onClick() {
-                return alert(2);
-              } },
+              onClick: this.goToCheckout },
             'CHECK OUT'
           )
         )

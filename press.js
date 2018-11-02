@@ -31,7 +31,7 @@ var Press = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
     _this.state = {
-      mode: 'start', // start | home | work | shop | completed
+      mode: 'browse', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: null
     };
@@ -85,6 +85,14 @@ var Press = function (_React$Component) {
           case 'shop':
             return React.createElement(MobileShop, { goToHome: function goToHome() {
                 return _this2.setState({ 'mode': 'home' });
+              },
+              goToCompleted: function goToCompleted() {
+                return _this2.setState({ mode: 'completed' });
+              } });
+            break;
+          case 'completed':
+            return React.createElement(Completed, { goToHome: function goToHome() {
+                return _this2.setState({ mode: 'home' });
               } });
             break;
           default:

@@ -10,7 +10,7 @@ class MobileItem extends React.Component {
     this.item = props.item;
     this.no = props.no;
     this.state = {
-      mode: 'buy', // 'buy' | 'size'
+      mode: 'buy',
       imageIndex: 0,
       size: '',
       qty: 1,
@@ -28,34 +28,39 @@ class MobileItem extends React.Component {
   render() {
     return (
         <div className='mobileItem'>
-          <div className='mid'>
-            <img src={'./product/'+this.props.item.image_urls[this.state.imageIndex]+'.png'}/>
+          <div className='itemPreview'>
+            <div>{this.item.name}</div>
+            <div>${this.item.price}</div>
+            <div className='imageHolder'>
+              <img src={'./product/'+this.props.item.image_urls[0]+'.png'}/>
+            </div>
           </div>
-          {
-            this.state.mode == 'buy' ?
-              <div className='low'>
-                <span className='itemName'>{this.item.name}</span>
-                <button
-                  type='button'
-                  onClick={() => this.setState({mode: 'size'})}>
-                    BUY • ${this.item.price}
-                </button>
+          <div>SELECT A SIZE</div>
+          <div className='low sizebar'>
+            {['S','M','L','XL'].map((s) =>
+              <div key={s}
+                   onClick={() => {
+                     this.setState({size: s, sizeError: false});
+                   }}
+                   className={s == this.state.size ? 'selected' : ''}
+              >
+                <span>{s}</span>
               </div>
-            :
-              <div className='low sizebar'>
-                {['S','M','L','XL'].map((s) =>
-                  <div key={s}
-                       onClick={() => {
-                         this.setState({size: s, sizeError: false});
-                         this.addToCart(s, 1);
-                       }}
-                       className={s == this.state.size ? 'selected' : ''}
-                  >
-                    <span>{s}</span>
-                  </div>
-                )}
-              </div>
-          }
+            )}
+          </div>
+          <div>HOW MANY?</div>
+          <select value={this.state.qty} onChange={this.handleQtyChange.bind(this)}>
+            {[1,2,3,4,5].map(n => <option value={n} key={n}>{n}</option>)}
+          </select>
+
+          <div className='low'>
+            <button
+              type='button'
+              onClick={() => this.addToCart(  this.state.size, this.state.qty)}>
+                ADD TO BAG
+            </button>
+          </div>
+
         </div>
 
     );

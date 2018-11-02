@@ -19,7 +19,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'start', // start | home | work | shop | completed
+      mode: 'browse', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: null,
     };
@@ -58,7 +58,11 @@ class Press extends React.Component {
           return <MobileWork goToHome={() => this.setState({'mode': 'home'})} />
           break;
         case 'shop':
-          return <MobileShop goToHome={() => this.setState({'mode': 'home'})} />
+          return <MobileShop goToHome={() => this.setState({'mode': 'home'})}
+                             goToCompleted={() => this.setState({mode: 'completed'})} />
+          break;
+        case 'completed':
+          return <Completed goToHome={() => this.setState({mode: 'home'})} />
           break;
         default:
           return <MobileHome goToShop={() => this.setState({'mode': 'shop'})}

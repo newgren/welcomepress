@@ -360,11 +360,14 @@ svg text {
 
   .bag .items .bagItem {
     color:blue;
-    display: flex;
     font-family: questrial;
+    width: 100%;
+  }
+
+  .bag .items .bagItem.desktop {
+    display: flex;
     height: 14vw;
     margin-bottom: 3vh;
-    width: 100%;
   }
 
   .bag .items .bagItem.legend {
@@ -583,7 +586,7 @@ svg text {
   font-size: 2vw;
 }
 
-.item .right select {
+select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -606,7 +609,7 @@ svg text {
   background-size: 1vw;
 }
 
-.item .right select option {
+select option {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -869,7 +872,10 @@ svg text {
   .mobileShop {
     display: flex;
     /* overflow:auto; */
+  }
 
+  .mobileShop #shopProductName {
+    font-size: 13vw;
   }
 
   .shopBox {
@@ -915,6 +921,29 @@ svg text {
     width: 100%;
   }
 
+  .mobileItem {
+    color:blue;
+  }
+
+  select {
+    border: 0.6vw solid blue;
+    font-size: 5vw;
+    height: 10vw;
+    margin-bottom: 2vh;
+    padding: 0.5vw 4vw;
+    width: 26vw;
+    size:4;
+
+    /* arrow things */
+    background: url('../iconImages/select_arrow_desktop.png');
+    background-position: right 4vw center;
+    background-repeat: no-repeat;
+    background-size: 3.5vw;
+  }
+
+  select option {
+  }
+
   .mobileItem .mid {
     align-items: center;
     border: 0.8vw solid blue;
@@ -925,6 +954,10 @@ svg text {
 
   .mobileItem .mid img {
     width: 100%;
+  }
+
+  .mobileItem .itemPreview {
+    margin-bottom: 3vw;
   }
 
   .mobileItem .low {
@@ -977,148 +1010,149 @@ svg text {
 
   .mobileItem .sizebar div {
     border: 0.6vw solid blue;
-    height: 12.6vw;
-    margin-right: 2vw;
-    width: 12vw;
+    height: 10vw;
+    margin-right: 4vw;
+    width: 10vw;
   }
 
   .mobileItem .sizebar div > span {
     font-size: 5vw;
   }
 
-
-
-/*
-  .strokeText > #text {
-    color:white;
-    font-size: 190px;
-    z-index: 1;
+  .bagItem {
+    display: block;
+    padding-bottom: 5vw;
   }
 
-
-  .homeDesktop {
-    display: none;
-  }
-
-  .homeMobile {
-    display: inherit;
-    height: 100%;
+  .bagItem .itemName {
+    font-family: galderglynn;
+    padding-bottom: 2vw;
     width: 100%;
   }
 
-  .homeBox {
-    margin: 33px 0px 0px 27px;
-  }
-
-  svg text {
-    fill: white;
-    stroke: blue;
-    stroke-width:2.5px;
-  }
-
-  .questionBox {
-    background-color: white;
-    border: 2px solid blue;
-    height: 24px;
-    line-height: 24px;
-    margin-top: 14px;
-    text-align: center;
-    width: 24px;
-  }
-  .questionBox span {
-    color:blue;
-    font-family: 'questrial';
-    font-size: 16px;
-  }
-  .square {
-    border: 0.75vw solid blue;
-    height: 53.8vw;
-    position: fixed;
-    width: 53.8vw;
-  }
-
-  .square#work {
-    background-image: url('../examples/work.png');
-    right: 3vw;
-  }
-  .square#shop {
-    background-image: url('../examples/shop.png');
-    left: 20vw;
-    top: 103vw;
-  }
-
-  .shadow {
-    text-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-  }
-
-
-  .disabled {
-    opacity: 0.5;
-  }
-
-
-  .container {
-    text-align: center;
-    position: fixed;
-    top: 0px;
-  }
-
-  .container > ul {
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -webkit-padding-start: 0;
-  }
-
-  .container > ul > li {
-    background-color: white;
-    color: blue;
-    display: inline-block;
-    font-family: 'questrial';
-    font-size: 5vw;
-    font-style: normal;
-    font-weight: 800;
-    list-style-type: none;
-    padding: 10px;
-    text-transform: uppercase;
-  }
-
-  .container span {
-    color: blue;
-    font-size: 2vw;
-  }
-
-  .bagText:hover {
-    cursor: pointer;
-  }
-
-  .info > .text {
-    background-color: white;
-    padding: 20px;
-    width: 100%;
-  }
-
-  .text > .desc {
-    font-size: 10px;
-  }
-
-
-  .buy {
+  .bagItem .flexOnEm {
     display: flex;
-    justify-content: center;
+    height: 60vw;
+    width: 100%;
   }
 
-  .buy > button {
-    background-color: #FFBDFB;
-    box-shadow: -8px 10px 10px rgba(0,0,0,0.5);
-    border:none;
-    color:white;
-    margin: 20px 50px;
-    width: 100%;
-    font-size: 40px;
-    font-weight: bold;
-    padding: 10px;
-  } */
+  .bagItem .flexOnEm .pic {
+    border: 0.6vw solid blue;
+    flex: 1;
+    padding-right: 2vw;
+  }
 
+  .pic img {
+    width: 100%;
+  }
+
+  .bagItem .flexOnEm .details {
+    flex: 1;
+    font-size: 6vw;
+    padding-left: 2vw;
+  }
+
+  .details .remove {
+    color:red;
+    padding-top: 4vw;
+    text-decoration: underline;
+  }
+
+  .summary {
+    font-size: 6vw;
+  }
+
+  .summary .bar .key {
+    font-size: 6vw;
+  }
+
+  .summary .title {
+    font-size: 5vw;
+    padding-bottom: 0.3vw;
+  }
+
+  .summary .bar {
+    padding: 0.8vh 0;
+  }
+
+  .summary .bar:first-of-type {
+    /* padding-top: 2.5vh; */
+    padding: 0.8vh 0;
+  }
+  .summary .bar:nth-of-type(2) {
+    /* border-bottom: 0.4vh solid blue; */
+    /* padding-bottom: 2.5vh; */
+    padding: 0.8vh 0;
+  }
+  .summary .bar:nth-of-type(3) {
+    /* padding: 2.5vh 0; */
+    padding: 0.8vh 0;
+  }
+
+  .summary .bar .key {
+  }
+  .summary .bar .val {
+    float: right;
+  }
+  .summary button {
+    font-size: 6vw;
+    height: 10vw;
+  }
+
+  .checkout > .formform {
+    font-size: 6vw;
+  }
+
+  .formform > form {
+    font-size: 6vw;
+    margin-bottom: 0;
+  }
+
+  .formform > span {
+    color:red;
+  }
+
+  .checkout input {
+    border: 0.5vw solid blue;
+    color:blue;
+    font-family: questrial;
+    font-size: 6vw;
+    height: 8vw;
+    margin-bottom: 2vw;
+    padding-left: 1vw;
+    width: 100%;
+  }
+
+  .checkout input:-webkit-autofill, .checkout select:-webkit-autofill {
+    /* Change the white to any color  */
+    -webkit-box-shadow: 0 0 0 30px white inset;
+    /* Change text in autofill textbox */
+    -webkit-text-fill-color: blue !important;
+  }
+
+  .formform select {
+    border: 0.5vw solid blue;
+    font-size: 6vw;
+    height: 8vw;
+    margin-bottom: 2vh;
+    padding: 0.5vw 1vw;
+
+    /* arrow things */
+    background: url('../iconImages/select_arrow_desktop.png');
+    background-position: right 3vw center;
+    background-repeat: no-repeat;
+    background-size: 4vw;
+  }
+
+  .formform select option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: yellow;
+  }
+
+
+  .shippingVerification span.title, .shippingVerification div.bit {
+    font-size: 5vw;
+  }
 }

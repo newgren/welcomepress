@@ -12,13 +12,13 @@ import catalog from './product/catalog.js';
 
 var e = React.createElement;
 
-var BagItem = function (_React$Component) {
-  _inherits(BagItem, _React$Component);
+var MobileBagItem = function (_React$Component) {
+  _inherits(MobileBagItem, _React$Component);
 
-  function BagItem(props) {
-    _classCallCheck(this, BagItem);
+  function MobileBagItem(props) {
+    _classCallCheck(this, MobileBagItem);
 
-    var _this = _possibleConstructorReturn(this, (BagItem.__proto__ || Object.getPrototypeOf(BagItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MobileBagItem.__proto__ || Object.getPrototypeOf(MobileBagItem)).call(this, props));
 
     _this.id = props.id;
     _this.size = props.size;
@@ -30,72 +30,62 @@ var BagItem = function (_React$Component) {
     return _this;
   }
 
-  _createClass(BagItem, [{
+  _createClass(MobileBagItem, [{
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       return React.createElement(
         'div',
-        { className: 'bagItem desktop' },
+        { className: 'bagItem' },
         React.createElement(
           'div',
-          { className: 'pic' },
-          React.createElement('img', { src: this.image_url })
+          { className: 'itemName' },
+          this.name
         ),
         React.createElement(
           'div',
-          { className: 'details' },
+          { className: 'flexOnEm' },
           React.createElement(
             'div',
-            null,
-            this.name
+            { className: 'pic' },
+            React.createElement('img', { src: this.image_url })
           ),
           React.createElement(
             'div',
-            null,
-            this.size
-          )
-        ),
-        React.createElement(
-          'span',
-          { className: 'price' },
-          '$',
-          this.price
-        ),
-        React.createElement(
-          'div',
-          { className: 'qty' },
-          React.createElement(
-            'span',
-            null,
-            this.qty
-          ),
-          React.createElement('br', null),
-          React.createElement(
-            'span',
-            { className: 'remove', onClick: function onClick() {
-                return _this2.remove(_this2.id, _this2.size);
-              } },
-            'x ',
+            { className: 'details' },
             React.createElement(
-              'span',
+              'div',
               null,
-              'remove'
+              'size: ',
+              this.size
+            ),
+            React.createElement(
+              'div',
+              null,
+              'quantity: ',
+              this.qty
+            ),
+            React.createElement(
+              'div',
+              null,
+              'price: $',
+              this.price
+            ),
+            React.createElement(
+              'div',
+              { className: 'remove', onClick: function onClick() {
+                  return _this2.remove(_this2.id, _this2.size);
+                } },
+              'x remove'
             )
           )
-        ),
-        React.createElement(
-          'span',
-          { className: 'total' },
-          '$',
-          this.price * this.qty
         )
       );
     }
   }]);
 
-  return BagItem;
+  return MobileBagItem;
 }(React.Component);
 
-export default BagItem;
+export default MobileBagItem;
