@@ -12,7 +12,19 @@ let state = {
   invalidShippingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
+  sameAddress: true,
   ship: {
+    email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  },
+  bill: {
     email: '',
     firstName: '',
     lastName: '',
@@ -115,9 +127,13 @@ class Checkout extends React.Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
+    if(target.type === 'checkbox') {
+      this.setState({sameAddress: !this.state.sameAddress});
+    } else {
+      ship[name] =  value;
+      this.setState({ship: ship});
+    }
 
-    ship[name] =  value;
-    this.setState({ship: ship});
   }
 
   // **** * ****
@@ -168,91 +184,189 @@ class Checkout extends React.Component {
         {
           this.props.mode == 'shipping' ?
             // SHIPPING
-            <div className='formform'>
-              <form id='finalform' onSubmit={this.handleShippingSubmit}>
-                email*:<br/>
-                <input
-                  type="text"
-                  name="email"
-                  value={this.state.ship.email}
-                  onChange={this.handleInputChange}/><br/>
-                <div className='twofer'>
-                  <div className='one'>
-                    first name*:<br/>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={this.state.ship.firstName}
-                      onChange={this.handleInputChange}/>
+            <div>
+              <div className='formform'>
+                <div className='title'>SHIPPING ADDRESS</div>
+                <form id='finalform' onSubmit={this.handleShippingSubmit}>
+                  email*:<br/>
+                  <input
+                    type="text"
+                    name="email"
+                    value={this.state.ship.email}
+                    onChange={this.handleInputChange}/><br/>
+                  <div className='twofer'>
+                    <div className='one'>
+                      first name*:<br/>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={this.state.ship.firstName}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      last name*:<br/>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={this.state.ship.lastName}
+                        onChange={this.handleInputChange}/>
+                    </div>
                   </div>
-                  <div className='two'>
-                    last name*:<br/>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={this.state.ship.lastName}
-                      onChange={this.handleInputChange}/>
+                  street address*:<br/>
+                <input type="text" name="street1"
+                    value={this.state.ship.street1}
+                    onChange={this.handleInputChange}/><br/>
+                  address2:<br/>
+                  <input type="text" name="street2"
+                    value={this.state.ship.street2}
+                    onChange={this.handleInputChange}/><br/>
+                  <div className='twofer'>
+                    <div className='one'>
+                      city*:<br/>
+                      <input type="text" name="city"
+                        value={this.state.ship.city}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      state*:<br/>
+                      <input type="text" name="state"
+                        value={this.state.ship.state}
+                        onChange={this.handleInputChange}/>
+                    </div>
                   </div>
-                </div>
-                street address*:<br/>
-              <input type="text" name="street1"
-                  value={this.state.ship.street1}
-                  onChange={this.handleInputChange}/><br/>
-                address2:<br/>
-                <input type="text" name="street2"
-                  value={this.state.ship.street2}
-                  onChange={this.handleInputChange}/><br/>
-                <div className='twofer'>
-                  <div className='one'>
-                    city*:<br/>
-                    <input type="text" name="city"
-                      value={this.state.ship.city}
-                      onChange={this.handleInputChange}/>
+                  <div className='twofer'>
+                    <div className='one'>
+                      zip code*:<br/>
+                      <input type="text" name="zip5"
+                        value={this.state.ship.zip5}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      country*:<br/>
+                      <select value='USA'
+                              onChange={this.handleInputChange}>
+                        <option
+                          value='USA'>USA</option>
+                      </select>
+                    </div>
                   </div>
-                  <div className='two'>
-                    state*:<br/>
-                    <input type="text" name="state"
-                      value={this.state.ship.state}
-                      onChange={this.handleInputChange}/>
+                  <div className='checkbox'>
+                    <input type='checkbox'
+                           checked={this.state.sameAddress}
+                           onChange={this.handleInputChange} />
+                    <div>My billing address is the same.</div>
                   </div>
-                </div>
-                <div className='twofer'>
-                  <div className='one'>
-                    zip code*:<br/>
-                    <input type="text" name="zip5"
-                      value={this.state.ship.zip5}
-                      onChange={this.handleInputChange}/>
+                  <input type="submit" style={{display: "none"}} />
+                </form>
+                {
+                this.state.invalidEmailAddressError ?
+                  <span>The email address you entered is invalid. Please try again.</span> :
+                <span></span>
+                }
+                {
+                this.state.invalidShippingAddressError ?
+                  <span>The shiping address you entered is invalid. Please try again.</span> :
+                <span></span>
+                }
+              </div>
+            {
+              !this.state.sameAddress ?
+              <div className='formform'>
+                <div className='title'>BILLING ADDRESS</div>
+                <form id='finalform' onSubmit={this.handleShippingSubmit}>
+                  email*:<br/>
+                  <input
+                    type="text"
+                    name="email"
+                    value={this.state.bill.email}
+                    onChange={this.handleInputChange}/><br/>
+                  <div className='twofer'>
+                    <div className='one'>
+                      first name*:<br/>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={this.state.bill.firstName}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      last name*:<br/>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={this.state.bill.lastName}
+                        onChange={this.handleInputChange}/>
+                    </div>
                   </div>
-                  <div className='two'>
-                    country*:<br/>
-                    <select value='USA'>
-                      <option value='USA'>USA</option>
-                    </select>
-
+                  street address*:<br/>
+                <input type="text" name="street1"
+                    value={this.state.bill.street1}
+                    onChange={this.handleInputChange}/><br/>
+                  address2:<br/>
+                  <input type="text" name="street2"
+                    value={this.state.bill.street2}
+                    onChange={this.handleInputChange}/><br/>
+                  <div className='twofer'>
+                    <div className='one'>
+                      city*:<br/>
+                      <input type="text" name="city"
+                        value={this.state.bill.city}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      state*:<br/>
+                      <input type="text" name="state"
+                        value={this.state.bill.state}
+                        onChange={this.handleInputChange}/>
+                    </div>
                   </div>
-                </div>
-                <input type="submit" style={{display: "none"}} />
-              </form>
-              {
-              this.state.invalidEmailAddressError ?
-                <span>The email address you entered is invalid. Please try again.</span> :
-              <span></span>
-              }
-              {
-              this.state.invalidShippingAddressError ?
-                <span>The shiping address you entered is invalid. Please try again.</span> :
-              <span></span>
-              }
+                  <div className='twofer'>
+                    <div className='one'>
+                      zip code*:<br/>
+                      <input type="text" name="zip5"
+                        value={this.state.bill.zip5}
+                        onChange={this.handleInputChange}/>
+                    </div>
+                    <div className='two'>
+                      country*:<br/>
+                      <select value='USA'
+                              onChange={this.handleInputChange}>
+                        <option
+                          value='USA'>USA</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className='checkbox'>
+                    <input type='checkbox'
+                           checked={this.state.sameAddress}
+                           onChange={this.handleInputChange} />
+                    <div>My billing address is the same.</div>
+                  </div>
+                  <input type="submit" style={{display: "none"}} />
+                </form>
+                {
+                this.state.invalidEmailAddressError ?
+                  <span>The email address you entered is invalid. Please try again.</span> :
+                <span></span>
+                }
+                {
+                this.state.invalidShippingAddressError ?
+                  <span>The shiping address you entered is invalid. Please try again.</span> :
+                <span></span>
+                }
+              </div>
+              : (null)
+            }
             </div>
+
           : // PAYMENT
             <div className='payAndVerify'>
               <div className='shippingVerification'>
-                <span className='title'>Make sure this info is correct!</span>
-                <br/><br/>
+                <div className='title'>Make sure this info is correct!</div>
                 {
                   Object.keys(this.state.ship).map((a)=> {
                     return this.state.ship[a] ?
-                      <div className='bit'>{this.state.ship[a]}</div>
+                      <div key={a} className='bit'>{this.state.ship[a]}</div>
                     :
                       (null)
                   })

@@ -473,6 +473,16 @@ svg text {
     width: 100%;
   }
 
+  .payment #dropin-container {
+    display: none;
+  }
+
+  .payment #loadingBox {
+    color: blue;
+    height: 100%;
+    width: 100%;
+  }
+
   .payAndVerify {
     display: flex;
     width: 100%;
@@ -480,6 +490,9 @@ svg text {
   .payAndVerify > div {
     flex: 1;
     padding-right: 2vw;
+  }
+  .shippingVerification {
+    font-size: 10vw;
   }
 
   /* end BAG */
@@ -681,6 +694,30 @@ select option {
   -webkit-text-fill-color: blue !important;
 }
 
+.formform .title {
+  font-family: galderglynn;
+  margin-bottom: 1vw;
+}
+
+.formform .checkbox {
+  align-items: center;
+  display: flex;
+  float: left;
+  width: 100%;
+}
+
+.formform .checkbox input {
+  height: 1.5vw;
+  margin: 0;
+  padding: 0;
+  width: 1.5vw;
+}
+
+.formform .checkbox div {
+  display: inline-block;
+  padding-left: 1.5vw;  
+}
+
 .formform select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -729,12 +766,13 @@ select option {
 
 .shippingVerification div.bit {
   font-family: questrial;
-  font-size: 1.3vw;
+  font-size: 2vw;
 }
 
-.shippingVerification span.title {
-  font-size: 1.5vw;
+.shippingVerification .title {
+  font-size: 2.2vw;
   font-weight: bold;
+  margin-bottom: 1vw;
 }
 
 .completed > div {
@@ -1152,7 +1190,7 @@ select option {
   }
 
 
-  .shippingVerification span.title, .shippingVerification div.bit {
+  .shippingVerification .title, .shippingVerification div.bit {
     font-size: 5vw;
   }
 }

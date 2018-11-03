@@ -4,6 +4,7 @@ const e = React.createElement;
 const server = 'welcomepresspayment.tk';
 const port = '443';
 var dropinInstance;
+let braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
 class Payment extends React.Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class Payment extends React.Component {
     this.buttonRef = props.buttonRef;
     this.handlePaymentSuccess = props.handlePaymentSuccess;
     this.handlePaymentFailure = props.handlePaymentFailure;
-
+    this.state = {
+      loaded: false
+    }
   }
 
   componentDidMount() {
@@ -28,10 +31,21 @@ class Payment extends React.Component {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
           console.error(err);
+          alert(braintreeErrorMessage);
           return;
         }
+        this.setState({loaded: true});
+        this.displayDropin();
+        console.log("loaded braintree dropin");
         dropinInstance = instance;
       });
+  }
+
+  displayDropin() {
+    let box = document.getElementById('dropin-container');
+    console.log(22);
+    console.log(box);
+    box.style.display = 'inherit';
   }
 
   render() {
@@ -82,6 +96,10 @@ class Payment extends React.Component {
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
+        {
+          this.state.loaded ? (null)
+            : <div id='loadingBox'>LOADING...</div>
+        }
       </div>
     );
   }

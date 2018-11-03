@@ -19,7 +19,19 @@ var state = {
   invalidShippingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
+  sameAddress: true,
   ship: {
+    email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  },
+  bill: {
     email: '',
     firstName: '',
     lastName: '',
@@ -125,9 +137,12 @@ var Checkout = function (_React$Component) {
       var target = event.target;
       var value = target.type === 'checkbox' ? target.checked : target.value;
       var name = target.name;
-
-      ship[name] = value;
-      this.setState({ ship: ship });
+      if (target.type === 'checkbox') {
+        this.setState({ sameAddress: !this.state.sameAddress });
+      } else {
+        ship[name] = value;
+        this.setState({ ship: ship });
+      }
     }
 
     // **** * ****
@@ -191,118 +206,275 @@ var Checkout = function (_React$Component) {
           // SHIPPING
           React.createElement(
             'div',
-            { className: 'formform' },
+            null,
             React.createElement(
-              'form',
-              { id: 'finalform', onSubmit: this.handleShippingSubmit },
-              'email*:',
-              React.createElement('br', null),
-              React.createElement('input', {
-                type: 'text',
-                name: 'email',
-                value: this.state.ship.email,
-                onChange: this.handleInputChange }),
-              React.createElement('br', null),
+              'div',
+              { className: 'formform' },
               React.createElement(
                 'div',
-                { className: 'twofer' },
-                React.createElement(
-                  'div',
-                  { className: 'one' },
-                  'first name*:',
-                  React.createElement('br', null),
-                  React.createElement('input', {
-                    type: 'text',
-                    name: 'firstName',
-                    value: this.state.ship.firstName,
-                    onChange: this.handleInputChange })
-                ),
-                React.createElement(
-                  'div',
-                  { className: 'two' },
-                  'last name*:',
-                  React.createElement('br', null),
-                  React.createElement('input', {
-                    type: 'text',
-                    name: 'lastName',
-                    value: this.state.ship.lastName,
-                    onChange: this.handleInputChange })
-                )
-              ),
-              'street address*:',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'street1',
-                value: this.state.ship.street1,
-                onChange: this.handleInputChange }),
-              React.createElement('br', null),
-              'address2:',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'street2',
-                value: this.state.ship.street2,
-                onChange: this.handleInputChange }),
-              React.createElement('br', null),
-              React.createElement(
-                'div',
-                { className: 'twofer' },
-                React.createElement(
-                  'div',
-                  { className: 'one' },
-                  'city*:',
-                  React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'city',
-                    value: this.state.ship.city,
-                    onChange: this.handleInputChange })
-                ),
-                React.createElement(
-                  'div',
-                  { className: 'two' },
-                  'state*:',
-                  React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'state',
-                    value: this.state.ship.state,
-                    onChange: this.handleInputChange })
-                )
+                { className: 'title' },
+                'SHIPPING ADDRESS'
               ),
               React.createElement(
-                'div',
-                { className: 'twofer' },
+                'form',
+                { id: 'finalform', onSubmit: this.handleShippingSubmit },
+                'email*:',
+                React.createElement('br', null),
+                React.createElement('input', {
+                  type: 'text',
+                  name: 'email',
+                  value: this.state.ship.email,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
                 React.createElement(
                   'div',
-                  { className: 'one' },
-                  'zip code*:',
-                  React.createElement('br', null),
-                  React.createElement('input', { type: 'text', name: 'zip5',
-                    value: this.state.ship.zip5,
-                    onChange: this.handleInputChange })
-                ),
-                React.createElement(
-                  'div',
-                  { className: 'two' },
-                  'country*:',
-                  React.createElement('br', null),
+                  { className: 'twofer' },
                   React.createElement(
-                    'select',
-                    { value: 'USA' },
+                    'div',
+                    { className: 'one' },
+                    'first name*:',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'firstName',
+                      value: this.state.ship.firstName,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'last name*:',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'lastName',
+                      value: this.state.ship.lastName,
+                      onChange: this.handleInputChange })
+                  )
+                ),
+                'street address*:',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street1',
+                  value: this.state.ship.street1,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
+                'address2:',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street2',
+                  value: this.state.ship.street2,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'city*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'city',
+                      value: this.state.ship.city,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'state*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'state',
+                      value: this.state.ship.state,
+                      onChange: this.handleInputChange })
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'zip code*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'zip5',
+                      value: this.state.ship.zip5,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'country*:',
+                    React.createElement('br', null),
                     React.createElement(
-                      'option',
-                      { value: 'USA' },
-                      'USA'
+                      'select',
+                      { value: 'USA',
+                        onChange: this.handleInputChange },
+                      React.createElement(
+                        'option',
+                        {
+                          value: 'USA' },
+                        'USA'
+                      )
                     )
                   )
-                )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'checkbox' },
+                  React.createElement('input', { type: 'checkbox',
+                    checked: this.state.sameAddress,
+                    onChange: this.handleInputChange }),
+                  React.createElement(
+                    'div',
+                    null,
+                    'My billing address is the same.'
+                  )
+                ),
+                React.createElement('input', { type: 'submit', style: { display: "none" } })
               ),
-              React.createElement('input', { type: 'submit', style: { display: "none" } })
+              this.state.invalidEmailAddressError ? React.createElement(
+                'span',
+                null,
+                'The email address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null),
+              this.state.invalidShippingAddressError ? React.createElement(
+                'span',
+                null,
+                'The shiping address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null)
             ),
-            this.state.invalidEmailAddressError ? React.createElement(
-              'span',
-              null,
-              'The email address you entered is invalid. Please try again.'
-            ) : React.createElement('span', null),
-            this.state.invalidShippingAddressError ? React.createElement(
-              'span',
-              null,
-              'The shiping address you entered is invalid. Please try again.'
-            ) : React.createElement('span', null)
+            !this.state.sameAddress ? React.createElement(
+              'div',
+              { className: 'formform' },
+              React.createElement(
+                'div',
+                { className: 'title' },
+                'BILLING ADDRESS'
+              ),
+              React.createElement(
+                'form',
+                { id: 'finalform', onSubmit: this.handleShippingSubmit },
+                'email*:',
+                React.createElement('br', null),
+                React.createElement('input', {
+                  type: 'text',
+                  name: 'email',
+                  value: this.state.bill.email,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'first name*:',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'firstName',
+                      value: this.state.bill.firstName,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'last name*:',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'lastName',
+                      value: this.state.bill.lastName,
+                      onChange: this.handleInputChange })
+                  )
+                ),
+                'street address*:',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street1',
+                  value: this.state.bill.street1,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
+                'address2:',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street2',
+                  value: this.state.bill.street2,
+                  onChange: this.handleInputChange }),
+                React.createElement('br', null),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'city*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'city',
+                      value: this.state.bill.city,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'state*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'state',
+                      value: this.state.bill.state,
+                      onChange: this.handleInputChange })
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'zip code*:',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'zip5',
+                      value: this.state.bill.zip5,
+                      onChange: this.handleInputChange })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'country*:',
+                    React.createElement('br', null),
+                    React.createElement(
+                      'select',
+                      { value: 'USA',
+                        onChange: this.handleInputChange },
+                      React.createElement(
+                        'option',
+                        {
+                          value: 'USA' },
+                        'USA'
+                      )
+                    )
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'checkbox' },
+                  React.createElement('input', { type: 'checkbox',
+                    checked: this.state.sameAddress,
+                    onChange: this.handleInputChange }),
+                  React.createElement(
+                    'div',
+                    null,
+                    'My billing address is the same.'
+                  )
+                ),
+                React.createElement('input', { type: 'submit', style: { display: "none" } })
+              ),
+              this.state.invalidEmailAddressError ? React.createElement(
+                'span',
+                null,
+                'The email address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null),
+              this.state.invalidShippingAddressError ? React.createElement(
+                'span',
+                null,
+                'The shiping address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null)
+            ) : null
           ) : // PAYMENT
           React.createElement(
             'div',
@@ -311,16 +483,14 @@ var Checkout = function (_React$Component) {
               'div',
               { className: 'shippingVerification' },
               React.createElement(
-                'span',
+                'div',
                 { className: 'title' },
                 'Make sure this info is correct!'
               ),
-              React.createElement('br', null),
-              React.createElement('br', null),
               Object.keys(this.state.ship).map(function (a) {
                 return _this3.state.ship[a] ? React.createElement(
                   'div',
-                  { className: 'bit' },
+                  { key: a, className: 'bit' },
                   _this3.state.ship[a]
                 ) : null;
               })

@@ -12,6 +12,7 @@ var e = React.createElement;
 var server = 'welcomepresspayment.tk';
 var port = '443';
 var dropinInstance;
+var braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
 var Payment = function (_React$Component) {
   _inherits(Payment, _React$Component);
@@ -26,13 +27,17 @@ var Payment = function (_React$Component) {
     _this.buttonRef = props.buttonRef;
     _this.handlePaymentSuccess = props.handlePaymentSuccess;
     _this.handlePaymentFailure = props.handlePaymentFailure;
-
+    _this.state = {
+      loaded: false
+    };
     return _this;
   }
 
   _createClass(Payment, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       braintree.dropin.create({
         authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
         container: '#dropin-container',
@@ -44,15 +49,27 @@ var Payment = function (_React$Component) {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
           console.error(err);
+          alert(braintreeErrorMessage);
           return;
         }
+        _this2.setState({ loaded: true });
+        _this2.displayDropin();
+        console.log("loaded braintree dropin");
         dropinInstance = instance;
       });
     }
   }, {
+    key: 'displayDropin',
+    value: function displayDropin() {
+      var box = document.getElementById('dropin-container');
+      console.log(22);
+      console.log(box);
+      box.style.display = 'inherit';
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var submitButton = this.buttonRef.current;
       submitButton.addEventListener('click', function () {
@@ -64,17 +81,17 @@ var Payment = function (_React$Component) {
 
           // Send payload.nonce to your server
           var params = {
-            amount: _this2.amount,
+            amount: _this3.amount,
             nonce: payload.nonce,
-            email: _this2.data.email,
-            firstName: _this2.data.firstName,
-            lastName: _this2.data.lastName,
-            street1: _this2.data.street1,
-            street2: _this2.data.street2,
-            city: _this2.data.city,
-            state: _this2.data.state,
-            zip5: _this2.data.zip5,
-            country: _this2.data.country
+            email: _this3.data.email,
+            firstName: _this3.data.firstName,
+            lastName: _this3.data.lastName,
+            street1: _this3.data.street1,
+            street2: _this3.data.street2,
+            city: _this3.data.city,
+            state: _this3.data.state,
+            zip5: _this3.data.zip5,
+            country: _this3.data.country
             //let params = payload.nonce;
           };console.log(params);
 
@@ -88,9 +105,9 @@ var Payment = function (_React$Component) {
             if (req.readyState === 4) {
               if (req.status === 200) {
                 console.log('GOOD transaction');
-                _this2.handlePaymentSuccess();
+                _this3.handlePaymentSuccess();
               } else {
-                _this2.handlePaymentFailure();
+                _this3.handlePaymentFailure();
                 console.log('BAD transaction');
               }
             }
@@ -100,7 +117,12 @@ var Payment = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'payment' },
-        React.createElement('div', { id: 'dropin-container' })
+        React.createElement('div', { id: 'dropin-container' }),
+        this.state.loaded ? null : React.createElement(
+          'div',
+          { id: 'loadingBox' },
+          'LOADING...'
+        )
       );
     }
   }]);
