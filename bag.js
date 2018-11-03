@@ -41,7 +41,7 @@ var Bag = function (_React$Component) {
           { className: 'items' },
           React.createElement(
             'div',
-            { className: 'bagItem legend' },
+            { className: 'bagItem legend desktop' },
             React.createElement(
               'span',
               { className: 'itemText' },

@@ -18,7 +18,7 @@ class Bag extends React.Component {
     return (
       <div className='bag'>
         <div className='items'>
-          <div className='bagItem legend'>
+          <div className='bagItem legend desktop'>
             <span className='itemText'>item</span>
             <span className='price'>item price</span>
             <span className='qty'>quantity</span>
