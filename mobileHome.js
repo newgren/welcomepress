@@ -27,6 +27,9 @@ var Home = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
+    _this.state = {
+      needToOpen: true
+    };
     _this.goToShop = props.goToShop;
     _this.goToWork = props.goToWork;
     return _this;
@@ -35,6 +38,8 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       var chchch = function chchch(copies, duration) {
         var copyIndex = copies.length - 1;
         var intervalPointer = window.setInterval(function () {
@@ -78,17 +83,15 @@ var Home = function (_React$Component) {
       var mark = document.getElementById('mark0');
       var infos = document.getElementsByClassName('info layer');
       var masterIndex = { val: infos.length - 1 };
-      mark.onmouseover = function () {
-        move(infos, masterIndex, true);
-      };
-      mark.onmouseout = function () {
-        //move(infos, masterIndex, false);
+      mark.onclick = function () {
+        move(infos, masterIndex, _this2.state.needToOpen);
+        _this2.setState({ needToOpen: !_this2.state.needToOpen });
       };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return React.createElement(
         'div',
@@ -108,7 +111,7 @@ var Home = function (_React$Component) {
                 id: 'work' + j,
                 key: j,
                 className: 'work layer',
-                onClick: _this2.goToWork,
+                onClick: _this3.goToWork,
                 style: {
                   transform: 'translate(' + -j * 0.7 + 'vh, ' + -j * 1.4 + 'vw)',
                   zIndex: -j
@@ -123,7 +126,7 @@ var Home = function (_React$Component) {
                 id: 'shopText' + j,
                 key: j,
                 className: 'shopText layer',
-                onClick: _this2.goToShop,
+                onClick: _this3.goToShop,
                 style: { transform: 'translate(' + j * 0.7 + 'vh, ' + j * 1.4 + 'vw)',
                   zIndex: -j } },
               React.createElement('img', { src: './iconImages/shop_mobile.png' })

@@ -14,6 +14,9 @@ var infoBlurb = 'we are an independent front-end design shop located in Urbana, 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      needToOpen: true
+    }
     this.goToShop = props.goToShop;
     this.goToWork = props.goToWork;
   }
@@ -64,11 +67,9 @@ class Home extends React.Component {
     let mark = document.getElementById('mark0');
     let infos = document.getElementsByClassName('info layer');
     let masterIndex = {val: infos.length - 1};
-    mark.onmouseover = () => {
-      move(infos, masterIndex, true);
-    };
-    mark.onmouseout = () => {
-      //move(infos, masterIndex, false);
+    mark.onclick = () => {
+      move(infos, masterIndex, this.state.needToOpen);
+      this.setState({needToOpen: !this.state.needToOpen}  );
     };
   }
 
