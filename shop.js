@@ -29,7 +29,7 @@ var Shop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
@@ -145,7 +145,6 @@ var Shop = function (_React$Component) {
   }, {
     key: 'setCheckoutMode',
     value: function setCheckoutMode(newMode) {
-      console.log("sET");
       this.setState({ checkoutMode: newMode });
     }
   }, {
@@ -272,18 +271,11 @@ var Shop = function (_React$Component) {
         React.createElement(
           'span',
           { className: 'slowdownkiddo' },
-          'oh.. the site\'s not supposed to do that. click ',
           React.createElement(
             'a',
-            { href: 'https://welcomepress.xyz' },
+            { href: 'http://brutalistwebsites.com/welcomepress.xyz/' },
             'here'
-          ),
-          ' to go to back to a version of WELCOME PRESS that\'s identical to this one except it won\'t let you do this'
-        ),
-        React.createElement(
-          'span',
-          { className: 'slowdownkiddo' },
-          'Re: that message above and to the left.  ok so we\'ve gotten WAY too many emails regarding the above message. people are saying things like, "why don\'t you just update this version of the site to the new version so this isn\'t a problem in the first place?? you clearly already have fixed the bug, so just update it." well, we\'re never going to change it so we hope that give you an idea of the type of business we\'re operating here. thank you. ~WP'
+          )
         )
       );
     }

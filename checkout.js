@@ -17,9 +17,12 @@ var e = React.createElement;
 
 var state = {
   invalidShippingAddressError: false,
+  invalidBillingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
+  paymentLoaded: false,
+  finalClick: false,
   ship: {
     email: '',
     firstName: '',
@@ -32,7 +35,6 @@ var state = {
     country: 'USA'
   },
   bill: {
-    email: '',
     firstName: '',
     lastName: '',
     street1: '',
@@ -56,7 +58,7 @@ var Checkout = function (_React$Component) {
     _this.remove = props.remove;
     _this.buttonRef = React.createRef();
     _this.handleInputChange = _this.handleInputChange.bind(_this);
-    _this.handleShippingSubmit = _this.handleShippingSubmit.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handlePaymentSuccess = _this.handlePaymentSuccess.bind(_this);
     _this.mode = props.mode; // 'shipping' | 'payment'
     _this.setCheckoutMode = props.setMode;
@@ -105,10 +107,18 @@ var Checkout = function (_React$Component) {
       return this.getSubtotal() + this.getShipping();
     }
   }, {
-    key: 'verifyShippingAddress',
-    value: function verifyShippingAddress(callbackTrue, callbackFalse) {
+    key: 'verifyAddress',
+    value: function verifyAddress(callback) {
+      var _this2 = this;
+
+      var shippingAddress = this.state.ship;
+      var billingAddress = this.state.bill;
       var userid = "711WELCO2258"; //"[userid]";
-      var url = 'https://secure.shippingapis.com/ShippingAPI.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
+
+      // secondAddress if needed
+
+      // ugly but strings in JS are weird!
+      var url = this.state.sameAddress ? 'https://secure.shippingapis.com/ShippingAPI.dll        ?API=Verify        &XML=        <AddressValidateRequest USERID="' + userid + '">          <Address ID="0">            <Address1>' + shippingAddress.street1 + '</Address1>            <Address2>' + shippingAddress.street2 + '</Address2>            <City>' + shippingAddress.city + '</City>            <State>' + shippingAddress.state + '</State>            <Zip5>' + shippingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>        </AddressValidateRequest>' : 'https://secure.shippingapis.com/ShippingAPI.dll        ?API=Verify        &XML=        <AddressValidateRequest USERID="' + userid + '">          <Address ID="0">            <Address1>' + shippingAddress.street1 + '</Address1>            <Address2>' + shippingAddress.street2 + '</Address2>            <City>' + shippingAddress.city + '</City>            <State>' + shippingAddress.state + '</State>            <Zip5>' + shippingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>          <Address ID="1">            <Address1>' + billingAddress.street1 + '</Address1>            <Address2>' + billingAddress.street2 + '</Address2>            <City>' + billingAddress.city + '</City>            <State>' + billingAddress.state + '</State>            <Zip5>' + billingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>        </AddressValidateRequest>';
 
       console.log(url);
       var http = new XMLHttpRequest();
@@ -119,8 +129,10 @@ var Checkout = function (_React$Component) {
         // console.log('HTTP RDYSTATE: ' + http.readyState);
         if (http.readyState === 4 && http.status === 200) {
           var xml = http.responseXML;
-          var valid = xml.getElementsByTagName("Error").length === 0;
-          valid ? callbackTrue() : callbackFalse();
+          var addresses = xml.getElementsByTagName("Address");
+          var validShipping = addresses[0].getElementsByTagName("Error").length == 0;
+          var validBilling = _this2.state.sameAddress ? true : addresses[1].getElementsByTagName("Error").length == 0;
+          callback(validShipping, validBilling);
         }
       };
     }
@@ -132,17 +144,24 @@ var Checkout = function (_React$Component) {
     }
   }, {
     key: 'handleInputChange',
-    value: function handleInputChange(event) {
-      var ship = this.state.ship;
+    value: function handleInputChange(type, event) {
       var target = event.target;
-      var value = target.type === 'checkbox' ? target.checked : target.value;
+      var value = target.value;
       var name = target.name;
-      if (target.type === 'checkbox') {
-        this.setState({ sameAddress: !this.state.sameAddress });
-      } else {
+      if (type == 'shipping') {
+        var ship = this.state.ship;
         ship[name] = value;
         this.setState({ ship: ship });
+      } else {
+        var bill = this.state.bill;
+        bill[name] = value;
+        this.setState({ bill: bill });
       }
+    }
+  }, {
+    key: 'handleCheckbox',
+    value: function handleCheckbox(event) {
+      this.setState({ sameAddress: !this.state.sameAddress });
     }
 
     // **** * ****
@@ -150,9 +169,9 @@ var Checkout = function (_React$Component) {
 
 
   }, {
-    key: 'handleShippingSubmit',
-    value: function handleShippingSubmit(event) {
-      var _this2 = this;
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      var _this3 = this;
 
       event.preventDefault();
       this.setState({ shippingInfoIsValidated: false }); // just in case
@@ -164,22 +183,30 @@ var Checkout = function (_React$Component) {
         console.log('INVALID EMAIL');
         return;
       }
-      var valid = this.verifyShippingAddress(function () {
-        // true callback
-        _this2.setState({
-          shippingInfoIsValidated: true, // all info validated only at this point
-          invalidShippingAddressError: false
-        });
-        _this2.setCheckoutMode('payment');
-        console.log('VALID SHIPPING ADDRESS');
-      }, function () {
-        // false callback
-        _this2.setState({
-          shippingInfoIsValidated: false,
-          invalidShippingAddressError: true
-        });
-        console.log('INVALID SHIPPING ADDRESS');
+      var valid = this.verifyAddress(function (validShipping, validBilling) {
+        if (validShipping && validBilling) {
+          // all info validated only at this point
+          _this3.setState({
+            shippingInfoIsValidated: true,
+            invalidShippingAddressError: false
+          });
+          _this3.setCheckoutMode('payment');
+          console.log('VALID SHIPPING and BILLING ADDRESS');
+        } else {
+          _this3.setState({
+            shippingInfoIsValidated: false,
+            invalidShippingAddressError: !validShipping,
+            invalidBillingAddressError: !validBilling
+          });
+          console.log('INVALID SHIPPING ADDRESS');
+        }
       });
+    }
+  }, {
+    key: 'handlePaymentSubmit',
+    value: function handlePaymentSubmit() {
+      console.log("CLICK");
+      this.setState({ finalClick: true });
     }
   }, {
     key: 'handlePaymentSuccess',
@@ -194,7 +221,7 @@ var Checkout = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return React.createElement(
         'div',
@@ -209,7 +236,7 @@ var Checkout = function (_React$Component) {
             null,
             React.createElement(
               'div',
-              { className: 'formform' },
+              { className: 'formform shipping' },
               React.createElement(
                 'div',
                 { className: 'title' },
@@ -217,14 +244,16 @@ var Checkout = function (_React$Component) {
               ),
               React.createElement(
                 'form',
-                { id: 'finalform', onSubmit: this.handleShippingSubmit },
-                'email*:',
+                { id: 'shippingForm', onSubmit: this.handleSubmit },
+                'email*',
                 React.createElement('br', null),
                 React.createElement('input', {
                   type: 'text',
                   name: 'email',
                   value: this.state.ship.email,
-                  onChange: this.handleInputChange }),
+                  onChange: function onChange(e) {
+                    return _this4.handleInputChange('shipping', e);
+                  } }),
                 React.createElement('br', null),
                 React.createElement(
                   'div',
@@ -232,37 +261,45 @@ var Checkout = function (_React$Component) {
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'first name*:',
+                    'first name*',
                     React.createElement('br', null),
                     React.createElement('input', {
                       type: 'text',
                       name: 'firstName',
                       value: this.state.ship.firstName,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('shipping', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'last name*:',
+                    'last name*',
                     React.createElement('br', null),
                     React.createElement('input', {
                       type: 'text',
                       name: 'lastName',
                       value: this.state.ship.lastName,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('shipping', e);
+                      } })
                   )
                 ),
-                'street address*:',
+                'street address*',
                 React.createElement('br', null),
                 React.createElement('input', { type: 'text', name: 'street1',
                   value: this.state.ship.street1,
-                  onChange: this.handleInputChange }),
+                  onChange: function onChange(e) {
+                    return _this4.handleInputChange('shipping', e);
+                  } }),
                 React.createElement('br', null),
-                'address2:',
+                'address 2',
                 React.createElement('br', null),
                 React.createElement('input', { type: 'text', name: 'street2',
                   value: this.state.ship.street2,
-                  onChange: this.handleInputChange }),
+                  onChange: function onChange(e) {
+                    return _this4.handleInputChange('shipping', e);
+                  } }),
                 React.createElement('br', null),
                 React.createElement(
                   'div',
@@ -270,20 +307,24 @@ var Checkout = function (_React$Component) {
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'city*:',
+                    'city*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'city',
                       value: this.state.ship.city,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('shipping', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'state*:',
+                    'state*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'state',
                       value: this.state.ship.state,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('shipping', e);
+                      } })
                   )
                 ),
                 React.createElement(
@@ -292,21 +333,25 @@ var Checkout = function (_React$Component) {
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'zip code*:',
+                    'zip code*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'zip5',
                       value: this.state.ship.zip5,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('shipping', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'country*:',
+                    'country*',
                     React.createElement('br', null),
                     React.createElement(
                       'select',
                       { value: 'USA',
-                        onChange: this.handleInputChange },
+                        onChange: function onChange(e) {
+                          return _this4.handleInputChange('shipping', e);
+                        } },
                       React.createElement(
                         'option',
                         {
@@ -321,7 +366,7 @@ var Checkout = function (_React$Component) {
                   { className: 'checkbox' },
                   React.createElement('input', { type: 'checkbox',
                     checked: this.state.sameAddress,
-                    onChange: this.handleInputChange }),
+                    onChange: this.handleCheckbox.bind(this) }),
                   React.createElement(
                     'div',
                     null,
@@ -338,12 +383,12 @@ var Checkout = function (_React$Component) {
               this.state.invalidShippingAddressError ? React.createElement(
                 'span',
                 null,
-                'The shiping address you entered is invalid. Please try again.'
+                'The shipping address you entered is invalid. Please try again.'
               ) : React.createElement('span', null)
             ),
             !this.state.sameAddress ? React.createElement(
               'div',
-              { className: 'formform' },
+              { className: 'formform billing' },
               React.createElement(
                 'div',
                 { className: 'title' },
@@ -351,52 +396,52 @@ var Checkout = function (_React$Component) {
               ),
               React.createElement(
                 'form',
-                { id: 'finalform', onSubmit: this.handleShippingSubmit },
-                'email*:',
-                React.createElement('br', null),
-                React.createElement('input', {
-                  type: 'text',
-                  name: 'email',
-                  value: this.state.bill.email,
-                  onChange: this.handleInputChange }),
-                React.createElement('br', null),
+                { id: 'billingForm', onSubmit: this.handleSubmit },
                 React.createElement(
                   'div',
                   { className: 'twofer' },
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'first name*:',
+                    'first name*',
                     React.createElement('br', null),
                     React.createElement('input', {
                       type: 'text',
                       name: 'firstName',
                       value: this.state.bill.firstName,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('billing', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'last name*:',
+                    'last name*',
                     React.createElement('br', null),
                     React.createElement('input', {
                       type: 'text',
                       name: 'lastName',
                       value: this.state.bill.lastName,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('billing', e);
+                      } })
                   )
                 ),
-                'street address*:',
+                'street address*',
                 React.createElement('br', null),
                 React.createElement('input', { type: 'text', name: 'street1',
                   value: this.state.bill.street1,
-                  onChange: this.handleInputChange }),
+                  onChange: function onChange(e) {
+                    return _this4.handleInputChange('billing', e);
+                  } }),
                 React.createElement('br', null),
-                'address2:',
+                'address 2',
                 React.createElement('br', null),
                 React.createElement('input', { type: 'text', name: 'street2',
                   value: this.state.bill.street2,
-                  onChange: this.handleInputChange }),
+                  onChange: function onChange(e) {
+                    return _this4.handleInputChange('billing', e);
+                  } }),
                 React.createElement('br', null),
                 React.createElement(
                   'div',
@@ -404,20 +449,24 @@ var Checkout = function (_React$Component) {
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'city*:',
+                    'city*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'city',
                       value: this.state.bill.city,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('billing', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'state*:',
+                    'state*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'state',
                       value: this.state.bill.state,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('billing', e);
+                      } })
                   )
                 ),
                 React.createElement(
@@ -426,21 +475,25 @@ var Checkout = function (_React$Component) {
                   React.createElement(
                     'div',
                     { className: 'one' },
-                    'zip code*:',
+                    'zip code*',
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'zip5',
                       value: this.state.bill.zip5,
-                      onChange: this.handleInputChange })
+                      onChange: function onChange(e) {
+                        return _this4.handleInputChange('billing', e);
+                      } })
                   ),
                   React.createElement(
                     'div',
                     { className: 'two' },
-                    'country*:',
+                    'country*',
                     React.createElement('br', null),
                     React.createElement(
                       'select',
                       { value: 'USA',
-                        onChange: this.handleInputChange },
+                        onChange: function onChange(e) {
+                          return _this4.handleInputChange('billing', e);
+                        } },
                       React.createElement(
                         'option',
                         {
@@ -450,29 +503,12 @@ var Checkout = function (_React$Component) {
                     )
                   )
                 ),
-                React.createElement(
-                  'div',
-                  { className: 'checkbox' },
-                  React.createElement('input', { type: 'checkbox',
-                    checked: this.state.sameAddress,
-                    onChange: this.handleInputChange }),
-                  React.createElement(
-                    'div',
-                    null,
-                    'My billing address is the same.'
-                  )
-                ),
                 React.createElement('input', { type: 'submit', style: { display: "none" } })
               ),
-              this.state.invalidEmailAddressError ? React.createElement(
+              this.state.invalidBillingAddressError ? React.createElement(
                 'span',
                 null,
-                'The email address you entered is invalid. Please try again.'
-              ) : React.createElement('span', null),
-              this.state.invalidShippingAddressError ? React.createElement(
-                'span',
-                null,
-                'The shiping address you entered is invalid. Please try again.'
+                'The billing address you entered is invalid. Please try again.'
               ) : React.createElement('span', null)
             ) : null
           ) : // PAYMENT
@@ -488,10 +524,10 @@ var Checkout = function (_React$Component) {
                 'Make sure this info is correct!'
               ),
               Object.keys(this.state.ship).map(function (a) {
-                return _this3.state.ship[a] ? React.createElement(
+                return _this4.state.ship[a] ? React.createElement(
                   'div',
                   { key: a, className: 'bit' },
-                  _this3.state.ship[a]
+                  _this4.state.ship[a]
                 ) : null;
               })
             ),
@@ -499,8 +535,16 @@ var Checkout = function (_React$Component) {
               amount: this.getTotal(),
               data: this.state.ship,
               buttonRef: this.buttonRef,
+              paymentLoaded: this.state.paymentLoaded,
+              setPaymentLoaded: function setPaymentLoaded() {
+                return _this4.setState({ paymentLoaded: true });
+              },
               handlePaymentSuccess: this.handlePaymentSuccess,
-              handlePaymentFailure: this.handlePaymentFailure })
+              handlePaymentFailure: this.handlePaymentFailure,
+              finalClick: this.state.finalClick,
+              flipFinalClick: function flipFinalClick() {
+                return _this4.setState({ finalClick: false });
+              } })
           )
         ),
         React.createElement(
@@ -560,7 +604,10 @@ var Checkout = function (_React$Component) {
             'button',
             { type: 'button',
               ref: this.buttonRef,
-              onClick: this.props.mode == 'shipping' ? this.handleShippingSubmit : this.handlePaymentSubmit },
+              disabled: this.props.mode == 'payment' && !this.state.paymentLoaded,
+              onClick: function onClick(e) {
+                return _this4.props.mode == 'shipping' ? _this4.handleSubmit(e) : _this4.handlePaymentSubmit();
+              } },
             this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
         )

@@ -25,11 +25,12 @@ var Payment = function (_React$Component) {
     _this.amount = props.amount;
     _this.data = props.data;
     _this.buttonRef = props.buttonRef;
+    // props has payment loaded (from checkout state)
+    _this.setPaymentLoaded = props.setPaymentLoaded;
     _this.handlePaymentSuccess = props.handlePaymentSuccess;
     _this.handlePaymentFailure = props.handlePaymentFailure;
-    _this.state = {
-      loaded: false
-    };
+    _this.finalClick = props.finalClick;
+    _this.flipFinalClick = props.flipFinalClick;
     return _this;
   }
 
@@ -52,7 +53,7 @@ var Payment = function (_React$Component) {
           alert(braintreeErrorMessage);
           return;
         }
-        _this2.setState({ loaded: true });
+        _this2.setPaymentLoaded();
         _this2.displayDropin();
         console.log("loaded braintree dropin");
         dropinInstance = instance;
@@ -67,16 +68,21 @@ var Payment = function (_React$Component) {
       box.style.display = 'inherit';
     }
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
       var _this3 = this;
 
-      var submitButton = this.buttonRef.current;
-      submitButton.addEventListener('click', function () {
+      if (this.props.finalClick === true) {
+        this.flipFinalClick();
+        console.log('CALLED');
         dropinInstance.requestPaymentMethod(function (err, payload) {
           if (err) {
             // Handle errors in requesting payment method
+            // if(err == 'DropinError: No payment method is available.') {
+            //   alert('Please enter your payment information.');
+            // }
             console.log("requestPaymentMethodError: " + err);
+            return;
           }
 
           // Send payload.nonce to your server
@@ -113,15 +119,21 @@ var Payment = function (_React$Component) {
             }
           };
         });
-      });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var submitButton = this.buttonRef.current;
+      submitButton.addEventListener('click', function () {});
       return React.createElement(
         'div',
         { className: 'payment' },
         React.createElement('div', { id: 'dropin-container' }),
-        this.state.loaded ? null : React.createElement(
+        this.props.paymentLoaded ? null : React.createElement(
           'div',
           { id: 'loadingBox' },
-          'LOADING...'
+          'PLEASE WAIT...'
         )
       );
     }

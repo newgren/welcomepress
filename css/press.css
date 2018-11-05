@@ -457,9 +457,22 @@ svg text {
     border: 0.2vw solid blue;
     color:white;
     display: block;
-    font-size: 1.7vw;
+    font-family: questrial;
+    font-size: 1.8vw;
     padding: 1vw;
     width: 100%;
+  }
+
+  .summary button:hover {
+    cursor: pointer;
+  }
+
+  .summary button:disabled {
+    opacity: 0.5;
+  }
+
+  .summary button:disabled:hover {
+    cursor: wait;
   }
 
   .summary button:active {
@@ -663,6 +676,10 @@ select option {
   font-family: questrial;
 }
 
+.checkout .left {
+  overflow-y: scroll;
+}
+
 .checkout > .formform {
   font-size: 1.5vw;
   width: 100%;
@@ -703,6 +720,7 @@ select option {
   align-items: center;
   display: flex;
   float: left;
+  margin-bottom: 3vw;
   width: 100%;
 }
 

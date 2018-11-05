@@ -80,7 +80,6 @@ class MobileShop extends React.Component {
   }
 
   setCheckoutMode(newMode) {
-    console.log("sET");
     this.setState({checkoutMode: newMode});
   }
 

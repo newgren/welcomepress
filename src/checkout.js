@@ -10,9 +10,12 @@ const e = React.createElement;
 
 let state = {
   invalidShippingAddressError: false,
+  invalidBillingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
+  paymentLoaded: false,
+  finalClick: false,
   ship: {
     email: '',
     firstName: '',
@@ -25,7 +28,6 @@ let state = {
     country: 'USA'
   },
   bill: {
-    email: '',
     firstName: '',
     lastName: '',
     street1: '',
@@ -44,7 +46,7 @@ class Checkout extends React.Component {
     this.remove = props.remove;
     this.buttonRef = React.createRef();
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleShippingSubmit = this.handleShippingSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePaymentSuccess = this.handlePaymentSuccess.bind(this);
     this.mode = props.mode; // 'shipping' | 'payment'
     this.setCheckoutMode = props.setMode;
@@ -86,21 +88,51 @@ class Checkout extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  verifyShippingAddress(callbackTrue, callbackFalse) {
+  verifyAddress(callback) {
+    let shippingAddress = this.state.ship;
+    let billingAddress = this.state.bill;
     let userid = "711WELCO2258"; //"[userid]";
-    let url = `https://secure.shippingapis.com/ShippingAPI.dll\
-    ?API=Verify\
-    &XML=\
-    <AddressValidateRequest USERID="${userid}">\
-      <Address ID="0">\
-        <Address1>${this.state.ship.street1}</Address1>\
-        <Address2>${this.state.ship.street2}</Address2>\
-        <City>${this.state.ship.city}</City>\
-        <State>${this.state.ship.state}</State>\
-        <Zip5>${this.state.ship.zip5}</Zip5>\
-        <Zip4></Zip4>\
-      </Address>\
-    </AddressValidateRequest>`;
+
+    // secondAddress if needed
+
+    // ugly but strings in JS are weird!
+    let url =
+      this.state.sameAddress ?
+        `https://secure.shippingapis.com/ShippingAPI.dll\
+        ?API=Verify\
+        &XML=\
+        <AddressValidateRequest USERID="${userid}">\
+          <Address ID="0">\
+            <Address1>${shippingAddress.street1}</Address1>\
+            <Address2>${shippingAddress.street2}</Address2>\
+            <City>${shippingAddress.city}</City>\
+            <State>${shippingAddress.state}</State>\
+            <Zip5>${shippingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+        </AddressValidateRequest>`
+        :
+        `https://secure.shippingapis.com/ShippingAPI.dll\
+        ?API=Verify\
+        &XML=\
+        <AddressValidateRequest USERID="${userid}">\
+          <Address ID="0">\
+            <Address1>${shippingAddress.street1}</Address1>\
+            <Address2>${shippingAddress.street2}</Address2>\
+            <City>${shippingAddress.city}</City>\
+            <State>${shippingAddress.state}</State>\
+            <Zip5>${shippingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+          <Address ID="1">\
+            <Address1>${billingAddress.street1}</Address1>\
+            <Address2>${billingAddress.street2}</Address2>\
+            <City>${billingAddress.city}</City>\
+            <State>${billingAddress.state}</State>\
+            <Zip5>${billingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+        </AddressValidateRequest>`;
 
     console.log(url);
     const http = new XMLHttpRequest();
@@ -111,8 +143,12 @@ class Checkout extends React.Component {
       // console.log('HTTP RDYSTATE: ' + http.readyState);
       if(http.readyState === 4 && http.status === 200) {
         let xml = http.responseXML;
-        let valid = xml.getElementsByTagName("Error").length === 0;
-        valid ? callbackTrue() : callbackFalse();
+        let addresses = xml.getElementsByTagName("Address");
+        let validShipping = addresses[0].getElementsByTagName("Error").length == 0;
+        let validBilling =
+          this.state.sameAddress ? true
+          : addresses[1].getElementsByTagName("Error").length == 0;
+        callback(validShipping, validBilling);
       }
     }
   }
@@ -122,25 +158,30 @@ class Checkout extends React.Component {
     return regex.test(String(email).toLowerCase());
   }
 
-  handleInputChange(event) {
-    let ship = this.state.ship;
+  handleInputChange(type, event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
-    if(target.type === 'checkbox') {
-      this.setState({sameAddress: !this.state.sameAddress});
-    } else {
+    if(type == 'shipping') {
+      let ship = this.state.ship;
       ship[name] =  value;
       this.setState({ship: ship});
+    } else {
+      let bill = this.state.bill;
+      bill[name] =  value;
+      this.setState({bill: bill});
     }
+  }
 
+  handleCheckbox(event) {
+    this.setState({sameAddress: !this.state.sameAddress});
   }
 
   // **** * ****
   // ***** TODO async
 
 
-  handleShippingSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
     this.setState({shippingInfoIsValidated: false}); // just in case
     if(this.validateEmail(this.state.ship.email)) {
@@ -151,31 +192,38 @@ class Checkout extends React.Component {
       console.log('INVALID EMAIL');
       return;
     }
-    let valid =  this.verifyShippingAddress(() => {
-      // true callback
-      this.setState({
-        shippingInfoIsValidated: true, // all info validated only at this point
-        invalidShippingAddressError: false
-      });
-      this.setCheckoutMode('payment');
-      console.log('VALID SHIPPING ADDRESS');
-    }, () => {
-      // false callback
-      this.setState({
-        shippingInfoIsValidated: false,
-        invalidShippingAddressError: true
-      });
-      console.log('INVALID SHIPPING ADDRESS');
+    let valid = this.verifyAddress((validShipping, validBilling) => {
+      if(validShipping && validBilling) {
+        // all info validated only at this point
+        this.setState({
+          shippingInfoIsValidated: true,
+          invalidShippingAddressError: false
+        });
+        this.setCheckoutMode('payment');
+        console.log('VALID SHIPPING and BILLING ADDRESS');
+      } else {
+        this.setState({
+          shippingInfoIsValidated: false,
+          invalidShippingAddressError: !validShipping,
+          invalidBillingAddressError: !validBilling,
+        });
+        console.log('INVALID SHIPPING ADDRESS');
+      }
     });
- }
+  }
 
- handlePaymentSuccess() {
+  handlePaymentSubmit() {
+    console.log("CLICK");
+    this.setState({finalClick: true});
+  }
+
+  handlePaymentSuccess() {
    this.completeCheckout();
- }
+  }
 
- handlePaymentFailure() {
+  handlePaymentFailure() {
    alert('Payment did not complete properly. Please try again.');
- }
+  }
 
   render() {
     return (
@@ -185,66 +233,66 @@ class Checkout extends React.Component {
           this.props.mode == 'shipping' ?
             // SHIPPING
             <div>
-              <div className='formform'>
+              <div className='formform shipping'>
                 <div className='title'>SHIPPING ADDRESS</div>
-                <form id='finalform' onSubmit={this.handleShippingSubmit}>
-                  email*:<br/>
+                <form id='shippingForm' onSubmit={this.handleSubmit}>
+                  email*<br/>
                   <input
                     type="text"
                     name="email"
                     value={this.state.ship.email}
-                    onChange={this.handleInputChange}/><br/>
+                    onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
                   <div className='twofer'>
                     <div className='one'>
-                      first name*:<br/>
+                      first name*<br/>
                       <input
                         type="text"
                         name="firstName"
                         value={this.state.ship.firstName}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('shipping', e)}/>
                     </div>
                     <div className='two'>
-                      last name*:<br/>
+                      last name*<br/>
                       <input
                         type="text"
                         name="lastName"
                         value={this.state.ship.lastName}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('shipping', e)}/>
                     </div>
                   </div>
-                  street address*:<br/>
+                  street address*<br/>
                 <input type="text" name="street1"
                     value={this.state.ship.street1}
-                    onChange={this.handleInputChange}/><br/>
-                  address2:<br/>
+                    onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
+                  address 2<br/>
                   <input type="text" name="street2"
                     value={this.state.ship.street2}
-                    onChange={this.handleInputChange}/><br/>
+                    onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
                   <div className='twofer'>
                     <div className='one'>
-                      city*:<br/>
+                      city*<br/>
                       <input type="text" name="city"
                         value={this.state.ship.city}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('shipping', e)}/>
                     </div>
                     <div className='two'>
-                      state*:<br/>
+                      state*<br/>
                       <input type="text" name="state"
                         value={this.state.ship.state}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('shipping', e)}/>
                     </div>
                   </div>
                   <div className='twofer'>
                     <div className='one'>
-                      zip code*:<br/>
+                      zip code*<br/>
                       <input type="text" name="zip5"
                         value={this.state.ship.zip5}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('shipping', e)}/>
                     </div>
                     <div className='two'>
-                      country*:<br/>
+                      country*<br/>
                       <select value='USA'
-                              onChange={this.handleInputChange}>
+                              onChange={(e) => this.handleInputChange('shipping', e)}>
                         <option
                           value='USA'>USA</option>
                       </select>
@@ -253,7 +301,7 @@ class Checkout extends React.Component {
                   <div className='checkbox'>
                     <input type='checkbox'
                            checked={this.state.sameAddress}
-                           onChange={this.handleInputChange} />
+                           onChange={this.handleCheckbox.bind(this)} />
                     <div>My billing address is the same.</div>
                   </div>
                   <input type="submit" style={{display: "none"}} />
@@ -265,93 +313,76 @@ class Checkout extends React.Component {
                 }
                 {
                 this.state.invalidShippingAddressError ?
-                  <span>The shiping address you entered is invalid. Please try again.</span> :
+                  <span>The shipping address you entered is invalid. Please try again.</span> :
                 <span></span>
                 }
               </div>
             {
               !this.state.sameAddress ?
-              <div className='formform'>
+              <div className='formform billing'>
                 <div className='title'>BILLING ADDRESS</div>
-                <form id='finalform' onSubmit={this.handleShippingSubmit}>
-                  email*:<br/>
-                  <input
-                    type="text"
-                    name="email"
-                    value={this.state.bill.email}
-                    onChange={this.handleInputChange}/><br/>
+                <form id='billingForm' onSubmit={this.handleSubmit}>
                   <div className='twofer'>
                     <div className='one'>
-                      first name*:<br/>
+                      first name*<br/>
                       <input
                         type="text"
                         name="firstName"
                         value={this.state.bill.firstName}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('billing', e)}/>
                     </div>
                     <div className='two'>
-                      last name*:<br/>
+                      last name*<br/>
                       <input
                         type="text"
                         name="lastName"
                         value={this.state.bill.lastName}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('billing', e)}/>
                     </div>
                   </div>
-                  street address*:<br/>
+                  street address*<br/>
                 <input type="text" name="street1"
                     value={this.state.bill.street1}
-                    onChange={this.handleInputChange}/><br/>
-                  address2:<br/>
+                    onChange={(e) => this.handleInputChange('billing', e)}/><br/>
+                  address 2<br/>
                   <input type="text" name="street2"
                     value={this.state.bill.street2}
-                    onChange={this.handleInputChange}/><br/>
+                    onChange={(e) => this.handleInputChange('billing', e)}/><br/>
                   <div className='twofer'>
                     <div className='one'>
-                      city*:<br/>
+                      city*<br/>
                       <input type="text" name="city"
                         value={this.state.bill.city}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('billing', e)}/>
                     </div>
                     <div className='two'>
-                      state*:<br/>
+                      state*<br/>
                       <input type="text" name="state"
                         value={this.state.bill.state}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('billing', e)}/>
                     </div>
                   </div>
                   <div className='twofer'>
                     <div className='one'>
-                      zip code*:<br/>
+                      zip code*<br/>
                       <input type="text" name="zip5"
                         value={this.state.bill.zip5}
-                        onChange={this.handleInputChange}/>
+                        onChange={(e) => this.handleInputChange('billing', e)}/>
                     </div>
                     <div className='two'>
-                      country*:<br/>
+                      country*<br/>
                       <select value='USA'
-                              onChange={this.handleInputChange}>
+                              onChange={(e) => this.handleInputChange('billing', e)}>
                         <option
                           value='USA'>USA</option>
                       </select>
                     </div>
                   </div>
-                  <div className='checkbox'>
-                    <input type='checkbox'
-                           checked={this.state.sameAddress}
-                           onChange={this.handleInputChange} />
-                    <div>My billing address is the same.</div>
-                  </div>
                   <input type="submit" style={{display: "none"}} />
                 </form>
                 {
-                this.state.invalidEmailAddressError ?
-                  <span>The email address you entered is invalid. Please try again.</span> :
-                <span></span>
-                }
-                {
-                this.state.invalidShippingAddressError ?
-                  <span>The shiping address you entered is invalid. Please try again.</span> :
+                this.state.invalidBillingAddressError ?
+                  <span>The billing address you entered is invalid. Please try again.</span> :
                 <span></span>
                 }
               </div>
@@ -376,8 +407,12 @@ class Checkout extends React.Component {
                 amount={this.getTotal()}
                 data={this.state.ship}
                 buttonRef={this.buttonRef}
+                paymentLoaded={this.state.paymentLoaded}
+                setPaymentLoaded={() => this.setState({paymentLoaded: true})}
                 handlePaymentSuccess={this.handlePaymentSuccess}
-                handlePaymentFailure={this.handlePaymentFailure}/>
+                handlePaymentFailure={this.handlePaymentFailure}
+                finalClick={this.state.finalClick}
+                flipFinalClick={() => this.setState({finalClick: false})}/>
             </div>
         }
         </div>
@@ -397,10 +432,11 @@ class Checkout extends React.Component {
           </div>
           <button type='button'
                   ref={this.buttonRef}
-                  onClick={this.props.mode == 'shipping' ?
-                    this.handleShippingSubmit
+                  disabled={this.props.mode == 'payment' && !this.state.paymentLoaded}
+                  onClick={(e) => this.props.mode == 'shipping' ?
+                    this.handleSubmit(e)
                   :
-                    this.handlePaymentSubmit
+                    this.handlePaymentSubmit()
                   }>
             {
               this.props.mode == 'shipping' ?

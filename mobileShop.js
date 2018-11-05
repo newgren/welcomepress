@@ -102,7 +102,6 @@ var MobileShop = function (_React$Component) {
   }, {
     key: 'setCheckoutMode',
     value: function setCheckoutMode(newMode) {
-      console.log("sET");
       this.setState({ checkoutMode: newMode });
     }
 

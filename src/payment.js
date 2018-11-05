@@ -12,11 +12,12 @@ class Payment extends React.Component {
     this.amount = props.amount;
     this.data = props.data;
     this.buttonRef = props.buttonRef;
+    // props has payment loaded (from checkout state)
+    this.setPaymentLoaded = props.setPaymentLoaded;
     this.handlePaymentSuccess = props.handlePaymentSuccess;
     this.handlePaymentFailure = props.handlePaymentFailure;
-    this.state = {
-      loaded: false
-    }
+    this.finalClick = props.finalClick;
+    this.flipFinalClick = props.flipFinalClick;
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class Payment extends React.Component {
           alert(braintreeErrorMessage);
           return;
         }
-        this.setState({loaded: true});
+        this.setPaymentLoaded();
         this.displayDropin();
         console.log("loaded braintree dropin");
         dropinInstance = instance;
@@ -48,13 +49,18 @@ class Payment extends React.Component {
     box.style.display = 'inherit';
   }
 
-  render() {
-    var submitButton = this.buttonRef.current;
-    submitButton.addEventListener('click', () => {
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.finalClick === true) {
+      this.flipFinalClick();
+      console.log('CALLED');
       dropinInstance.requestPaymentMethod((err, payload) => {
         if (err) {
           // Handle errors in requesting payment method
+          // if(err == 'DropinError: No payment method is available.') {
+          //   alert('Please enter your payment information.');
+          // }
           console.log("requestPaymentMethodError: " + err);
+          return;
         }
 
         // Send payload.nonce to your server
@@ -92,13 +98,20 @@ class Payment extends React.Component {
           }
         }
       });
+    }
+  }
+
+  render() {
+    var submitButton = this.buttonRef.current;
+    submitButton.addEventListener('click', () => {
+
     });
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
         {
-          this.state.loaded ? (null)
-            : <div id='loadingBox'>LOADING...</div>
+          this.props.paymentLoaded ? (null)
+            : <div id='loadingBox'>PLEASE WAIT...</div>
         }
       </div>
     );
