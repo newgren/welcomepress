@@ -205,7 +205,7 @@ class Shop extends React.Component {
                     <Checkout cart={this.state.cart}
                               mode={this.state.checkoutMode}
                               setMode={(newMode) => this.setCheckoutMode(newMode)}
-                              completeCheckout={this.goToCompleted} />
+                              completeCheckout={this.goToCompleted}/>
                   :
                     (null)
               )

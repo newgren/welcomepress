@@ -10,7 +10,9 @@ class Payment extends React.Component {
   constructor(props) {
     super(props);
     this.amount = props.amount;
-    this.data = props.data;
+    this.cart = props.cart;
+    this.shipData = props.shipData;
+    this.billData = props.billData;
     this.buttonRef = props.buttonRef;
     // props has payment loaded (from checkout state)
     this.setPaymentLoaded = props.setPaymentLoaded;
@@ -18,6 +20,9 @@ class Payment extends React.Component {
     this.handlePaymentFailure = props.handlePaymentFailure;
     this.finalClick = props.finalClick;
     this.flipFinalClick = props.flipFinalClick;
+    this.state = {
+      selfLoaded: false
+    }
   }
 
   componentDidMount() {
@@ -36,6 +41,7 @@ class Payment extends React.Component {
           return;
         }
         this.setPaymentLoaded();
+        this.setState({selfLoaded: true});
         this.displayDropin();
         console.log("loaded braintree dropin");
         dropinInstance = instance;
@@ -63,20 +69,39 @@ class Payment extends React.Component {
           return;
         }
 
+        console.log(this.cart);
+
+        let shipObj = {
+          firstName: this.shipData.firstName,
+          lastName: this.shipData.lastName,
+          street1: this.shipData.street1,
+          street2: this.shipData.street2,
+          city: this.shipData.city,
+          state: this.shipData.state,
+          zip5: this.shipData.zip5,
+          country: this.shipData.country
+        };
+
         // Send payload.nonce to your server
-        let params = {
+        let params =
+        {
           amount: this.amount,
+          cart: this.cart,
           nonce: payload.nonce,
-          email: this.data.email,
-          firstName: this.data.firstName,
-          lastName: this.data.lastName,
-          street1: this.data.street1,
-          street2: this.data.street2,
-          city: this.data.city,
-          state: this.data.state,
-          zip5: this.data.zip5,
-          country: this.data.country
-        }
+          email: this.shipData.email,
+          ship: shipObj,
+          bill: this.billData ? {
+            firstName: this.billData.firstName,
+            lastName: this.billData.lastName,
+            street1: this.billData.street1,
+            street2: this.billData.street2,
+            city: this.billData.city,
+            state: this.billData.state,
+            zip5: this.billData.zip5,
+            country: this.billData.country
+          } :
+          shipObj // use shipping if no seperate billing info
+        };
         //let params = payload.nonce;
         console.log(params);
 
@@ -102,16 +127,14 @@ class Payment extends React.Component {
   }
 
   render() {
-    var submitButton = this.buttonRef.current;
-    submitButton.addEventListener('click', () => {
-
-    });
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
         {
-          this.props.paymentLoaded ? (null)
-            : <div id='loadingBox'>PLEASE WAIT...</div>
+          this.state.selfLoaded ? (null)
+            : <div id='loadingBox'>
+                <img src='../logos/loading.gif'></img>
+              </div>
         }
       </div>
     );

@@ -14,8 +14,8 @@ let state = {
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
-  paymentLoaded: false,
   finalClick: false,
+  paymentLoaded: false,
   ship: {
     email: '',
     firstName: '',
@@ -44,7 +44,6 @@ class Checkout extends React.Component {
     super(props);
     this.cart = props.cart;
     this.remove = props.remove;
-    this.buttonRef = React.createRef();
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePaymentSuccess = this.handlePaymentSuccess.bind(this);
@@ -86,6 +85,11 @@ class Checkout extends React.Component {
 
   getTotal() {
     return this.getSubtotal() + this.getShipping();
+  }
+
+  setPaymentLoaded() {
+    console.log("SETSETSET");
+    this.setState({paymentLoaded: true});
   }
 
   verifyAddress(callback) {
@@ -177,6 +181,16 @@ class Checkout extends React.Component {
     this.setState({sameAddress: !this.state.sameAddress});
   }
 
+  buttonIsDisabled() {
+    console.log("ok")
+    if(this.props.mode == 'payment' && !this.state.paymentLoaded) {
+      return false;
+    }
+    return true;
+  }
+
+
+
   // **** * ****
   // ***** TODO async
 
@@ -197,7 +211,8 @@ class Checkout extends React.Component {
         // all info validated only at this point
         this.setState({
           shippingInfoIsValidated: true,
-          invalidShippingAddressError: false
+          invalidShippingAddressError: false,
+          invalidBillingAddressError: false,
         });
         this.setCheckoutMode('payment');
         console.log('VALID SHIPPING and BILLING ADDRESS');
@@ -226,6 +241,7 @@ class Checkout extends React.Component {
   }
 
   render() {
+    const isEnabled = !this.buttonIsDisabled();
     return (
       <div className='checkout'>
         <div className='left'>
@@ -405,10 +421,11 @@ class Checkout extends React.Component {
               </div>
               <Payment
                 amount={this.getTotal()}
-                data={this.state.ship}
-                buttonRef={this.buttonRef}
+                cart={this.cart}
+                shipData={this.state.ship}
+                billData={this.state.sameAddress ? (null) : this.state.bill}
                 paymentLoaded={this.state.paymentLoaded}
-                setPaymentLoaded={() => this.setState({paymentLoaded: true})}
+                setPaymentLoaded={this.setPaymentLoaded.bind(this)}
                 handlePaymentSuccess={this.handlePaymentSuccess}
                 handlePaymentFailure={this.handlePaymentFailure}
                 finalClick={this.state.finalClick}
@@ -430,21 +447,23 @@ class Checkout extends React.Component {
             <span className='key'>total</span>
             <span className='val'>${this.getTotal().toFixed(2)}</span>
           </div>
-          <button type='button'
-                  ref={this.buttonRef}
-                  disabled={this.props.mode == 'payment' && !this.state.paymentLoaded}
-                  onClick={(e) => this.props.mode == 'shipping' ?
-                    this.handleSubmit(e)
-                  :
-                    this.handlePaymentSubmit()
-                  }>
-            {
-              this.props.mode == 'shipping' ?
-                "CONTINUE TO PAYMENT"
-              :
-                'CONFIRM ORDER'
-            }
-          </button>
+
+              <button type='button'
+                      disabled={isEnabled}
+                      onClick={(e) => this.props.mode == 'shipping' ?
+                        this.handleSubmit(e)
+                      :
+                        this.handlePaymentSubmit()
+                      }>
+                      {
+                        this.props.mode == 'shipping' ?
+                          "CONTINUE TO PAYMENT"
+                        :
+                          'CONFIRM OORDER'
+                      }
+                    </button>
+
+
         </div>
       </div>
     );

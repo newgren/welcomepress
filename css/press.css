@@ -496,6 +496,10 @@ svg text {
     width: 100%;
   }
 
+  .payment #loadingBox img {
+    width: 100%;
+  }
+
   .payAndVerify {
     display: flex;
     width: 100%;

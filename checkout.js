@@ -21,8 +21,8 @@ var state = {
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
-  paymentLoaded: false,
   finalClick: false,
+  paymentLoaded: false,
   ship: {
     email: '',
     firstName: '',
@@ -56,7 +56,6 @@ var Checkout = function (_React$Component) {
 
     _this.cart = props.cart;
     _this.remove = props.remove;
-    _this.buttonRef = React.createRef();
     _this.handleInputChange = _this.handleInputChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handlePaymentSuccess = _this.handlePaymentSuccess.bind(_this);
@@ -105,6 +104,12 @@ var Checkout = function (_React$Component) {
     key: 'getTotal',
     value: function getTotal() {
       return this.getSubtotal() + this.getShipping();
+    }
+  }, {
+    key: 'setPaymentLoaded',
+    value: function setPaymentLoaded() {
+      console.log("SETSETSET");
+      this.setState({ paymentLoaded: true });
     }
   }, {
     key: 'verifyAddress',
@@ -163,6 +168,15 @@ var Checkout = function (_React$Component) {
     value: function handleCheckbox(event) {
       this.setState({ sameAddress: !this.state.sameAddress });
     }
+  }, {
+    key: 'buttonIsDisabled',
+    value: function buttonIsDisabled() {
+      console.log("ok");
+      if (this.props.mode == 'payment' && !this.state.paymentLoaded) {
+        return false;
+      }
+      return true;
+    }
 
     // **** * ****
     // ***** TODO async
@@ -188,7 +202,8 @@ var Checkout = function (_React$Component) {
           // all info validated only at this point
           _this3.setState({
             shippingInfoIsValidated: true,
-            invalidShippingAddressError: false
+            invalidShippingAddressError: false,
+            invalidBillingAddressError: false
           });
           _this3.setCheckoutMode('payment');
           console.log('VALID SHIPPING and BILLING ADDRESS');
@@ -223,6 +238,7 @@ var Checkout = function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
+      var isEnabled = !this.buttonIsDisabled();
       return React.createElement(
         'div',
         { className: 'checkout' },
@@ -533,12 +549,11 @@ var Checkout = function (_React$Component) {
             ),
             React.createElement(Payment, {
               amount: this.getTotal(),
-              data: this.state.ship,
-              buttonRef: this.buttonRef,
+              cart: this.cart,
+              shipData: this.state.ship,
+              billData: this.state.sameAddress ? null : this.state.bill,
               paymentLoaded: this.state.paymentLoaded,
-              setPaymentLoaded: function setPaymentLoaded() {
-                return _this4.setState({ paymentLoaded: true });
-              },
+              setPaymentLoaded: this.setPaymentLoaded.bind(this),
               handlePaymentSuccess: this.handlePaymentSuccess,
               handlePaymentFailure: this.handlePaymentFailure,
               finalClick: this.state.finalClick,
@@ -603,12 +618,11 @@ var Checkout = function (_React$Component) {
           React.createElement(
             'button',
             { type: 'button',
-              ref: this.buttonRef,
-              disabled: this.props.mode == 'payment' && !this.state.paymentLoaded,
+              disabled: isEnabled,
               onClick: function onClick(e) {
                 return _this4.props.mode == 'shipping' ? _this4.handleSubmit(e) : _this4.handlePaymentSubmit();
               } },
-            this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
+            this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM OORDER'
           )
         )
       );

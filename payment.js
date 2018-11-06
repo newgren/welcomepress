@@ -23,7 +23,9 @@ var Payment = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
 
     _this.amount = props.amount;
-    _this.data = props.data;
+    _this.cart = props.cart;
+    _this.shipData = props.shipData;
+    _this.billData = props.billData;
     _this.buttonRef = props.buttonRef;
     // props has payment loaded (from checkout state)
     _this.setPaymentLoaded = props.setPaymentLoaded;
@@ -31,6 +33,9 @@ var Payment = function (_React$Component) {
     _this.handlePaymentFailure = props.handlePaymentFailure;
     _this.finalClick = props.finalClick;
     _this.flipFinalClick = props.flipFinalClick;
+    _this.state = {
+      selfLoaded: false
+    };
     return _this;
   }
 
@@ -54,6 +59,7 @@ var Payment = function (_React$Component) {
           return;
         }
         _this2.setPaymentLoaded();
+        _this2.setState({ selfLoaded: true });
         _this2.displayDropin();
         console.log("loaded braintree dropin");
         dropinInstance = instance;
@@ -85,21 +91,39 @@ var Payment = function (_React$Component) {
             return;
           }
 
+          console.log(_this3.cart);
+
+          var shipObj = {
+            firstName: _this3.shipData.firstName,
+            lastName: _this3.shipData.lastName,
+            street1: _this3.shipData.street1,
+            street2: _this3.shipData.street2,
+            city: _this3.shipData.city,
+            state: _this3.shipData.state,
+            zip5: _this3.shipData.zip5,
+            country: _this3.shipData.country
+          };
+
           // Send payload.nonce to your server
           var params = {
             amount: _this3.amount,
+            cart: _this3.cart,
             nonce: payload.nonce,
-            email: _this3.data.email,
-            firstName: _this3.data.firstName,
-            lastName: _this3.data.lastName,
-            street1: _this3.data.street1,
-            street2: _this3.data.street2,
-            city: _this3.data.city,
-            state: _this3.data.state,
-            zip5: _this3.data.zip5,
-            country: _this3.data.country
-            //let params = payload.nonce;
-          };console.log(params);
+            email: _this3.shipData.email,
+            ship: shipObj,
+            bill: _this3.billData ? {
+              firstName: _this3.billData.firstName,
+              lastName: _this3.billData.lastName,
+              street1: _this3.billData.street1,
+              street2: _this3.billData.street2,
+              city: _this3.billData.city,
+              state: _this3.billData.state,
+              zip5: _this3.billData.zip5,
+              country: _this3.billData.country
+            } : shipObj // use shipping if no seperate billing info
+          };
+          //let params = payload.nonce;
+          console.log(params);
 
           var req = new XMLHttpRequest();
           var url = 'https://' + server + ':' + port + '/checkout';
@@ -124,16 +148,14 @@ var Payment = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var submitButton = this.buttonRef.current;
-      submitButton.addEventListener('click', function () {});
       return React.createElement(
         'div',
         { className: 'payment' },
         React.createElement('div', { id: 'dropin-container' }),
-        this.props.paymentLoaded ? null : React.createElement(
+        this.state.selfLoaded ? null : React.createElement(
           'div',
           { id: 'loadingBox' },
-          'PLEASE WAIT...'
+          React.createElement('img', { src: '../logos/loading.gif' })
         )
       );
     }
