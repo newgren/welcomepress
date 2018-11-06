@@ -264,7 +264,7 @@ svg text {
 }
 
 .banner img#leftBannerIcon {
-  cursor: pointer;
+  cursor: w-resize;
   height: 40%;
   left: 0px;
   padding-left: 2vw;
@@ -290,7 +290,7 @@ svg text {
 
 .banner #bagbannericon {
   align-items: center;
-  cursor: pointer;
+  cursor: e-resize;
   display: flex;
   height: 55%;
   justify-content: center;
@@ -352,6 +352,34 @@ svg text {
 
   .shop .bag > div, .shop .checkout > div {
     padding: 0 2vw;
+  }
+
+  .bag .items #emptyMessage {
+    align-items: center;
+    color:blue;
+    display: flex;
+    flex-direction: column;
+    font-family: questrial;
+    justify-content: center;
+    padding-top: 2vw;
+    width: 100%;
+  }
+
+  .bag .items #emptyMessage #emptyButton {
+    background-color: blue;
+    border: 0.2vw solid blue;
+    color:white;
+    cursor: w-resize;
+    font-family: questrial;
+    font-weight: bold;
+    margin-top: 2vw;
+    padding: 1vw;
+    pointer-events: all;
+  }
+
+  .bag .items #emptyMessage #emptyButton:hover {
+    background-color: yellow;
+    color:blue;
   }
 
   .bag .items, .checkout .left {

@@ -14,6 +14,9 @@ class Home extends React.Component {
     super(props);
     this.goToShop = props.goToShop;
     this.goToWork = props.goToWork;
+    this.state = {
+      infoOut: false
+    }
   }
 
   componentDidMount() {
@@ -63,10 +66,16 @@ class Home extends React.Component {
     let infos = document.getElementsByClassName('info layer');
     let masterIndex = {val: infos.length - 1};
     mark.onmouseover = () => {
-      move(infos, masterIndex, true);
+      if(!this.state.infoOut) {
+        move(infos, masterIndex, true);
+        this.setState({infoOut: true});
+      }
     };
-    mark.onmouseout = () => {
-      //move(infos, masterIndex, false);
+    mark.onclick = () => {
+      if(this.state.infoOut) {
+        move(infos, masterIndex, false);
+        this.setState({infoOut: !this.state.infoOut});
+      }
     };
   }
 

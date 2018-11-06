@@ -249,7 +249,11 @@ var Shop = function (_React$Component) {
             goToCheckout: function goToCheckout() {
               return _this2.setState({ mode: 'checkout' });
             },
-            getSubtotal: this.getSubtotal.bind(this) }) : this.state.mode == 'checkout' ? React.createElement(Checkout, { cart: this.state.cart,
+            goToBrowse: function goToBrowse() {
+              return _this2.setState({ mode: 'browse' });
+            },
+            getSubtotal: this.getSubtotal.bind(this),
+            getCartSize: this.getCartSize.bind(this) }) : this.state.mode == 'checkout' ? React.createElement(Checkout, { cart: this.state.cart,
             mode: this.state.checkoutMode,
             setMode: function setMode(newMode) {
               return _this2.setCheckoutMode(newMode);

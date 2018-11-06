@@ -200,7 +200,9 @@ class Shop extends React.Component {
                     cart={this.state.cart}
                     remove={(index, size) => this.removeFromCart(index, size)}
                     goToCheckout={() => this.setState({mode: 'checkout'})}
-                    getSubtotal={this.getSubtotal.bind(this)} />                  :
+                    goToBrowse={()=>this.setState({mode: 'browse'})}
+                    getSubtotal={this.getSubtotal.bind(this)}
+                    getCartSize={this.getCartSize.bind(this)} />                  :
                   this.state.mode == 'checkout' ?
                     <Checkout cart={this.state.cart}
                               mode={this.state.checkoutMode}

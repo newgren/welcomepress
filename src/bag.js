@@ -8,10 +8,10 @@ const e = React.createElement;
 class Bag extends React.Component {
   constructor(props) {
     super(props);
-    this.cart = props.cart;
     this.remove = props.remove;
     this.getSubtotal = props.getSubtotal;
     this.goToCheckout = props.goToCheckout;
+    this.goToBrowse = props.goToBrowse;
   }
 
   render() {
@@ -24,20 +24,32 @@ class Bag extends React.Component {
             <span className='qty'>quantity</span>
             <span className='total'>total</span>
           </div>
-          {Object.keys(this.cart).map(id =>
-            Object.keys(this.cart[id]).map(size =>
-              <BagItem
-                id={id}
-                size={size}
-                qty={this.cart[id][size]}
-                name={catalog.items[id].name.toUpperCase()}
-                image_url={'./product/' + catalog.items[id].image_urls[0] + '.png'}
-                price={catalog.items[id].price}
-                key={id+size+this.cart[id][size]}
-                remove={(index, size) => this.remove(index, size)}
-              />
-            )
-          )}
+          {
+            this.props.getCartSize() > 0 ?
+              Object.keys(this.props.cart).map(id =>
+                Object.keys(this.props.cart[id]).map(size =>
+                  <BagItem
+                    id={id}
+                    size={size}
+                    qty={this.props.cart[id][size]}
+                    name={catalog.items[id].name.toUpperCase()}
+                    image_url={'./product/' + catalog.items[id].image_urls[0] + '.png'}
+                    price={catalog.items[id].price}
+                    key={id+size+this.props.cart[id][size]}
+                    remove={(index, size) => this.remove(index, size)}
+                  />
+                )
+              ) :
+              <div id='emptyMessage'>
+                <div>there's nothing here!</div>
+                <div id='emptyButton'
+                     onClick={this.goToBrowse}>
+                     &#8592; CLICK ME TO GO BACK &#8592;
+                </div>
+              </div>
+
+          }
+
         </div>
         <div className='summary'>
           <span className='title'>ORDER SUMMARY</span>

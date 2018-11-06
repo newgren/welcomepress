@@ -27,12 +27,17 @@ var Home = function (_React$Component) {
 
     _this.goToShop = props.goToShop;
     _this.goToWork = props.goToWork;
+    _this.state = {
+      infoOut: false
+    };
     return _this;
   }
 
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       var chchch = function chchch(copies, duration) {
         var copyIndex = copies.length - 1;
         var intervalPointer = window.setInterval(function () {
@@ -77,16 +82,22 @@ var Home = function (_React$Component) {
       var infos = document.getElementsByClassName('info layer');
       var masterIndex = { val: infos.length - 1 };
       mark.onmouseover = function () {
-        move(infos, masterIndex, true);
+        if (!_this2.state.infoOut) {
+          move(infos, masterIndex, true);
+          _this2.setState({ infoOut: true });
+        }
       };
-      mark.onmouseout = function () {
-        //move(infos, masterIndex, false);
+      mark.onclick = function () {
+        if (_this2.state.infoOut) {
+          move(infos, masterIndex, false);
+          _this2.setState({ infoOut: !_this2.state.infoOut });
+        }
       };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return React.createElement(
         'div',
@@ -106,7 +117,7 @@ var Home = function (_React$Component) {
                 id: 'work' + j,
                 key: j,
                 className: 'work layer',
-                onClick: _this2.goToWork,
+                onClick: _this3.goToWork,
                 style: {
                   transform: 'translate(' + -j + 'vw, ' + -j * 1.5 + 'vh)',
                   zIndex: -j
@@ -125,7 +136,7 @@ var Home = function (_React$Component) {
                 id: 'shopText' + j,
                 key: j,
                 className: 'shopText layer',
-                onClick: _this2.goToShop,
+                onClick: _this3.goToShop,
                 style: { transform: 'translate(' + j + 'vw, ' + j * 1.5 + 'vh)',
                   zIndex: -j } },
               React.createElement(

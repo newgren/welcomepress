@@ -21,10 +21,10 @@ var Bag = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Bag.__proto__ || Object.getPrototypeOf(Bag)).call(this, props));
 
-    _this.cart = props.cart;
     _this.remove = props.remove;
     _this.getSubtotal = props.getSubtotal;
     _this.goToCheckout = props.goToCheckout;
+    _this.goToBrowse = props.goToBrowse;
     return _this;
   }
 
@@ -63,22 +63,36 @@ var Bag = function (_React$Component) {
               'total'
             )
           ),
-          Object.keys(this.cart).map(function (id) {
-            return Object.keys(_this2.cart[id]).map(function (size) {
+          this.props.getCartSize() > 0 ? Object.keys(this.props.cart).map(function (id) {
+            return Object.keys(_this2.props.cart[id]).map(function (size) {
               return React.createElement(BagItem, {
                 id: id,
                 size: size,
-                qty: _this2.cart[id][size],
+                qty: _this2.props.cart[id][size],
                 name: catalog.items[id].name.toUpperCase(),
                 image_url: './product/' + catalog.items[id].image_urls[0] + '.png',
                 price: catalog.items[id].price,
-                key: id + size + _this2.cart[id][size],
+                key: id + size + _this2.props.cart[id][size],
                 remove: function remove(index, size) {
                   return _this2.remove(index, size);
                 }
               });
             });
-          })
+          }) : React.createElement(
+            'div',
+            { id: 'emptyMessage' },
+            React.createElement(
+              'div',
+              null,
+              'there\'s nothing here!'
+            ),
+            React.createElement(
+              'div',
+              { id: 'emptyButton',
+                onClick: this.goToBrowse },
+              '\u2190 CLICK ME TO GO BACK \u2190'
+            )
+          )
         ),
         React.createElement(
           'div',
