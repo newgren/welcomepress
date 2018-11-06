@@ -54,11 +54,6 @@ class Checkout extends React.Component {
     this.state = state;
   }
 
-  componentWillUnmount() {
-    // Remember state for the next mount
-    state = this.state;
-  }
-
   formatMoney(val) {
     return Math.round(val * 100) / 100;
   }
@@ -86,10 +81,6 @@ class Checkout extends React.Component {
 
   getTotal() {
     return this.getSubtotal() + this.getShipping();
-  }
-
-  setPaymentLoaded(val) {
-    this.setState({paymentLoaded: val});
   }
 
   verifyAddress(callback) {
@@ -235,6 +226,15 @@ class Checkout extends React.Component {
 
   handlePaymentFailure() {
    alert('Payment did not complete properly. Please try again.');
+  }
+
+  setPaymentLoaded(val) {
+    this.setState({paymentLoaded: val});
+  }
+
+  componentWillUnmount() {
+    // Remember state for the next mount
+    state = this.state;
   }
 
   render() {
@@ -437,7 +437,7 @@ class Checkout extends React.Component {
               </div>
               <Payment
                 amount={this.getTotal()}
-                cart={this.cart}
+                cart={this.props.cart}
                 shipData={this.state.ship}
                 billData={this.state.sameAddress ? (null) : this.state.bill}
                 paymentLoaded={this.state.paymentLoaded}

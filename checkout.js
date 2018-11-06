@@ -68,12 +68,6 @@ var Checkout = function (_React$Component) {
   }
 
   _createClass(Checkout, [{
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // Remember state for the next mount
-      state = this.state;
-    }
-  }, {
     key: 'formatMoney',
     value: function formatMoney(val) {
       return Math.round(val * 100) / 100;
@@ -105,11 +99,6 @@ var Checkout = function (_React$Component) {
     key: 'getTotal',
     value: function getTotal() {
       return this.getSubtotal() + this.getShipping();
-    }
-  }, {
-    key: 'setPaymentLoaded',
-    value: function setPaymentLoaded(val) {
-      this.setState({ paymentLoaded: val });
     }
   }, {
     key: 'verifyAddress',
@@ -231,6 +220,17 @@ var Checkout = function (_React$Component) {
     key: 'handlePaymentFailure',
     value: function handlePaymentFailure() {
       alert('Payment did not complete properly. Please try again.');
+    }
+  }, {
+    key: 'setPaymentLoaded',
+    value: function setPaymentLoaded(val) {
+      this.setState({ paymentLoaded: val });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // Remember state for the next mount
+      state = this.state;
     }
   }, {
     key: 'render',
@@ -578,7 +578,7 @@ var Checkout = function (_React$Component) {
             ),
             React.createElement(Payment, {
               amount: this.getTotal(),
-              cart: this.cart,
+              cart: this.props.cart,
               shipData: this.state.ship,
               billData: this.state.sameAddress ? null : this.state.bill,
               paymentLoaded: this.state.paymentLoaded,

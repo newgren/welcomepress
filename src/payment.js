@@ -13,7 +13,6 @@ class Payment extends React.Component {
     this.cart = props.cart;
     this.shipData = props.shipData;
     this.billData = props.billData;
-    this.buttonRef = props.buttonRef;
     // props has payment loaded (from checkout state)
     this.setPaymentLoaded = props.setPaymentLoaded;
     this.handlePaymentSuccess = props.handlePaymentSuccess;

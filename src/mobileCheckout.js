@@ -12,8 +12,21 @@ let state = {
   invalidShippingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
+  sameAddress: true,
+  paymentLoaded: false,
+  finalClick: false,
   ship: {
     email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  },
+  bill: {
     firstName: '',
     lastName: '',
     street1: '',
@@ -38,11 +51,6 @@ class MobileCheckout extends React.Component {
     this.setCheckoutMode = props.setMode;
     this.completeCheckout = props.completeCheckout;
     this.state = state;
-  }
-
-  componentWillUnmount() {
-    // Remember state for the next mount
-    state = this.state;
   }
 
   formatMoney(val) {
@@ -74,21 +82,51 @@ class MobileCheckout extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  verifyShippingAddress(callbackTrue, callbackFalse) {
+  verifyAddress(callback) {
+    let shippingAddress = this.state.ship;
+    let billingAddress = this.state.bill;
     let userid = "711WELCO2258"; //"[userid]";
-    let url = `https://secure.shippingapis.com/ShippingAPI.dll\
-    ?API=Verify\
-    &XML=\
-    <AddressValidateRequest USERID="${userid}">\
-      <Address ID="0">\
-        <Address1>${this.state.ship.street1}</Address1>\
-        <Address2>${this.state.ship.street2}</Address2>\
-        <City>${this.state.ship.city}</City>\
-        <State>${this.state.ship.state}</State>\
-        <Zip5>${this.state.ship.zip5}</Zip5>\
-        <Zip4></Zip4>\
-      </Address>\
-    </AddressValidateRequest>`;
+
+    // secondAddress if needed
+
+    // ugly but strings in JS are weird!
+    let url =
+      this.state.sameAddress ?
+        `https://secure.shippingapis.com/ShippingAPI.dll\
+        ?API=Verify\
+        &XML=\
+        <AddressValidateRequest USERID="${userid}">\
+          <Address ID="0">\
+            <Address1>${shippingAddress.street1}</Address1>\
+            <Address2>${shippingAddress.street2}</Address2>\
+            <City>${shippingAddress.city}</City>\
+            <State>${shippingAddress.state}</State>\
+            <Zip5>${shippingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+        </AddressValidateRequest>`
+        :
+        `https://secure.shippingapis.com/ShippingAPI.dll\
+        ?API=Verify\
+        &XML=\
+        <AddressValidateRequest USERID="${userid}">\
+          <Address ID="0">\
+            <Address1>${shippingAddress.street1}</Address1>\
+            <Address2>${shippingAddress.street2}</Address2>\
+            <City>${shippingAddress.city}</City>\
+            <State>${shippingAddress.state}</State>\
+            <Zip5>${shippingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+          <Address ID="1">\
+            <Address1>${billingAddress.street1}</Address1>\
+            <Address2>${billingAddress.street2}</Address2>\
+            <City>${billingAddress.city}</City>\
+            <State>${billingAddress.state}</State>\
+            <Zip5>${billingAddress.zip5}</Zip5>\
+            <Zip4></Zip4>\
+          </Address>\
+        </AddressValidateRequest>`;
 
     console.log(url);
     const http = new XMLHttpRequest();
@@ -99,8 +137,12 @@ class MobileCheckout extends React.Component {
       // console.log('HTTP RDYSTATE: ' + http.readyState);
       if(http.readyState === 4 && http.status === 200) {
         let xml = http.responseXML;
-        let valid = xml.getElementsByTagName("Error").length === 0;
-        valid ? callbackTrue() : callbackFalse();
+        let addresses = xml.getElementsByTagName("Address");
+        let validShipping = addresses[0].getElementsByTagName("Error").length == 0;
+        let validBilling =
+          this.state.sameAddress ? true
+          : addresses[1].getElementsByTagName("Error").length == 0;
+        callback(validShipping, validBilling);
       }
     }
   }
@@ -110,19 +152,67 @@ class MobileCheckout extends React.Component {
     return regex.test(String(email).toLowerCase());
   }
 
-  handleInputChange(event) {
-    let ship = this.state.ship;
+  handleInputChange(type, event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
+    if(type == 'shipping') {
+      let ship = this.state.ship;
+      ship[name] =  value;
+      this.setState({ship: ship});
+    } else {
+      let bill = this.state.bill;
+      bill[name] =  value;
+      this.setState({bill: bill});
+    }
+  }
 
-    ship[name] =  value;
-    this.setState({ship: ship});
+  handleCheckbox(event) {
+    this.setState({sameAddress: !this.state.sameAddress});
+  }
+
+  buttonIsDisabled() {
+    console.log("ok")
+    if(this.props.mode == 'payment' && !this.state.paymentLoaded) {
+      return false;
+    }
+    return true;
   }
 
   // **** * ****
   // ***** TODO async
 
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({shippingInfoIsValidated: false}); // just in case
+    if(this.validateEmail(this.state.ship.email)) {
+      this.setState({invalidEmailAddressError: false});
+      console.log('VALID EMAIL');
+    } else {
+      this.setState({invalidEmailAddressError: true});
+      console.log('INVALID EMAIL');
+      return;
+    }
+    let valid = this.verifyAddress((validShipping, validBilling) => {
+      if(validShipping && validBilling) {
+        // all info validated only at this point
+        this.setState({
+          shippingInfoIsValidated: true,
+          invalidShippingAddressError: false,
+          invalidBillingAddressError: false,
+        });
+        this.setCheckoutMode('payment');
+        console.log('VALID SHIPPING and BILLING ADDRESS');
+      } else {
+        this.setState({
+          shippingInfoIsValidated: false,
+          invalidShippingAddressError: !validShipping,
+          invalidBillingAddressError: !validBilling,
+        });
+        console.log('INVALID SHIPPING ADDRESS');
+      }
+    });
+  }
 
   handleShippingSubmit(event) {
     event.preventDefault();
@@ -161,6 +251,19 @@ class MobileCheckout extends React.Component {
    alert('Payment did not complete properly. Please try again.');
  }
 
+ handlePaymentSubmit() {
+   this.setState({finalClick: true});
+ }
+
+ setPaymentLoaded(val) {
+   this.setState({paymentLoaded: val});
+ }
+
+ componentWillUnmount() {
+   // Remember state for the next mount
+   state = this.state;
+ }
+
   render() {
     return (
       <div className='checkout'>
@@ -175,41 +278,42 @@ class MobileCheckout extends React.Component {
                   type="text"
                   name="email"
                   value={this.state.ship.email}
-                  onChange={this.handleInputChange}/><br/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
                 first name<br/>
                 <input
                   type="text"
                   name="firstName"
                   value={this.state.ship.firstName}
-                  onChange={this.handleInputChange}/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/>
                 last name<br/>
                 <input
                   type="text"
                   name="lastName"
                   value={this.state.ship.lastName}
-                  onChange={this.handleInputChange}/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/>
                 street address<br/>
                 <input type="text" name="street1"
                   value={this.state.ship.street1}
-                  onChange={this.handleInputChange}/><br/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
                 address2<br/>
                 <input type="text" name="street2"
                   value={this.state.ship.street2}
-                  onChange={this.handleInputChange}/><br/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/><br/>
                 city<br/>
                 <input type="text" name="city"
                   value={this.state.ship.city}
-                  onChange={this.handleInputChange}/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/>
                 state<br/>
                 <input type="text" name="state"
                   value={this.state.ship.state}
-                  onChange={this.handleInputChange}/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/>
                 zip code<br/>
                 <input type="text" name="zip5"
                   value={this.state.ship.zip5}
-                  onChange={this.handleInputChange}/>
+                  onChange={(e) => this.handleInputChange('shipping', e)}/>
                 country<br/>
-                <select value='USA'>
+              <select value='USA'
+                      onChange={(e) => this.handleInputChange('shipping', e)}>
                   <option value='USA'>USA</option>
                 </select>
 
@@ -230,8 +334,12 @@ class MobileCheckout extends React.Component {
             <div className='payAndVerifyMobile'>
               <Payment
                 amount={this.getTotal()}
-                data={this.state.ship}
-                buttonRef={this.buttonRef}
+                cart={this.props.cart}
+                shipData={this.state.ship}
+                billData={this.state.sameAddress ? (null) : this.state.bill}
+                finalClick={this.state.finalClick}
+                flipFinalClick={() => this.setState({finalClick: false})}
+                setPaymentLoaded={this.setPaymentLoaded.bind(this)}
                 handlePaymentSuccess={this.handlePaymentSuccess}
                 handlePaymentFailure={this.handlePaymentFailure}/>
               <div className='shippingVerification'>
@@ -240,7 +348,7 @@ class MobileCheckout extends React.Component {
                 {
                   Object.keys(this.state.ship).map((a)=> {
                     return this.state.ship[a] ?
-                      <div className='bit'>{this.state.ship[a]}</div>
+                      <div key={a} className='bit'>{this.state.ship[a]}</div>
                     :
                       (null)
                   })
@@ -271,10 +379,10 @@ class MobileCheckout extends React.Component {
             }
             <button type='button'
                     ref={this.buttonRef}
-                    onClick={this.props.mode == 'shipping' ?
-                      this.handleShippingSubmit
+                    onClick={(e) => this.props.mode == 'shipping' ?
+                      this.handleSubmit(e)
                     :
-                      this.handlePaymentSubmit
+                      this.handlePaymentSubmit()
                     }>
               {
                 this.props.mode == 'shipping' ?

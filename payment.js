@@ -26,7 +26,6 @@ var Payment = function (_React$Component) {
     _this.cart = props.cart;
     _this.shipData = props.shipData;
     _this.billData = props.billData;
-    _this.buttonRef = props.buttonRef;
     // props has payment loaded (from checkout state)
     _this.setPaymentLoaded = props.setPaymentLoaded;
     _this.handlePaymentSuccess = props.handlePaymentSuccess;

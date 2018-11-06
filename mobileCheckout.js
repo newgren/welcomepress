@@ -19,8 +19,21 @@ var state = {
   invalidShippingAddressError: false,
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
+  sameAddress: true,
+  paymentLoaded: false,
+  finalClick: false,
   ship: {
     email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip5: '',
+    country: 'USA'
+  },
+  bill: {
     firstName: '',
     lastName: '',
     street1: '',
@@ -54,12 +67,6 @@ var MobileCheckout = function (_React$Component) {
   }
 
   _createClass(MobileCheckout, [{
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // Remember state for the next mount
-      state = this.state;
-    }
-  }, {
     key: 'formatMoney',
     value: function formatMoney(val) {
       return Math.round(val * 100) / 100;
@@ -93,10 +100,18 @@ var MobileCheckout = function (_React$Component) {
       return this.getSubtotal() + this.getShipping();
     }
   }, {
-    key: 'verifyShippingAddress',
-    value: function verifyShippingAddress(callbackTrue, callbackFalse) {
+    key: 'verifyAddress',
+    value: function verifyAddress(callback) {
+      var _this2 = this;
+
+      var shippingAddress = this.state.ship;
+      var billingAddress = this.state.bill;
       var userid = "711WELCO2258"; //"[userid]";
-      var url = 'https://secure.shippingapis.com/ShippingAPI.dll    ?API=Verify    &XML=    <AddressValidateRequest USERID="' + userid + '">      <Address ID="0">        <Address1>' + this.state.ship.street1 + '</Address1>        <Address2>' + this.state.ship.street2 + '</Address2>        <City>' + this.state.ship.city + '</City>        <State>' + this.state.ship.state + '</State>        <Zip5>' + this.state.ship.zip5 + '</Zip5>        <Zip4></Zip4>      </Address>    </AddressValidateRequest>';
+
+      // secondAddress if needed
+
+      // ugly but strings in JS are weird!
+      var url = this.state.sameAddress ? 'https://secure.shippingapis.com/ShippingAPI.dll        ?API=Verify        &XML=        <AddressValidateRequest USERID="' + userid + '">          <Address ID="0">            <Address1>' + shippingAddress.street1 + '</Address1>            <Address2>' + shippingAddress.street2 + '</Address2>            <City>' + shippingAddress.city + '</City>            <State>' + shippingAddress.state + '</State>            <Zip5>' + shippingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>        </AddressValidateRequest>' : 'https://secure.shippingapis.com/ShippingAPI.dll        ?API=Verify        &XML=        <AddressValidateRequest USERID="' + userid + '">          <Address ID="0">            <Address1>' + shippingAddress.street1 + '</Address1>            <Address2>' + shippingAddress.street2 + '</Address2>            <City>' + shippingAddress.city + '</City>            <State>' + shippingAddress.state + '</State>            <Zip5>' + shippingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>          <Address ID="1">            <Address1>' + billingAddress.street1 + '</Address1>            <Address2>' + billingAddress.street2 + '</Address2>            <City>' + billingAddress.city + '</City>            <State>' + billingAddress.state + '</State>            <Zip5>' + billingAddress.zip5 + '</Zip5>            <Zip4></Zip4>          </Address>        </AddressValidateRequest>';
 
       console.log(url);
       var http = new XMLHttpRequest();
@@ -107,8 +122,10 @@ var MobileCheckout = function (_React$Component) {
         // console.log('HTTP RDYSTATE: ' + http.readyState);
         if (http.readyState === 4 && http.status === 200) {
           var xml = http.responseXML;
-          var valid = xml.getElementsByTagName("Error").length === 0;
-          valid ? callbackTrue() : callbackFalse();
+          var addresses = xml.getElementsByTagName("Address");
+          var validShipping = addresses[0].getElementsByTagName("Error").length == 0;
+          var validBilling = _this2.state.sameAddress ? true : addresses[1].getElementsByTagName("Error").length == 0;
+          callback(validShipping, validBilling);
         }
       };
     }
@@ -120,24 +137,77 @@ var MobileCheckout = function (_React$Component) {
     }
   }, {
     key: 'handleInputChange',
-    value: function handleInputChange(event) {
-      var ship = this.state.ship;
+    value: function handleInputChange(type, event) {
       var target = event.target;
-      var value = target.type === 'checkbox' ? target.checked : target.value;
+      var value = target.value;
       var name = target.name;
-
-      ship[name] = value;
-      this.setState({ ship: ship });
+      if (type == 'shipping') {
+        var ship = this.state.ship;
+        ship[name] = value;
+        this.setState({ ship: ship });
+      } else {
+        var bill = this.state.bill;
+        bill[name] = value;
+        this.setState({ bill: bill });
+      }
+    }
+  }, {
+    key: 'handleCheckbox',
+    value: function handleCheckbox(event) {
+      this.setState({ sameAddress: !this.state.sameAddress });
+    }
+  }, {
+    key: 'buttonIsDisabled',
+    value: function buttonIsDisabled() {
+      console.log("ok");
+      if (this.props.mode == 'payment' && !this.state.paymentLoaded) {
+        return false;
+      }
+      return true;
     }
 
     // **** * ****
     // ***** TODO async
 
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      var _this3 = this;
 
+      event.preventDefault();
+      this.setState({ shippingInfoIsValidated: false }); // just in case
+      if (this.validateEmail(this.state.ship.email)) {
+        this.setState({ invalidEmailAddressError: false });
+        console.log('VALID EMAIL');
+      } else {
+        this.setState({ invalidEmailAddressError: true });
+        console.log('INVALID EMAIL');
+        return;
+      }
+      var valid = this.verifyAddress(function (validShipping, validBilling) {
+        if (validShipping && validBilling) {
+          // all info validated only at this point
+          _this3.setState({
+            shippingInfoIsValidated: true,
+            invalidShippingAddressError: false,
+            invalidBillingAddressError: false
+          });
+          _this3.setCheckoutMode('payment');
+          console.log('VALID SHIPPING and BILLING ADDRESS');
+        } else {
+          _this3.setState({
+            shippingInfoIsValidated: false,
+            invalidShippingAddressError: !validShipping,
+            invalidBillingAddressError: !validBilling
+          });
+          console.log('INVALID SHIPPING ADDRESS');
+        }
+      });
+    }
   }, {
     key: 'handleShippingSubmit',
     value: function handleShippingSubmit(event) {
-      var _this2 = this;
+      var _this4 = this;
 
       event.preventDefault();
       this.setState({ shippingInfoIsValidated: false }); // just in case
@@ -151,15 +221,15 @@ var MobileCheckout = function (_React$Component) {
       }
       var valid = this.verifyShippingAddress(function () {
         // true callback
-        _this2.setState({
+        _this4.setState({
           shippingInfoIsValidated: true, // all info validated only at this point
           invalidShippingAddressError: false
         });
-        _this2.setCheckoutMode('payment');
+        _this4.setCheckoutMode('payment');
         console.log('VALID SHIPPING ADDRESS');
       }, function () {
         // false callback
-        _this2.setState({
+        _this4.setState({
           shippingInfoIsValidated: false,
           invalidShippingAddressError: true
         });
@@ -177,9 +247,25 @@ var MobileCheckout = function (_React$Component) {
       alert('Payment did not complete properly. Please try again.');
     }
   }, {
+    key: 'handlePaymentSubmit',
+    value: function handlePaymentSubmit() {
+      this.setState({ finalClick: true });
+    }
+  }, {
+    key: 'setPaymentLoaded',
+    value: function setPaymentLoaded(val) {
+      this.setState({ paymentLoaded: val });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // Remember state for the next mount
+      state = this.state;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
       return React.createElement(
         'div',
@@ -201,7 +287,9 @@ var MobileCheckout = function (_React$Component) {
                 type: 'text',
                 name: 'email',
                 value: this.state.ship.email,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               React.createElement('br', null),
               'first name',
               React.createElement('br', null),
@@ -209,46 +297,63 @@ var MobileCheckout = function (_React$Component) {
                 type: 'text',
                 name: 'firstName',
                 value: this.state.ship.firstName,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               'last name',
               React.createElement('br', null),
               React.createElement('input', {
                 type: 'text',
                 name: 'lastName',
                 value: this.state.ship.lastName,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               'street address',
               React.createElement('br', null),
               React.createElement('input', { type: 'text', name: 'street1',
                 value: this.state.ship.street1,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               React.createElement('br', null),
               'address2',
               React.createElement('br', null),
               React.createElement('input', { type: 'text', name: 'street2',
                 value: this.state.ship.street2,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               React.createElement('br', null),
               'city',
               React.createElement('br', null),
               React.createElement('input', { type: 'text', name: 'city',
                 value: this.state.ship.city,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               'state',
               React.createElement('br', null),
               React.createElement('input', { type: 'text', name: 'state',
                 value: this.state.ship.state,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               'zip code',
               React.createElement('br', null),
               React.createElement('input', { type: 'text', name: 'zip5',
                 value: this.state.ship.zip5,
-                onChange: this.handleInputChange }),
+                onChange: function onChange(e) {
+                  return _this5.handleInputChange('shipping', e);
+                } }),
               'country',
               React.createElement('br', null),
               React.createElement(
                 'select',
-                { value: 'USA' },
+                { value: 'USA',
+                  onChange: function onChange(e) {
+                    return _this5.handleInputChange('shipping', e);
+                  } },
                 React.createElement(
                   'option',
                   { value: 'USA' },
@@ -273,8 +378,14 @@ var MobileCheckout = function (_React$Component) {
             { className: 'payAndVerifyMobile' },
             React.createElement(Payment, {
               amount: this.getTotal(),
-              data: this.state.ship,
-              buttonRef: this.buttonRef,
+              cart: this.props.cart,
+              shipData: this.state.ship,
+              billData: this.state.sameAddress ? null : this.state.bill,
+              finalClick: this.state.finalClick,
+              flipFinalClick: function flipFinalClick() {
+                return _this5.setState({ finalClick: false });
+              },
+              setPaymentLoaded: this.setPaymentLoaded.bind(this),
               handlePaymentSuccess: this.handlePaymentSuccess,
               handlePaymentFailure: this.handlePaymentFailure }),
             React.createElement(
@@ -288,10 +399,10 @@ var MobileCheckout = function (_React$Component) {
               React.createElement('br', null),
               React.createElement('br', null),
               Object.keys(this.state.ship).map(function (a) {
-                return _this3.state.ship[a] ? React.createElement(
+                return _this5.state.ship[a] ? React.createElement(
                   'div',
-                  { className: 'bit' },
-                  _this3.state.ship[a]
+                  { key: a, className: 'bit' },
+                  _this5.state.ship[a]
                 ) : null;
               })
             )
@@ -358,7 +469,9 @@ var MobileCheckout = function (_React$Component) {
             'button',
             { type: 'button',
               ref: this.buttonRef,
-              onClick: this.props.mode == 'shipping' ? this.handleShippingSubmit : this.handlePaymentSubmit },
+              onClick: function onClick(e) {
+                return _this5.props.mode == 'shipping' ? _this5.handleSubmit(e) : _this5.handlePaymentSubmit();
+              } },
             this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
         )
