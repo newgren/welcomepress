@@ -29,7 +29,7 @@ var MobileShop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: 0,
@@ -208,6 +208,12 @@ var MobileShop = function (_React$Component) {
               },
               goToCheckout: function goToCheckout() {
                 return _this2.setState({ mode: 'checkout' });
+              },
+              getCartSize: function getCartSize() {
+                return _this2.getCartSize();
+              },
+              goBack: function goBack() {
+                return _this2.handleBack();
               } }),
             'item': React.createElement(MobileItem, { item: catalog.items[this.state.sel],
               addToCart: function addToCart(size, qty) {

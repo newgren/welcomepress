@@ -447,6 +447,7 @@ svg text {
     height: 100%;
   }
 
+
   .bagItem .details {
     flex: 210;
   }
@@ -1191,7 +1192,7 @@ select option {
 
   .bagItem .flexOnEm {
     display: flex;
-    height: 60vw;
+    /* height: 60vw; */
     width: 100%;
   }
 
@@ -1203,6 +1204,10 @@ select option {
 
   .pic img {
     width: 100%;
+  }
+
+  .bagItem .pic img {
+    height: inherit;
   }
 
   .bagItem .flexOnEm .details {
@@ -1240,7 +1245,10 @@ select option {
   .summary .bar:nth-of-type(3){
     padding-bottom: 4vw;
     padding-top: 4vw;
-
+  }
+  .summary .bar:nth-of-type(4){
+    padding-bottom: 4vw;
+    padding-top: 0vw;
   }
   .summary .bar .key {
     font-size: 5vw;

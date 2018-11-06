@@ -16,7 +16,7 @@ class MobileShop extends React.Component {
     this.goToHome = props.goToHome;
     this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: 0,
@@ -153,7 +153,9 @@ class MobileShop extends React.Component {
                 </div>),
               'bag': <MobileBag cart={this.state.cart}
                                 remove={(index, size) => this.removeFromCart(index, size)}
-                                goToCheckout={() => this.setState({mode: 'checkout'})} />,
+                                goToCheckout={() => this.setState({mode: 'checkout'})}
+                                getCartSize={() => this.getCartSize()}
+                                goBack={() => this.handleBack()}/>,
               'item': <MobileItem item={catalog.items[this.state.sel]}
                                 addToCart={(size, qty) => this.addToCart(this.state.sel, size, qty)}/>,
               'checkout':  <MobileCheckout cart={this.state.cart}

@@ -68,7 +68,6 @@ var MobileBag = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.cart);
       return React.createElement(
         'div',
         { className: 'bag' },
@@ -86,7 +85,10 @@ var MobileBag = function (_React$Component) {
                 price: catalog.items[id].price,
                 key: id + size + _this2.cart[id][size],
                 remove: function remove(index, size) {
-                  return _this2.remove(index, size);
+                  _this2.remove(index, size);
+                  if (_this2.props.getCartSize() == 0) {
+                    _this2.props.goBack();
+                  }
                 }
               });
             });

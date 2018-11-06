@@ -45,7 +45,6 @@ class MobileBag extends React.Component {
   }
 
   render() {
-    console.log(this.cart);
     return (
       <div className='bag'>
         <div className='items'>
@@ -59,7 +58,12 @@ class MobileBag extends React.Component {
                 image_url={'./product/' + catalog.items[id].image_urls[0] + '.png'}
                 price={catalog.items[id].price}
                 key={id+size+this.cart[id][size]}
-                remove={(index, size) => this.remove(index, size)}
+                remove={(index, size) => {
+                  this.remove(index, size);
+                  if(this.props.getCartSize() == 0) {
+                    this.props.goBack();
+                  }
+                }}
               />
             )
           )}
