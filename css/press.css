@@ -316,13 +316,24 @@ svg text {
 
 .shop .scroller {
   -webkit-transition: left 1s;
-  height: 82%;
+  height: 81%;
+  padding-bottom: 1vw;
+  padding-left: 1vw;
   transition: left 1s;
   white-space: nowrap;
 }
 
 .shop .scroller > img {
+  cursor: pointer;
   height: 100%;
+  transition: filter 0.1s;
+  transition-timing-function: ease-in;
+}
+
+.shop .scroller > img:hover {
+  filter: hue-rotate(180deg);
+  /* -webkit-filter: invert(1); */
+   /* filter: invert(1); */
 }
 
 .shop .slowdownkiddo {
@@ -512,6 +523,33 @@ svg text {
   }
   .summary > img {
     width: 100%;
+  }
+
+  [data-braintree-id="choose-a-way-to-pay"] {
+    color:blue;
+    font-family: questrial;
+    font-size: 2.2vw;
+    font-weight: bold;
+  }
+
+  [data-braintree-id="toggle"] {
+    background: none;
+    color:blue;
+    font-family: questrial;
+    font-size: 1.5vw;
+    text-align: left;
+    text-decoration: underline;
+    text-transform: lowercase;
+  }
+  [data-braintree-id="toggle"] span {
+    border: none;
+  }
+
+  [data-braintree-id="toggle"]:hover {
+    background-color: yellow;
+    border: 0.2vw solid blue;
+    border-radius: 0;
+    cursor: w-resize;
   }
 
   .payment #dropin-container {
@@ -823,6 +861,21 @@ select option {
   font-size: 2.2vw;
   font-weight: bold;
   margin-bottom: 1vw;
+}
+
+.shippingVerification .title.second ,
+.shippingVerification .title.third  {
+  margin-top: 1vw;
+}
+
+#badAddressBack {
+  font-size: 2vw;
+  text-decoration: underline;
+}
+
+#badAddressBack:hover {
+  cursor: pointer;
+  text-decoration: overline;
 }
 
 .completed > div {

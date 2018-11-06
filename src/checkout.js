@@ -50,6 +50,7 @@ class Checkout extends React.Component {
     this.mode = props.mode; // 'shipping' | 'payment'
     this.setCheckoutMode = props.setMode;
     this.completeCheckout = props.completeCheckout;
+    this.goBack = props.goBack;
     this.state = state;
   }
 
@@ -87,9 +88,8 @@ class Checkout extends React.Component {
     return this.getSubtotal() + this.getShipping();
   }
 
-  setPaymentLoaded() {
-    console.log("SETSETSET");
-    this.setState({paymentLoaded: true});
+  setPaymentLoaded(val) {
+    this.setState({paymentLoaded: val});
   }
 
   verifyAddress(callback) {
@@ -189,11 +189,8 @@ class Checkout extends React.Component {
     return true;
   }
 
-
-
   // **** * ****
   // ***** TODO async
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -409,15 +406,34 @@ class Checkout extends React.Component {
           : // PAYMENT
             <div className='payAndVerify'>
               <div className='shippingVerification'>
-                <div className='title'>Make sure this info is correct!</div>
+                <div className='title first'>Email</div>
+                <div className='bit'>{this.state.ship.email}</div>
+                <div className='title second'>{this.state.sameAddress ? 'Address' : 'Shipping Address'}</div>
                 {
                   Object.keys(this.state.ship).map((a)=> {
-                    return this.state.ship[a] ?
+                    return this.state.ship[a] && a != 'email' ?
                       <div key={a} className='bit'>{this.state.ship[a]}</div>
                     :
                       (null)
                   })
                 }
+                <div className='title third'>{this.state.sameAddress ? (null) : 'Billing Address'}</div>
+                {
+                    !this.state.sameAddress ?
+                      Object.keys(this.state.bill).map((a)=> {
+                        return this.state.bill[a] ?
+                          <div key={a} className='bit'>{this.state.bill[a]}</div>
+                        :
+                          (null)
+                      })
+                    : (null )
+                }
+                <div
+                  id='badAddressBack'
+                  onClick={this.goBack}
+                >
+                  &#8592; go back if this is wrong
+                </div>
               </div>
               <Payment
                 amount={this.getTotal()}
@@ -459,7 +475,7 @@ class Checkout extends React.Component {
                         this.props.mode == 'shipping' ?
                           "CONTINUE TO PAYMENT"
                         :
-                          'CONFIRM OORDER'
+                          'CONFIRM ORDER'
                       }
                     </button>
 

@@ -191,7 +191,9 @@ class Shop extends React.Component {
                 <div className='desktop scroller'>
                   {catalog.items.map((item, id) =>
                     <img src={'./product/'+item.image_urls[0]+'.png'}
-                         onClick={() => this.setState({sel: id, mode: 'item'})} key={item.name}/>
+                         className='scrollerItem'
+                         onClick={() => this.setState({sel: id, mode: 'item'})}
+                         key={item.name}/>
                   )}
                 </div>
               :
@@ -207,7 +209,8 @@ class Shop extends React.Component {
                     <Checkout cart={this.state.cart}
                               mode={this.state.checkoutMode}
                               setMode={(newMode) => this.setCheckoutMode(newMode)}
-                              completeCheckout={this.goToCompleted}/>
+                              completeCheckout={this.goToCompleted}
+                              goBack={this.handleBack.bind(this)}/>
                   :
                     (null)
               )
@@ -222,7 +225,7 @@ class Shop extends React.Component {
             )}
           </div>
         </div>
-        <span className='slowdownkiddo'><a href='http://brutalistwebsites.com/welcomepress.xyz/'>here</a></span>
+        <span className='slowdownkiddo'><a target="_blank" href='http://brutalistwebsites.com/welcomepress.xyz/'>here</a></span>
       </div>
     );
   }

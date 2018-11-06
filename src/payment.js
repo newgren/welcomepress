@@ -40,7 +40,7 @@ class Payment extends React.Component {
           alert(braintreeErrorMessage);
           return;
         }
-        this.setPaymentLoaded();
+        this.setPaymentLoaded(true);
         this.setState({selfLoaded: true});
         this.displayDropin();
         console.log("loaded braintree dropin");
@@ -124,6 +124,10 @@ class Payment extends React.Component {
         }
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.setPaymentLoaded(false);
   }
 
   render() {

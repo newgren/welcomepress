@@ -62,6 +62,7 @@ var Checkout = function (_React$Component) {
     _this.mode = props.mode; // 'shipping' | 'payment'
     _this.setCheckoutMode = props.setMode;
     _this.completeCheckout = props.completeCheckout;
+    _this.goBack = props.goBack;
     _this.state = state;
     return _this;
   }
@@ -107,9 +108,8 @@ var Checkout = function (_React$Component) {
     }
   }, {
     key: 'setPaymentLoaded',
-    value: function setPaymentLoaded() {
-      console.log("SETSETSET");
-      this.setState({ paymentLoaded: true });
+    value: function setPaymentLoaded(val) {
+      this.setState({ paymentLoaded: val });
     }
   }, {
     key: 'verifyAddress',
@@ -180,7 +180,6 @@ var Checkout = function (_React$Component) {
 
     // **** * ****
     // ***** TODO async
-
 
   }, {
     key: 'handleSubmit',
@@ -536,16 +535,46 @@ var Checkout = function (_React$Component) {
               { className: 'shippingVerification' },
               React.createElement(
                 'div',
-                { className: 'title' },
-                'Make sure this info is correct!'
+                { className: 'title first' },
+                'Email'
+              ),
+              React.createElement(
+                'div',
+                { className: 'bit' },
+                this.state.ship.email
+              ),
+              React.createElement(
+                'div',
+                { className: 'title second' },
+                this.state.sameAddress ? 'Address' : 'Shipping Address'
               ),
               Object.keys(this.state.ship).map(function (a) {
-                return _this4.state.ship[a] ? React.createElement(
+                return _this4.state.ship[a] && a != 'email' ? React.createElement(
                   'div',
                   { key: a, className: 'bit' },
                   _this4.state.ship[a]
                 ) : null;
-              })
+              }),
+              React.createElement(
+                'div',
+                { className: 'title third' },
+                this.state.sameAddress ? null : 'Billing Address'
+              ),
+              !this.state.sameAddress ? Object.keys(this.state.bill).map(function (a) {
+                return _this4.state.bill[a] ? React.createElement(
+                  'div',
+                  { key: a, className: 'bit' },
+                  _this4.state.bill[a]
+                ) : null;
+              }) : null,
+              React.createElement(
+                'div',
+                {
+                  id: 'badAddressBack',
+                  onClick: this.goBack
+                },
+                '\u2190 go back if this is wrong'
+              )
             ),
             React.createElement(Payment, {
               amount: this.getTotal(),
@@ -622,7 +651,7 @@ var Checkout = function (_React$Component) {
               onClick: function onClick(e) {
                 return _this4.props.mode == 'shipping' ? _this4.handleSubmit(e) : _this4.handlePaymentSubmit();
               } },
-            this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM OORDER'
+            this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
         )
       );

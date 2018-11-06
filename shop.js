@@ -237,9 +237,11 @@ var Shop = function (_React$Component) {
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
               return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+                className: 'scrollerItem',
                 onClick: function onClick() {
                   return _this2.setState({ sel: id, mode: 'item' });
-                }, key: item.name });
+                },
+                key: item.name });
             })
           ) : this.state.mode == 'bag' ? React.createElement(Bag, {
             cart: this.state.cart,
@@ -258,7 +260,8 @@ var Shop = function (_React$Component) {
             setMode: function setMode(newMode) {
               return _this2.setCheckoutMode(newMode);
             },
-            completeCheckout: this.goToCompleted }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
+            completeCheckout: this.goToCompleted,
+            goBack: this.handleBack.bind(this) }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
             addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }
@@ -278,7 +281,7 @@ var Shop = function (_React$Component) {
           { className: 'slowdownkiddo' },
           React.createElement(
             'a',
-            { href: 'http://brutalistwebsites.com/welcomepress.xyz/' },
+            { target: '_blank', href: 'http://brutalistwebsites.com/welcomepress.xyz/' },
             'here'
           )
         )

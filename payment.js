@@ -58,7 +58,7 @@ var Payment = function (_React$Component) {
           alert(braintreeErrorMessage);
           return;
         }
-        _this2.setPaymentLoaded();
+        _this2.setPaymentLoaded(true);
         _this2.setState({ selfLoaded: true });
         _this2.displayDropin();
         console.log("loaded braintree dropin");
@@ -144,6 +144,11 @@ var Payment = function (_React$Component) {
           };
         });
       }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.setPaymentLoaded(false);
     }
   }, {
     key: 'render',
