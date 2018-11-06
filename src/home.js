@@ -83,6 +83,9 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home'>
+        <div id='privacyPolicy'>
+          <a href='./privacyPolicy.html'>Privacy Policy</a>
+        </div>
         <div id='leftStacked'>
           <img src='./iconImages/leftStacked.png'/>
         </div>

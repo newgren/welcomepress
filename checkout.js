@@ -23,6 +23,7 @@ var state = {
   sameAddress: true,
   finalClick: false,
   paymentLoaded: false,
+  scrolledForUser: false,
   ship: {
     email: '',
     firstName: '',
@@ -227,6 +228,15 @@ var Checkout = function (_React$Component) {
       this.setState({ paymentLoaded: val });
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (!this.state.scrolledForUser && this.state.invalidBillingAddressError) {
+        this.setState({ scrolledForUser: true });
+        var scrollLeft = document.getElementById('scrollLeft');
+        scrollLeft.scrollTop = scrollLeft.scrollHeight;
+      }
+    }
+  }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       // Remember state for the next mount
@@ -243,7 +253,7 @@ var Checkout = function (_React$Component) {
         { className: 'checkout' },
         React.createElement(
           'div',
-          { className: 'left' },
+          { className: 'left', id: 'scrollLeft' },
           this.props.mode == 'shipping' ?
           // SHIPPING
           React.createElement(

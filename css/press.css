@@ -76,6 +76,23 @@ body {
   width: 100%;
 }
 
+.home #privacyPolicy {
+  margin: 1vw 1vw 0 0;
+  position: fixed;
+  right:0;
+  top: 0;
+}
+
+.home #privacyPolicy a {
+  color: blue;
+  font-family: questrial;
+  text-decoration: none;
+}
+
+.home #privacyPolicy a:hover {
+  text-decoration: underline;
+}
+
 .homeDesktop {
   display: inherit;
   height: 100%;
@@ -526,6 +543,9 @@ svg text {
   }
 
   [data-braintree-id="choose-a-way-to-pay"] {
+    display: none;
+  }
+  #choosePay {
     color:blue;
     font-family: questrial;
     font-size: 2.2vw;
@@ -761,6 +781,7 @@ select option {
 
 .formform > span {
   color:red;
+  margin-bottom: 2vw;
 }
 
 .checkout input {

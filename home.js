@@ -104,6 +104,15 @@ var Home = function (_React$Component) {
         { className: 'home' },
         React.createElement(
           'div',
+          { id: 'privacyPolicy' },
+          React.createElement(
+            'a',
+            { href: './privacyPolicy.html' },
+            'Privacy Policy'
+          )
+        ),
+        React.createElement(
+          'div',
           { id: 'leftStacked' },
           React.createElement('img', { src: './iconImages/leftStacked.png' })
         ),

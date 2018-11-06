@@ -16,6 +16,7 @@ let state = {
   sameAddress: true,
   finalClick: false,
   paymentLoaded: false,
+  scrolledForUser: false,
   ship: {
     email: '',
     firstName: '',
@@ -232,6 +233,14 @@ class Checkout extends React.Component {
     this.setState({paymentLoaded: val});
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(!this.state.scrolledForUser && this.state.invalidBillingAddressError) {
+      this.setState({scrolledForUser: true});
+      let scrollLeft = document.getElementById('scrollLeft');
+      scrollLeft.scrollTop = scrollLeft.scrollHeight;
+    }
+  }
+
   componentWillUnmount() {
     // Remember state for the next mount
     state = this.state;
@@ -241,7 +250,7 @@ class Checkout extends React.Component {
     const isEnabled = !this.buttonIsDisabled();
     return (
       <div className='checkout'>
-        <div className='left'>
+        <div className='left' id='scrollLeft'>
         {
           this.props.mode == 'shipping' ?
             // SHIPPING
@@ -325,9 +334,9 @@ class Checkout extends React.Component {
                 <span></span>
                 }
                 {
-                this.state.invalidShippingAddressError ?
-                  <span>The shipping address you entered is invalid. Please try again.</span> :
-                <span></span>
+                  this.state.invalidShippingAddressError ?
+                    <span>The shipping address you entered is invalid. Please try again.</span> :
+                  <span></span>
                 }
               </div>
             {
