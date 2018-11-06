@@ -132,7 +132,7 @@ class Payment extends React.Component {
   render() {
     return (
       <div className='payment'>
-        <div id='choosePay'>Choose a way to pay</div>
+        <div id='choosePay'>choose a way to pay</div>
         <div id="dropin-container"></div>
         {
           this.state.selfLoaded ? (null)

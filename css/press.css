@@ -471,7 +471,6 @@ svg text {
     border-bottom: 1px solid red;
   }
 
-
   .summary {
     color: blue;
     flex: 3;
@@ -479,35 +478,33 @@ svg text {
   }
 
   .summary .title {
-    border-bottom: 0.4vh solid blue;
+    border-bottom: 0.3vw solid blue;
     display: block;
     font-family: galderglynn;
     font-size: 2vw;
-    padding-bottom: 0.7vh;
+    padding-bottom: 0.5vw;
     width: 100%;
   }
 
   .summary .bar {
-    padding: 0.8vh 0;
+    padding: 0.5vw 0;
   }
 
   .summary .bar:first-of-type {
-    padding-top: 2.5vh;
+    padding-top: 1.8vw;
   }
   .summary .bar:nth-of-type(2) {
-    border-bottom: 0.4vh solid blue;
-    padding-bottom: 2.5vh;
+    border-bottom: 0.3vw solid blue;
+    padding-bottom: 1.8vw;
   }
   .summary .bar:nth-of-type(3) {
-    padding: 2.5vh 0;
+    padding: 1.8vw 0;
   }
-
   .summary .bar .key {
   }
   .summary .bar .val {
     float: right;
   }
-
   .summary button {
     background-color: blue;
     border: 0.2vw solid blue;
@@ -1223,40 +1220,37 @@ select option {
   .summary {
     font-size: 6vw;
   }
-
-  .summary .bar .key {
-    font-size: 6vw;
-  }
-
   .summary .title {
+    border-bottom: 0.8vw solid blue;
     font-size: 5vw;
     padding-bottom: 0.3vw;
   }
-
   .summary .bar {
-    padding: 0.8vh 0;
+    padding: 1.2vh 0;
   }
+  .summary .bar:nth-of-type(1){
+    padding-bottom: 1vw;
+    padding-top: 4vw;
+  }
+  .summary .bar:nth-of-type(2){
+    border-bottom: 0.8vw solid blue;
+    padding-bottom: 4vw;
+    padding-top: 1vw;
+  }
+  .summary .bar:nth-of-type(3){
+    padding-bottom: 4vw;
+    padding-top: 4vw;
 
-  .summary .bar:first-of-type {
-    /* padding-top: 2.5vh; */
-    padding: 0.8vh 0;
   }
-  .summary .bar:nth-of-type(2) {
-    /* border-bottom: 0.4vh solid blue; */
-    /* padding-bottom: 2.5vh; */
-    padding: 0.8vh 0;
-  }
-  .summary .bar:nth-of-type(3) {
-    /* padding: 2.5vh 0; */
-    padding: 0.8vh 0;
-  }
-
   .summary .bar .key {
+    font-size: 5vw;
   }
   .summary .bar .val {
     float: right;
+    font-size: 5vw;
   }
   .summary button {
+    border: 0.8vw solid blue;
     font-size: 6vw;
     height: 10vw;
   }
@@ -1292,6 +1286,11 @@ select option {
     -webkit-text-fill-color: blue !important;
   }
 
+  .formform .title {
+    font-size: 5vw;
+    margin-bottom: 2vw;
+  }
+
   .formform select {
     border: 0.5vw solid blue;
     font-size: 6vw;
@@ -1313,8 +1312,74 @@ select option {
     background-color: yellow;
   }
 
+  .formform .checkbox {
+    align-items: center;
+    display: flex;
+    float: left;
+    margin-bottom: 3vw;
+    width: 100%;
+  }
 
-  .shippingVerification .title, .shippingVerification div.bit {
+  .formform .checkbox input {
+    height: 5vw;
+    margin: 0;
+    padding: 0;
+    width: 5vw;
+  }
+
+  .formform .checkbox div {
+    display: inline-block;
+    font-size: 5vw;
+    padding-left: 1.5vw;
+  }
+
+  #choosePay {
+    font-size: 5vw;
+    font-weight:normal;
+    margin-bottom: 2vw;
+  }
+
+  [data-braintree-id="toggle"] {
+    background: none;
+    color:blue;
+    font-family: questrial;
+    font-size: 5vw;
+    margin-bottom: 4vw;
+    padding: 0;
+    text-align: left;
+    text-decoration: underline;
+    text-transform: lowercase;
+  }
+  [data-braintree-id="toggle"] span {
+    border: none;
+  }
+
+  [data-braintree-id="toggle"]:hover {
+    background-color: yellow;
+    border: 0.2vw solid blue;
+    border-radius: 0;
+    cursor: w-resize;
+  }
+  .braintree-placeholder {
+    display: none;
+  }
+
+  .shippingVerification {
+    /* display: none; */
+    margin-top: 4vw;
+  }
+
+  .shippingVerification .title{
+    font-size: 5vw;
+  }
+  .shippingVerification .title.second ,
+  .shippingVerification .title.third  {
+    margin-top: 2vw;
+  }
+  .shippingVerification div.bit {
+    font-size: 4vw;
+  }
+  .shippingVerification #badAddressBack {
     font-size: 5vw;
   }
 }

@@ -29,7 +29,7 @@ var MobileShop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: 0,
@@ -218,7 +218,8 @@ var MobileShop = function (_React$Component) {
               setMode: function setMode(newMode) {
                 return _this2.setCheckoutMode(newMode);
               },
-              completeCheckout: this.goToCompleted })
+              completeCheckout: this.goToCompleted,
+              goBack: this.handleBack.bind(this) })
 
           }[this.state.mode]
         ),

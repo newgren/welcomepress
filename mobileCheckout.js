@@ -62,6 +62,7 @@ var MobileCheckout = function (_React$Component) {
     _this.mode = props.mode; // 'shipping' | 'payment'
     _this.setCheckoutMode = props.setMode;
     _this.completeCheckout = props.completeCheckout;
+    _this.goBack = props.goBack;
     _this.state = state;
     return _this;
   }
@@ -277,101 +278,284 @@ var MobileCheckout = function (_React$Component) {
           // SHIPPING
           React.createElement(
             'div',
-            { className: 'formform' },
+            null,
             React.createElement(
-              'form',
-              { id: 'finalform', onSubmit: this.handleShippingSubmit },
-              'email',
-              React.createElement('br', null),
-              React.createElement('input', {
-                type: 'text',
-                name: 'email',
-                value: this.state.ship.email,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              React.createElement('br', null),
-              'first name',
-              React.createElement('br', null),
-              React.createElement('input', {
-                type: 'text',
-                name: 'firstName',
-                value: this.state.ship.firstName,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              'last name',
-              React.createElement('br', null),
-              React.createElement('input', {
-                type: 'text',
-                name: 'lastName',
-                value: this.state.ship.lastName,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              'street address',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'street1',
-                value: this.state.ship.street1,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              React.createElement('br', null),
-              'address2',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'street2',
-                value: this.state.ship.street2,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              React.createElement('br', null),
-              'city',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'city',
-                value: this.state.ship.city,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              'state',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'state',
-                value: this.state.ship.state,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              'zip code',
-              React.createElement('br', null),
-              React.createElement('input', { type: 'text', name: 'zip5',
-                value: this.state.ship.zip5,
-                onChange: function onChange(e) {
-                  return _this5.handleInputChange('shipping', e);
-                } }),
-              'country',
-              React.createElement('br', null),
+              'div',
+              { className: 'formform shipping' },
               React.createElement(
-                'select',
-                { value: 'USA',
+                'div',
+                { className: 'title' },
+                'SHIPPING ADDRESS'
+              ),
+              React.createElement(
+                'form',
+                { id: 'shippingForm', onSubmit: this.handleSubmit },
+                'email*',
+                React.createElement('br', null),
+                React.createElement('input', {
+                  type: 'text',
+                  name: 'email',
+                  value: this.state.ship.email,
                   onChange: function onChange(e) {
                     return _this5.handleInputChange('shipping', e);
-                  } },
+                  } }),
+                React.createElement('br', null),
                 React.createElement(
-                  'option',
-                  { value: 'USA' },
-                  'USA'
-                )
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'first name*',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'firstName',
+                      value: this.state.ship.firstName,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('shipping', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'last name*',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'lastName',
+                      value: this.state.ship.lastName,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('shipping', e);
+                      } })
+                  )
+                ),
+                'street address*',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street1',
+                  value: this.state.ship.street1,
+                  onChange: function onChange(e) {
+                    return _this5.handleInputChange('shipping', e);
+                  } }),
+                React.createElement('br', null),
+                'address 2',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street2',
+                  value: this.state.ship.street2,
+                  onChange: function onChange(e) {
+                    return _this5.handleInputChange('shipping', e);
+                  } }),
+                React.createElement('br', null),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'city*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'city',
+                      value: this.state.ship.city,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('shipping', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'state*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'state',
+                      value: this.state.ship.state,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('shipping', e);
+                      } })
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'zip code*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'zip5',
+                      value: this.state.ship.zip5,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('shipping', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'country*',
+                    React.createElement('br', null),
+                    React.createElement(
+                      'select',
+                      { value: 'USA',
+                        onChange: function onChange(e) {
+                          return _this5.handleInputChange('shipping', e);
+                        } },
+                      React.createElement(
+                        'option',
+                        {
+                          value: 'USA' },
+                        'USA'
+                      )
+                    )
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'checkbox' },
+                  React.createElement('input', { type: 'checkbox',
+                    checked: this.state.sameAddress,
+                    onChange: this.handleCheckbox.bind(this) }),
+                  React.createElement(
+                    'div',
+                    null,
+                    'My billing address is the same.'
+                  )
+                ),
+                React.createElement('input', { type: 'submit', style: { display: "none" } })
               ),
-              React.createElement('input', { type: 'submit', style: { display: "none" } })
+              this.state.invalidEmailAddressError ? React.createElement(
+                'span',
+                null,
+                'The email address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null),
+              this.state.invalidShippingAddressError ? React.createElement(
+                'span',
+                null,
+                'The shipping address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null)
             ),
-            this.state.invalidEmailAddressError ? React.createElement(
-              'span',
-              null,
-              'The email address you entered is invalid. Please try again.'
-            ) : React.createElement('span', null),
-            this.state.invalidShippingAddressError ? React.createElement(
-              'span',
-              null,
-              'The shiping address you entered is invalid. Please try again.'
-            ) : React.createElement('span', null)
+            !this.state.sameAddress ? React.createElement(
+              'div',
+              { className: 'formform billing' },
+              React.createElement(
+                'div',
+                { className: 'title' },
+                'BILLING ADDRESS'
+              ),
+              React.createElement(
+                'form',
+                { id: 'billingForm', onSubmit: this.handleSubmit },
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'first name*',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'firstName',
+                      value: this.state.bill.firstName,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('billing', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'last name*',
+                    React.createElement('br', null),
+                    React.createElement('input', {
+                      type: 'text',
+                      name: 'lastName',
+                      value: this.state.bill.lastName,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('billing', e);
+                      } })
+                  )
+                ),
+                'street address*',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street1',
+                  value: this.state.bill.street1,
+                  onChange: function onChange(e) {
+                    return _this5.handleInputChange('billing', e);
+                  } }),
+                React.createElement('br', null),
+                'address 2',
+                React.createElement('br', null),
+                React.createElement('input', { type: 'text', name: 'street2',
+                  value: this.state.bill.street2,
+                  onChange: function onChange(e) {
+                    return _this5.handleInputChange('billing', e);
+                  } }),
+                React.createElement('br', null),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'city*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'city',
+                      value: this.state.bill.city,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('billing', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'state*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'state',
+                      value: this.state.bill.state,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('billing', e);
+                      } })
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'twofer' },
+                  React.createElement(
+                    'div',
+                    { className: 'one' },
+                    'zip code*',
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'zip5',
+                      value: this.state.bill.zip5,
+                      onChange: function onChange(e) {
+                        return _this5.handleInputChange('billing', e);
+                      } })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'two' },
+                    'country*',
+                    React.createElement('br', null),
+                    React.createElement(
+                      'select',
+                      { value: 'USA',
+                        onChange: function onChange(e) {
+                          return _this5.handleInputChange('billing', e);
+                        } },
+                      React.createElement(
+                        'option',
+                        {
+                          value: 'USA' },
+                        'USA'
+                      )
+                    )
+                  )
+                ),
+                React.createElement('input', { type: 'submit', style: { display: "none" } })
+              ),
+              this.state.invalidBillingAddressError ? React.createElement(
+                'span',
+                null,
+                'The billing address you entered is invalid. Please try again.'
+              ) : React.createElement('span', null)
+            ) : null
           ) : // PAYMENT
           React.createElement(
             'div',
@@ -387,31 +571,13 @@ var MobileCheckout = function (_React$Component) {
               },
               setPaymentLoaded: this.setPaymentLoaded.bind(this),
               handlePaymentSuccess: this.handlePaymentSuccess,
-              handlePaymentFailure: this.handlePaymentFailure }),
-            React.createElement(
-              'div',
-              { className: 'shippingVerification' },
-              React.createElement(
-                'span',
-                { className: 'title' },
-                'Make sure this info is correct!'
-              ),
-              React.createElement('br', null),
-              React.createElement('br', null),
-              Object.keys(this.state.ship).map(function (a) {
-                return _this5.state.ship[a] ? React.createElement(
-                  'div',
-                  { key: a, className: 'bit' },
-                  _this5.state.ship[a]
-                ) : null;
-              })
-            )
+              handlePaymentFailure: this.handlePaymentFailure })
           )
         ),
         React.createElement(
           'div',
           { className: 'summary' },
-          this.mode != 'shipping' ? React.createElement(
+          this.props.mode != 'shipping' ? React.createElement(
             'div',
             null,
             React.createElement(
@@ -474,7 +640,73 @@ var MobileCheckout = function (_React$Component) {
               } },
             this.props.mode == 'shipping' ? "CONTINUE TO PAYMENT" : 'CONFIRM ORDER'
           )
-        )
+        ),
+        this.props.mode != 'shipping' ? React.createElement(
+          'div',
+          { className: 'shippingVerification' },
+          React.createElement(
+            'div',
+            { className: 'title first' },
+            'Email'
+          ),
+          React.createElement(
+            'div',
+            { className: 'bit' },
+            this.state.ship.email
+          ),
+          React.createElement(
+            'div',
+            { className: 'title second' },
+            this.state.sameAddress ? 'Address' : 'Shipping Address'
+          ),
+          React.createElement(
+            'div',
+            { className: 'bit' },
+            this.state.ship.firstName + ' ' + this.state.ship.lastName
+          ),
+          React.createElement(
+            'div',
+            { className: 'bit' },
+            this.state.ship.street1 + ', ' + this.state.ship.street2
+          ),
+          React.createElement(
+            'div',
+            { className: 'bit' },
+            this.state.ship.city + ', ' + this.state.ship.state + ' ' + this.state.ship.zip5 + ' ' + this.state.ship.country
+          ),
+          !this.state.sameAddress ? React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'div',
+              { className: 'title third' },
+              this.state.sameAddress ? null : 'Billing Address'
+            ),
+            React.createElement(
+              'div',
+              { className: 'bit' },
+              this.state.bill.firstName + ' ' + this.state.bill.lastName
+            ),
+            React.createElement(
+              'div',
+              { className: 'bit' },
+              this.state.bill.street1 + ', ' + this.state.bill.street2
+            ),
+            React.createElement(
+              'div',
+              { className: 'bit' },
+              this.state.bill.city + ', ' + this.state.bill.state + ' ' + this.state.bill.zip5 + ' ' + this.state.bill.country
+            )
+          ) : null,
+          React.createElement(
+            'div',
+            {
+              id: 'badAddressBack',
+              onClick: this.goBack
+            },
+            '\u2190 go back if this is wrong'
+          )
+        ) : null
       );
     }
   }]);

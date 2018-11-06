@@ -158,7 +158,7 @@ var Payment = function (_React$Component) {
         React.createElement(
           'div',
           { id: 'choosePay' },
-          'Choose a way to pay'
+          'choose a way to pay'
         ),
         React.createElement('div', { id: 'dropin-container' }),
         this.state.selfLoaded ? null : React.createElement(
