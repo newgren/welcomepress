@@ -137,7 +137,7 @@ class Payment extends React.Component {
         {
           this.state.selfLoaded ? (null)
             : <div id='loadingBox'>
-                <img src='../logos/loading.gif'></img>
+                <img src='./logos/loading.gif'></img>
               </div>
         }
       </div>

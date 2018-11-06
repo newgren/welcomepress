@@ -160,7 +160,7 @@ var Payment = function (_React$Component) {
         this.state.selfLoaded ? null : React.createElement(
           'div',
           { id: 'loadingBox' },
-          React.createElement('img', { src: '../logos/loading.gif' })
+          React.createElement('img', { src: './logos/loading.gif' })
         )
       );
     }
