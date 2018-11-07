@@ -20,7 +20,7 @@ var state = {
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
-  paymentLoaded: false,
+  buttonEnabled: true,
   finalClick: false,
   ship: {
     email: '',
@@ -157,15 +157,6 @@ var MobileCheckout = function (_React$Component) {
     value: function handleCheckbox(event) {
       this.setState({ sameAddress: !this.state.sameAddress });
     }
-  }, {
-    key: 'buttonIsDisabled',
-    value: function buttonIsDisabled() {
-      console.log("ok");
-      if (this.props.mode == 'payment' && !this.state.paymentLoaded) {
-        return false;
-      }
-      return true;
-    }
 
     // **** * ****
     // ***** TODO async
@@ -253,9 +244,20 @@ var MobileCheckout = function (_React$Component) {
       this.setState({ finalClick: true });
     }
   }, {
-    key: 'setPaymentLoaded',
-    value: function setPaymentLoaded(val) {
-      this.setState({ paymentLoaded: val });
+    key: 'setButtonEnabled',
+    value: function setButtonEnabled(val) {
+      this.setState({ buttonEnabled: val });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log(this.props.mode);
+      console.log(prevProps.mode);
+
+      if (this.props.mode == 'payment' && prevProps.mode != 'payment') {
+        console.log("in");
+        this.setState({ buttonEnabled: false });
+      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -268,6 +270,7 @@ var MobileCheckout = function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
+      var isEnabled = this.state.buttonEnabled;
       return React.createElement(
         'div',
         { className: 'checkout' },
@@ -562,6 +565,7 @@ var MobileCheckout = function (_React$Component) {
             { className: 'payAndVerifyMobile' },
             React.createElement(Payment, {
               amount: this.getTotal(),
+              buttonEnabled: this.state.buttonEnabled,
               cart: this.props.cart,
               shipData: this.state.ship,
               billData: this.state.sameAddress ? null : this.state.bill,
@@ -569,7 +573,7 @@ var MobileCheckout = function (_React$Component) {
               flipFinalClick: function flipFinalClick() {
                 return _this5.setState({ finalClick: false });
               },
-              setPaymentLoaded: this.setPaymentLoaded.bind(this),
+              setButtonEnabled: this.setButtonEnabled.bind(this),
               handlePaymentSuccess: this.handlePaymentSuccess,
               handlePaymentFailure: this.handlePaymentFailure })
           )
@@ -634,6 +638,7 @@ var MobileCheckout = function (_React$Component) {
           React.createElement(
             'button',
             { type: 'button',
+              disabled: !isEnabled,
               ref: this.buttonRef,
               onClick: function onClick(e) {
                 return _this5.props.mode == 'shipping' ? _this5.handleSubmit(e) : _this5.handlePaymentSubmit();

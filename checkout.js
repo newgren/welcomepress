@@ -22,7 +22,7 @@ var state = {
   shippingInfoIsValidated: false,
   sameAddress: true,
   finalClick: false,
-  paymentLoaded: false,
+  buttonEnabled: true,
   scrolledForUser: false,
   ship: {
     email: '',
@@ -158,15 +158,6 @@ var Checkout = function (_React$Component) {
     value: function handleCheckbox(event) {
       this.setState({ sameAddress: !this.state.sameAddress });
     }
-  }, {
-    key: 'buttonIsDisabled',
-    value: function buttonIsDisabled() {
-      console.log("ok");
-      if (this.props.mode == 'payment' && !this.state.paymentLoaded) {
-        return false;
-      }
-      return true;
-    }
 
     // **** * ****
     // ***** TODO async
@@ -223,13 +214,17 @@ var Checkout = function (_React$Component) {
       alert('Payment did not complete properly. Please try again.');
     }
   }, {
-    key: 'setPaymentLoaded',
-    value: function setPaymentLoaded(val) {
-      this.setState({ paymentLoaded: val });
+    key: 'setButtonEnabled',
+    value: function setButtonEnabled(val) {
+      console.log("ok");
+      this.setState({ buttonEnabled: val });
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
+      if (this.props.mode == 'payment' && prevProps.mode != 'payment') {
+        this.setState({ buttonEnabled: false });
+      }
       if (!this.state.scrolledForUser && this.state.invalidBillingAddressError) {
         this.setState({ scrolledForUser: true });
         var scrollLeft = document.getElementById('scrollLeft');
@@ -247,7 +242,7 @@ var Checkout = function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var isEnabled = !this.buttonIsDisabled();
+      var isEnabled = this.state.buttonEnabled;
       return React.createElement(
         'div',
         { className: 'checkout' },
@@ -591,8 +586,8 @@ var Checkout = function (_React$Component) {
               cart: this.props.cart,
               shipData: this.state.ship,
               billData: this.state.sameAddress ? null : this.state.bill,
-              paymentLoaded: this.state.paymentLoaded,
-              setPaymentLoaded: this.setPaymentLoaded.bind(this),
+              buttonEnabled: this.state.buttonEnabled,
+              setButtonEnabled: this.setButtonEnabled.bind(this),
               handlePaymentSuccess: this.handlePaymentSuccess,
               handlePaymentFailure: this.handlePaymentFailure,
               finalClick: this.state.finalClick,
@@ -657,7 +652,7 @@ var Checkout = function (_React$Component) {
           React.createElement(
             'button',
             { type: 'button',
-              disabled: isEnabled,
+              disabled: !isEnabled,
               onClick: function onClick(e) {
                 return _this4.props.mode == 'shipping' ? _this4.handleSubmit(e) : _this4.handlePaymentSubmit();
               } },

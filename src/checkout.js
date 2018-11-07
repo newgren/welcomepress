@@ -15,7 +15,7 @@ let state = {
   shippingInfoIsValidated: false,
   sameAddress: true,
   finalClick: false,
-  paymentLoaded: false,
+  buttonEnabled: true,
   scrolledForUser: false,
   ship: {
     email: '',
@@ -173,14 +173,6 @@ class Checkout extends React.Component {
     this.setState({sameAddress: !this.state.sameAddress});
   }
 
-  buttonIsDisabled() {
-    console.log("ok")
-    if(this.props.mode == 'payment' && !this.state.paymentLoaded) {
-      return false;
-    }
-    return true;
-  }
-
   // **** * ****
   // ***** TODO async
 
@@ -229,11 +221,15 @@ class Checkout extends React.Component {
    alert('Payment did not complete properly. Please try again.');
   }
 
-  setPaymentLoaded(val) {
-    this.setState({paymentLoaded: val});
+  setButtonEnabled(val) {
+    console.log("ok");
+    this.setState({buttonEnabled: val});
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if(this.props.mode == 'payment' && prevProps.mode != 'payment') {
+        this.setState({buttonEnabled: false});
+    }
     if(!this.state.scrolledForUser && this.state.invalidBillingAddressError) {
       this.setState({scrolledForUser: true});
       let scrollLeft = document.getElementById('scrollLeft');
@@ -247,7 +243,7 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const isEnabled = !this.buttonIsDisabled();
+    const isEnabled = this.state.buttonEnabled;
     return (
       <div className='checkout'>
         <div className='left' id='scrollLeft'>
@@ -449,8 +445,8 @@ class Checkout extends React.Component {
                 cart={this.props.cart}
                 shipData={this.state.ship}
                 billData={this.state.sameAddress ? (null) : this.state.bill}
-                paymentLoaded={this.state.paymentLoaded}
-                setPaymentLoaded={this.setPaymentLoaded.bind(this)}
+                buttonEnabled={this.state.buttonEnabled}
+                setButtonEnabled={this.setButtonEnabled.bind(this)}
                 handlePaymentSuccess={this.handlePaymentSuccess}
                 handlePaymentFailure={this.handlePaymentFailure}
                 finalClick={this.state.finalClick}
@@ -474,7 +470,7 @@ class Checkout extends React.Component {
           </div>
 
               <button type='button'
-                      disabled={isEnabled}
+                      disabled={!isEnabled}
                       onClick={(e) => this.props.mode == 'shipping' ?
                         this.handleSubmit(e)
                       :

@@ -13,7 +13,7 @@ let state = {
   invalidEmailAddressError: false,
   shippingInfoIsValidated: false,
   sameAddress: true,
-  paymentLoaded: false,
+  buttonEnabled: true,
   finalClick: false,
   ship: {
     email: '',
@@ -172,14 +172,6 @@ class MobileCheckout extends React.Component {
     this.setState({sameAddress: !this.state.sameAddress});
   }
 
-  buttonIsDisabled() {
-    console.log("ok")
-    if(this.props.mode == 'payment' && !this.state.paymentLoaded) {
-      return false;
-    }
-    return true;
-  }
-
   // **** * ****
   // ***** TODO async
 
@@ -256,8 +248,18 @@ class MobileCheckout extends React.Component {
    this.setState({finalClick: true});
  }
 
- setPaymentLoaded(val) {
-   this.setState({paymentLoaded: val});
+ setButtonEnabled(val) {
+   this.setState({buttonEnabled: val});
+ }
+
+ componentDidUpdate(prevProps, prevState) {
+   console.log(this.props.mode);
+   console.log(prevProps.mode);
+
+   if(this.props.mode == 'payment' && prevProps.mode != 'payment') {
+      console.log("in");
+       this.setState({buttonEnabled: false});
+   }
  }
 
  componentWillUnmount() {
@@ -266,6 +268,7 @@ class MobileCheckout extends React.Component {
  }
 
   render() {
+    const isEnabled = this.state.buttonEnabled;
     return (
       <div className='checkout'>
         <div className='left'>
@@ -434,12 +437,13 @@ class MobileCheckout extends React.Component {
             <div className='payAndVerifyMobile'>
               <Payment
                 amount={this.getTotal()}
+                buttonEnabled={this.state.buttonEnabled}
                 cart={this.props.cart}
                 shipData={this.state.ship}
                 billData={this.state.sameAddress ? (null) : this.state.bill}
                 finalClick={this.state.finalClick}
                 flipFinalClick={() => this.setState({finalClick: false})}
-                setPaymentLoaded={this.setPaymentLoaded.bind(this)}
+                setButtonEnabled={this.setButtonEnabled.bind(this)}
                 handlePaymentSuccess={this.handlePaymentSuccess}
                 handlePaymentFailure={this.handlePaymentFailure}/>
             </div>
@@ -466,6 +470,7 @@ class MobileCheckout extends React.Component {
                 : (null)
             }
             <button type='button'
+                    disabled={!isEnabled}
                     ref={this.buttonRef}
                     onClick={(e) => this.props.mode == 'shipping' ?
                       this.handleSubmit(e)

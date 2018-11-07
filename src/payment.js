@@ -14,7 +14,7 @@ class Payment extends React.Component {
     this.shipData = props.shipData;
     this.billData = props.billData;
     // props has payment loaded (from checkout state)
-    this.setPaymentLoaded = props.setPaymentLoaded;
+    this.setButtonEnabled = props.setButtonEnabled;
     this.handlePaymentSuccess = props.handlePaymentSuccess;
     this.handlePaymentFailure = props.handlePaymentFailure;
     this.finalClick = props.finalClick;
@@ -36,10 +36,10 @@ class Payment extends React.Component {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
           console.error(err);
-          alert(braintreeErrorMessage);
+          // alert(braintreeErrorMessage);
           return;
         }
-        this.setPaymentLoaded(true);
+        this.setButtonEnabled(true);
         this.setState({selfLoaded: true});
         this.displayDropin();
         console.log("loaded braintree dropin");
@@ -48,27 +48,37 @@ class Payment extends React.Component {
   }
 
   displayDropin() {
-    let box = document.getElementById('dropin-container');
-    console.log(22);
-    console.log(box);
-    box.style.display = 'inherit';
+    document.getElementById('dropin-container').style.display = 'inherit';
+  }
+
+  hideDropin() {
+    document.getElementById('dropin-container').style.display = 'none';
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // onclick for final checkout button
     if(this.props.finalClick === true) {
+      // prevents spamming
+      this.setButtonEnabled(false);
+      this.hideDropin();
+      this.setState({selfLoaded: false});
+
+
       this.flipFinalClick();
-      console.log('CALLED');
+      console.log('transaction initiated');
+
+      // deactivate button
       dropinInstance.requestPaymentMethod((err, payload) => {
-        if (err) {
+        if(err) {
           // Handle errors in requesting payment method
-          // if(err == 'DropinError: No payment method is available.') {
-          //   alert('Please enter your payment information.');
-          // }
+          if(err == 'DropinError: No payment method is available.') {
+            alert('Please enter your payment information.');
+          } else {
+            alert('An unknown error occured. Please try again.');
+          }
           console.log("requestPaymentMethodError: " + err);
           return;
         }
-
-        console.log(this.cart);
 
         let shipObj = {
           firstName: this.shipData.firstName,
@@ -81,9 +91,7 @@ class Payment extends React.Component {
           country: this.shipData.country
         };
 
-        // Send payload.nonce to your server
-        let params =
-        {
+        let params = {
           amount: this.amount,
           cart: this.cart,
           nonce: payload.nonce,
@@ -101,23 +109,22 @@ class Payment extends React.Component {
           } :
           shipObj // use shipping if no seperate billing info
         };
-        //let params = payload.nonce;
-        console.log(params);
 
         const req = new XMLHttpRequest();
-        const url='https://' +server +':'+port+'/checkout';
+        const url='https://' + server + ':' + port + '/checkout';
         req.open("POST", url);
-        // req.setRequestHeader("Access-Control-Allow-Origin", "*");
-        // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify(params));
         req.onreadystatechange = (e) => {
           if(req.readyState === 4) {
+            this.setButtonEnabled(true);
+            this.displayDropin();
+            this.setState({selfLoaded: true});
             if(req.status === 200) {
               console.log('GOOD transaction');
               this.handlePaymentSuccess();
             } else {
-              this.handlePaymentFailure();
               console.log('BAD transaction');
+              this.handlePaymentFailure();
             }
           }
         }
@@ -126,7 +133,8 @@ class Payment extends React.Component {
   }
 
   componentWillUnmount() {
-    this.setPaymentLoaded(false);
+    // this is important, so we don't lock the button!
+    this.setButtonEnabled(true);
   }
 
   render() {

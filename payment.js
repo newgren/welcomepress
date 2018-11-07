@@ -27,7 +27,7 @@ var Payment = function (_React$Component) {
     _this.shipData = props.shipData;
     _this.billData = props.billData;
     // props has payment loaded (from checkout state)
-    _this.setPaymentLoaded = props.setPaymentLoaded;
+    _this.setButtonEnabled = props.setButtonEnabled;
     _this.handlePaymentSuccess = props.handlePaymentSuccess;
     _this.handlePaymentFailure = props.handlePaymentFailure;
     _this.finalClick = props.finalClick;
@@ -54,10 +54,10 @@ var Payment = function (_React$Component) {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
           console.error(err);
-          alert(braintreeErrorMessage);
+          // alert(braintreeErrorMessage);
           return;
         }
-        _this2.setPaymentLoaded(true);
+        _this2.setButtonEnabled(true);
         _this2.setState({ selfLoaded: true });
         _this2.displayDropin();
         console.log("loaded braintree dropin");
@@ -67,30 +67,40 @@ var Payment = function (_React$Component) {
   }, {
     key: 'displayDropin',
     value: function displayDropin() {
-      var box = document.getElementById('dropin-container');
-      console.log(22);
-      console.log(box);
-      box.style.display = 'inherit';
+      document.getElementById('dropin-container').style.display = 'inherit';
+    }
+  }, {
+    key: 'hideDropin',
+    value: function hideDropin() {
+      document.getElementById('dropin-container').style.display = 'none';
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       var _this3 = this;
 
+      // onclick for final checkout button
       if (this.props.finalClick === true) {
+        // prevents spamming
+        this.setButtonEnabled(false);
+        this.hideDropin();
+        this.setState({ selfLoaded: false });
+
         this.flipFinalClick();
-        console.log('CALLED');
+        console.log('transaction initiated');
+
+        // deactivate button
         dropinInstance.requestPaymentMethod(function (err, payload) {
           if (err) {
             // Handle errors in requesting payment method
-            // if(err == 'DropinError: No payment method is available.') {
-            //   alert('Please enter your payment information.');
-            // }
+            if (err == 'DropinError: No payment method is available.') {
+              alert('Please enter your payment information.');
+            } else {
+              alert('An unknown error occured. Please try again.');
+            }
             console.log("requestPaymentMethodError: " + err);
             return;
           }
-
-          console.log(_this3.cart);
 
           var shipObj = {
             firstName: _this3.shipData.firstName,
@@ -103,7 +113,6 @@ var Payment = function (_React$Component) {
             country: _this3.shipData.country
           };
 
-          // Send payload.nonce to your server
           var params = {
             amount: _this3.amount,
             cart: _this3.cart,
@@ -121,23 +130,22 @@ var Payment = function (_React$Component) {
               country: _this3.billData.country
             } : shipObj // use shipping if no seperate billing info
           };
-          //let params = payload.nonce;
-          console.log(params);
 
           var req = new XMLHttpRequest();
           var url = 'https://' + server + ':' + port + '/checkout';
           req.open("POST", url);
-          // req.setRequestHeader("Access-Control-Allow-Origin", "*");
-          // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
           req.send(JSON.stringify(params));
           req.onreadystatechange = function (e) {
             if (req.readyState === 4) {
+              _this3.setButtonEnabled(true);
+              _this3.displayDropin();
+              _this3.setState({ selfLoaded: true });
               if (req.status === 200) {
                 console.log('GOOD transaction');
                 _this3.handlePaymentSuccess();
               } else {
-                _this3.handlePaymentFailure();
                 console.log('BAD transaction');
+                _this3.handlePaymentFailure();
               }
             }
           };
@@ -147,7 +155,8 @@ var Payment = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.setPaymentLoaded(false);
+      // this is important, so we don't lock the button!
+      this.setButtonEnabled(true);
     }
   }, {
     key: 'render',
