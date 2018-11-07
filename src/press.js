@@ -19,7 +19,7 @@ class Press extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'work', // start | home | work | shop | completed
+      mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: null,
     };
