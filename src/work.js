@@ -23,10 +23,32 @@ class Work extends React.Component {
             <img src='./iconImages/WORK.png' id='shopBannerText' />
           </div>
           <div className='workSlides'>
-            <a href='https://usontheb.us/' target='_blank'>
-              <img src='./workCaps/usonthebus.png'/>
-            </a>
+            <div className='slide'>
+              <a href='https://usontheb.us/' target='_blank'>
+                <div>
+                  <img src='./workCaps/usonthebus.png'/>
+                </div>
+              </a>
+            </div>
+            <div className='slide'>
+              <a href='https://usontheb.us/' target='_blank'>
+                <div>
+                  <img src='./workCaps/usonthebus.png'/>
+                </div>
+              </a>
+            </div>
           </div>
+          <div className='text'>
+            <h1>Want a website? Here's what we offer</h1>
+            <ul>
+              <li>web/graphic design (read: whole site including logos, etc.)</li>
+              <li>site development and maintenence (read: <span>code</span>)</li>
+              <li>analytics</li>
+              <li>store integration</li>
+              <li>whatever else you can imagine</li>
+            </ul>
+          </div>
+
         </div>
 
 

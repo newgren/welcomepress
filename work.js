@@ -53,9 +53,74 @@ var Work = function (_React$Component) {
             'div',
             { className: 'workSlides' },
             React.createElement(
-              'a',
-              { href: 'https://usontheb.us/', target: '_blank' },
-              React.createElement('img', { src: './workCaps/usonthebus.png' })
+              'div',
+              { className: 'slide' },
+              React.createElement(
+                'a',
+                { href: 'https://usontheb.us/', target: '_blank' },
+                React.createElement(
+                  'div',
+                  null,
+                  React.createElement('img', { src: './workCaps/usonthebus.png' })
+                )
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: 'slide' },
+              React.createElement(
+                'a',
+                { href: 'https://usontheb.us/', target: '_blank' },
+                React.createElement(
+                  'div',
+                  null,
+                  React.createElement('img', { src: './workCaps/usonthebus.png' })
+                )
+              )
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: 'text' },
+            React.createElement(
+              'h1',
+              null,
+              'Want a website? Here\'s what we offer'
+            ),
+            React.createElement(
+              'ul',
+              null,
+              React.createElement(
+                'li',
+                null,
+                'web/graphic design (read: whole site including logos, etc.)'
+              ),
+              React.createElement(
+                'li',
+                null,
+                'site development and maintenence (read: ',
+                React.createElement(
+                  'span',
+                  null,
+                  'code'
+                ),
+                ')'
+              ),
+              React.createElement(
+                'li',
+                null,
+                'analytics'
+              ),
+              React.createElement(
+                'li',
+                null,
+                'store integration'
+              ),
+              React.createElement(
+                'li',
+                null,
+                'whatever else you can imagine'
+              )
             )
           )
         )

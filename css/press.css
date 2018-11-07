@@ -223,6 +223,25 @@ svg text {
   display: flex;
 }
 
+.work .text {
+  bottom: 0;
+  color:blue;
+  font-family: questrial;
+  margin-left: 2vw;
+  position: fixed;
+}
+
+.work .text h1 {
+  font-family: galderglynn;
+  font-size: 3vw;
+}
+
+.work .text span {
+  background: black;
+  color: limegreen;
+  font-family: monospace;
+}
+
 .work .workLeft {
   /* flex: 7; is defined below with '.shopLeft, .workLeft' */
 }
@@ -234,8 +253,29 @@ svg text {
   height: 100%;
 }
 
-.work .workSlides img {
-  height: 50%;
+.work .workSlides {
+  display: inline-block;
+  height: 20vw;
+  float: left;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.work .workSlides .slide {
+  /* background-color: grey; */
+  border: 0.4vw solid blue;
+  display: inline-block;
+  height: 100%;
+  margin-left: 10vw;
+}
+
+.work .workSlides .slide img {
+  height: 100%;
+  transition-duration: 0.2s;
+}
+
+.work .workSlides .slide:hover img {
+  filter: hue-rotate(180deg);
 }
 
 
