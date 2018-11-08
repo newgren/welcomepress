@@ -180,6 +180,11 @@ var Checkout = function (_React$Component) {
       var valid = this.verifyAddress(function (validShipping, validBilling) {
         if (validShipping && validBilling) {
           // all info validated only at this point
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'product',
+            eventAction: 'initPaymentDetails'
+          });
           _this3.setState({
             shippingInfoIsValidated: true,
             invalidShippingAddressError: false,
@@ -200,7 +205,6 @@ var Checkout = function (_React$Component) {
   }, {
     key: 'handlePaymentSubmit',
     value: function handlePaymentSubmit() {
-      console.log("CLICK");
       this.setState({ finalClick: true });
     }
   }, {

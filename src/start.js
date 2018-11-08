@@ -82,7 +82,15 @@ class Start extends React.Component {
 
   render() {
     return (
-      <div className='start' onClick={() => this.goToHome()} id='start'>
+      <div className='start' onClick={() => {
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'clicks',
+            eventAction: 'start'
+          });
+          this.goToHome();
+        }
+        } id='start'>
           <div className='center'>
             <div id='welcome'>
               <svg viewBox="0 0 417 60">

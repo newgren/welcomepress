@@ -141,9 +141,19 @@ var Payment = function (_React$Component) {
               _this3.displayDropin();
               _this3.setState({ selfLoaded: true });
               if (req.status === 200) {
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'product',
+                  eventAction: 'transactionSuccess'
+                });
                 console.log('GOOD transaction');
                 _this3.handlePaymentSuccess();
               } else {
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'product',
+                  eventAction: 'transactionFailure'
+                });
                 console.log('BAD transaction');
                 _this3.handlePaymentFailure();
               }

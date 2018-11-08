@@ -48,6 +48,11 @@ class Shop extends React.Component {
   }
 
   addToCart(id, size, qty) {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'product',
+      eventAction: 'addToCart ' + id
+    });
     let cart = this.state.cart;
     if (!(id in cart)) {
       cart[id] = {};
@@ -61,6 +66,11 @@ class Shop extends React.Component {
   }
 
   removeFromCart(index, size) {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'product',
+      eventAction: 'removeFromCart ' + index
+    });
     let cart = this.state.cart;
     delete cart[index][size];
     this.setState({cart: cart});
@@ -120,7 +130,12 @@ class Shop extends React.Component {
   }
 
   setCheckoutMode(newMode) {
-    console.log("sET");
+    let oldMode = this.state.checkoutMode;
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'modeCheckout',
+      eventAction: oldMode + '-' + newMode
+    });
     this.setState({checkoutMode: newMode});
   }
 
@@ -179,10 +194,20 @@ class Shop extends React.Component {
               <span id='shopProductName'>{catalog.items[this.state.sel].name}</span>
             }
             <div id='bagbannericon'>
-              <img src='./iconImages/bag_desktop.png'
-                   onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
-              />
-            <span>{this.getCartSize()}</span>
+              {this.state.mode == 'browse' || this.state.mode == 'item' ?
+                <img src='./iconImages/bag_desktop.png'
+                     onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
+                /> :
+                <img src='./iconImages/bag_desktop_blue.png'
+                     onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
+                />
+              }
+              {this.state.mode == 'browse' || this.state.mode == 'item' ?
+                <span>{this.getCartSize()}</span>
+                :
+                <span className='white'>{this.getCartSize()}</span>
+
+              }
             </div>
           </div>
           {
@@ -190,7 +215,7 @@ class Shop extends React.Component {
               this.state.mode == 'browse' ?
                 <div className='desktop scroller'>
                   {catalog.items.map((item, id) =>
-                    <img src={'./product/'+item.image_urls[0]+'.png'}
+                    <img src={'./product/'+item.preview_url+'.png'}
                          className='scrollerItem'
                          onClick={() => this.setState({sel: id, mode: 'item'})}
                          key={item.name}/>
@@ -201,7 +226,14 @@ class Shop extends React.Component {
                   <Bag
                     cart={this.state.cart}
                     remove={(index, size) => this.removeFromCart(index, size)}
-                    goToCheckout={() => this.setState({mode: 'checkout'})}
+                    goToCheckout={() => {
+                      ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'product',
+                        eventAction: 'initCheckout'
+                      });
+                      this.setState({mode: 'checkout'});
+                    }}
                     goToBrowse={()=>this.setState({mode: 'browse'})}
                     getSubtotal={this.getSubtotal.bind(this)}
                     getCartSize={this.getCartSize.bind(this)} />                  :

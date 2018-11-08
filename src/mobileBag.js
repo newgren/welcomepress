@@ -33,15 +33,11 @@ class MobileBag extends React.Component {
   }
 
   getShipping() {
-    return 9.0;
-  }
-
-  getEstimatedTax() {
-    return this.formatMoney(0.07 * this.getSubtotal());
+    return 2.05;
   }
 
   getTotal() {
-    return this.getSubtotal() + this.getShipping() + this.getEstimatedTax();
+    return this.getSubtotal() + this.getShipping();
   }
 
   render() {
@@ -77,10 +73,6 @@ class MobileBag extends React.Component {
           <div className='bar'>
             <span className='key'>shipping</span>
             <span className='val'>${this.getShipping()}</span>
-          </div>
-          <div className='bar'>
-            <span className='key'>estimated tax</span>
-            <span className='val'>${this.getEstimatedTax()}</span>
           </div>
           <div className='bar'>
             <span className='key'>total</span>

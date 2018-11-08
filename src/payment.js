@@ -120,9 +120,19 @@ class Payment extends React.Component {
             this.displayDropin();
             this.setState({selfLoaded: true});
             if(req.status === 200) {
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'product',
+                eventAction: 'transactionSuccess'
+              });
               console.log('GOOD transaction');
               this.handlePaymentSuccess();
             } else {
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'product',
+                eventAction: 'transactionFailure'
+              });
               console.log('BAD transaction');
               this.handlePaymentFailure();
             }

@@ -101,7 +101,12 @@ var Start = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'start', onClick: function onClick() {
-            return _this2.goToHome();
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'clicks',
+              eventAction: 'start'
+            });
+            _this2.goToHome();
           }, id: 'start' },
         React.createElement(
           'div',

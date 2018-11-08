@@ -30,6 +30,7 @@ var Press = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Press.__proto__ || Object.getPrototypeOf(Press)).call(this, props));
 
+    _this.changeMode = _this.changeMode.bind(_this);
     _this.state = {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
@@ -47,6 +48,17 @@ var Press = function (_React$Component) {
     key: 'updateWidth',
     value: function updateWidth() {
       this.setState({ windowWidth: window.innerWidth });
+    }
+  }, {
+    key: 'changeMode',
+    value: function changeMode(newMode) {
+      var oldMode = this.state.mode;
+      this.setState({ mode: newMode });
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'mode',
+        eventAction: oldMode + '-' + newMode
+      });
     }
   }, {
     key: 'componentDidMount',
@@ -74,33 +86,33 @@ var Press = function (_React$Component) {
         switch (this.state.mode) {
           case 'start':
             return React.createElement(MobileStart, { goToHome: function goToHome() {
-                return _this2.setState({ 'mode': 'home' });
+                return _this2.changeMode('home');
               } });
             break;
           case 'work':
             return React.createElement(MobileWork, { goToHome: function goToHome() {
-                return _this2.setState({ 'mode': 'home' });
+                return _this2.changeMode('home');
               } });
             break;
           case 'shop':
             return React.createElement(MobileShop, { goToHome: function goToHome() {
-                return _this2.setState({ 'mode': 'home' });
+                return _this2.changeMode('home');
               },
               goToCompleted: function goToCompleted() {
-                return _this2.setState({ mode: 'completed' });
+                return _this2.changeMode('completed');
               } });
             break;
           case 'completed':
             return React.createElement(Completed, { goToHome: function goToHome() {
-                return _this2.setState({ mode: 'home' });
+                return _this2.changeMode('home');
               } });
             break;
           default:
             return React.createElement(MobileHome, { goToShop: function goToShop() {
-                return _this2.setState({ 'mode': 'shop' });
+                return _this2.changeMode('shop');
               },
               goToWork: function goToWork() {
-                return _this2.setState({ 'mode': 'work' });
+                return _this2.changeMode('work');
               } });
         }
       } else {
@@ -108,37 +120,37 @@ var Press = function (_React$Component) {
         switch (this.state.mode) {
           case 'start':
             return React.createElement(Start, { goToHome: function goToHome() {
-                return _this2.setState({ 'mode': 'home' });
+                return _this2.changeMode('home');
               } });
             break;
           case 'work':
             return React.createElement(Work, { goToHome: function goToHome() {
-                return _this2.setState({ 'mode': 'home' });
+                return _this2.changeMode('home');
               } });
           case 'shop':
             return React.createElement(Shop, { goToBag: function goToBag() {
-                return _this2.setState({ mode: 'bag' });
+                return _this2.changeMode('bag');
               },
               goToHome: function goToHome() {
-                return _this2.setState({ mode: 'home' });
+                return _this2.changeMode('home');
               },
               goToCompleted: function goToCompleted() {
-                return _this2.setState({ mode: 'completed' });
+                return _this2.changeMode('completed');
               } });
             break;
           case 'completed':
             return React.createElement(Completed, { goToHome: function goToHome() {
-                return _this2.setState({ mode: 'home' });
+                return _this2.changeMode('home');
               } });
             break;
           case 'home':
           default:
             //default to home
             return React.createElement(Home, { goToShop: function goToShop() {
-                return _this2.setState({ mode: 'shop' });
+                return _this2.changeMode('shop');
               },
               goToWork: function goToWork() {
-                return _this2.setState({ mode: 'work' });
+                return _this2.changeMode('work');
               } });
         }
       }

@@ -190,6 +190,11 @@ class Checkout extends React.Component {
     let valid = this.verifyAddress((validShipping, validBilling) => {
       if(validShipping && validBilling) {
         // all info validated only at this point
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'product',
+          eventAction: 'initPaymentDetails'
+        });
         this.setState({
           shippingInfoIsValidated: true,
           invalidShippingAddressError: false,
@@ -209,16 +214,15 @@ class Checkout extends React.Component {
   }
 
   handlePaymentSubmit() {
-    console.log("CLICK");
     this.setState({finalClick: true});
   }
 
   handlePaymentSuccess() {
-   this.completeCheckout();
+    this.completeCheckout();
   }
 
   handlePaymentFailure() {
-   alert('Payment did not complete properly. Please try again.');
+    alert('Payment did not complete properly. Please try again.');
   }
 
   setButtonEnabled(val) {

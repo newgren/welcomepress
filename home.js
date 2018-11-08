@@ -81,17 +81,9 @@ var Home = function (_React$Component) {
       var mark = document.getElementById('mark0');
       var infos = document.getElementsByClassName('info layer');
       var masterIndex = { val: infos.length - 1 };
-      mark.onmouseover = function () {
-        if (!_this2.state.infoOut) {
-          move(infos, masterIndex, true);
-          _this2.setState({ infoOut: true });
-        }
-      };
       mark.onclick = function () {
-        if (_this2.state.infoOut) {
-          move(infos, masterIndex, false);
-          _this2.setState({ infoOut: !_this2.state.infoOut });
-        }
+        move(infos, masterIndex, !_this2.state.infoOut);
+        _this2.setState({ infoOut: !_this2.state.infoOut });
       };
     }
   }, {

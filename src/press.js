@@ -17,7 +17,7 @@ import MobileBag from './mobileBag.js'
 class Press extends React.Component {
   constructor(props) {
     super(props);
-
+    this.changeMode = this.changeMode.bind(this);
     this.state = {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
@@ -31,6 +31,16 @@ class Press extends React.Component {
 
   updateWidth() {
     this.setState({windowWidth: window.innerWidth});
+  }
+
+  changeMode(newMode) {
+    let oldMode = this.state.mode;
+    this.setState({mode: newMode});
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'mode',
+      eventAction: oldMode + '-' + newMode
+    });
   }
 
   componentDidMount() {
@@ -52,42 +62,42 @@ class Press extends React.Component {
       console.log("mobile");
       switch (this.state.mode) {
         case 'start':
-          return <MobileStart goToHome={() => this.setState({'mode': 'home'})} />
+          return <MobileStart goToHome={() => this.changeMode('home')} />
           break;
         case 'work':
-          return <MobileWork goToHome={() => this.setState({'mode': 'home'})} />
+          return <MobileWork goToHome={() => this.changeMode('home')} />
           break;
         case 'shop':
-          return <MobileShop goToHome={() => this.setState({'mode': 'home'})}
-                             goToCompleted={() => this.setState({mode: 'completed'})} />
+          return <MobileShop goToHome={() => this.changeMode('home')}
+                             goToCompleted={() => this.changeMode('completed')} />
           break;
         case 'completed':
-          return <Completed goToHome={() => this.setState({mode: 'home'})} />
+          return <Completed goToHome={() => this.changeMode('home')} />
           break;
         default:
-          return <MobileHome goToShop={() => this.setState({'mode': 'shop'})}
-                            goToWork={() => this.setState({'mode': 'work'})} />
+          return <MobileHome goToShop={() => this.changeMode('shop')}
+                            goToWork={() => this.changeMode('work')} />
       }
     } else {
       console.log("desktop");
       switch (this.state.mode) {
         case 'start':
-          return <Start goToHome={() => this.setState({'mode': 'home'})}/>
+          return <Start goToHome={() => this.changeMode('home')}/>
           break;
         case 'work':
-          return <Work goToHome={() => this.setState({'mode': 'home'})}/>
+          return <Work goToHome={() => this.changeMode('home')}/>
         case 'shop':
-          return <Shop goToBag={() => this.setState({mode: 'bag'})}
-                       goToHome={() => this.setState({mode: 'home'})}
-                       goToCompleted={() => this.setState({mode: 'completed'})}/>
+          return <Shop goToBag={() => this.changeMode('bag')}
+                       goToHome={() => this.changeMode('home')}
+                       goToCompleted={() => this.changeMode('completed')}/>
           break;
         case 'completed':
-          return <Completed goToHome={() => this.setState({mode: 'home'})} />
+          return <Completed goToHome={() => this.changeMode('home')} />
           break;
         case 'home':
         default: //default to home
-          return <Home goToShop={() => this.setState({mode: 'shop'})}
-                       goToWork={() => this.setState({mode: 'work'})}/>
+          return <Home goToShop={() => this.changeMode('shop')}
+                       goToWork={() => this.changeMode('work')}/>
       }
     }
     /*

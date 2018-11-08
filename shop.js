@@ -66,6 +66,11 @@ var Shop = function (_React$Component) {
   }, {
     key: 'addToCart',
     value: function addToCart(id, size, qty) {
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'product',
+        eventAction: 'addToCart ' + id
+      });
       var cart = this.state.cart;
       if (!(id in cart)) {
         cart[id] = {};
@@ -80,6 +85,11 @@ var Shop = function (_React$Component) {
   }, {
     key: 'removeFromCart',
     value: function removeFromCart(index, size) {
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'product',
+        eventAction: 'removeFromCart ' + index
+      });
       var cart = this.state.cart;
       delete cart[index][size];
       this.setState({ cart: cart });
@@ -145,7 +155,12 @@ var Shop = function (_React$Component) {
   }, {
     key: 'setCheckoutMode',
     value: function setCheckoutMode(newMode) {
-      console.log("sET");
+      var oldMode = this.state.checkoutMode;
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'modeCheckout',
+        eventAction: oldMode + '-' + newMode
+      });
       this.setState({ checkoutMode: newMode });
     }
   }, {
@@ -220,14 +235,22 @@ var Shop = function (_React$Component) {
             React.createElement(
               'div',
               { id: 'bagbannericon' },
-              React.createElement('img', { src: './iconImages/bag_desktop.png',
+              this.state.mode == 'browse' || this.state.mode == 'item' ? React.createElement('img', { src: './iconImages/bag_desktop.png',
+                onClick: function onClick() {
+                  return _this2.getCartSize() > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
+                }
+              }) : React.createElement('img', { src: './iconImages/bag_desktop_blue.png',
                 onClick: function onClick() {
                   return _this2.getCartSize() > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
                 }
               }),
-              React.createElement(
+              this.state.mode == 'browse' || this.state.mode == 'item' ? React.createElement(
                 'span',
                 null,
+                this.getCartSize()
+              ) : React.createElement(
+                'span',
+                { className: 'white' },
                 this.getCartSize()
               )
             )
@@ -236,7 +259,7 @@ var Shop = function (_React$Component) {
             'div',
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
-              return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+              return React.createElement('img', { src: './product/' + item.preview_url + '.png',
                 className: 'scrollerItem',
                 onClick: function onClick() {
                   return _this2.setState({ sel: id, mode: 'item' });
@@ -249,7 +272,12 @@ var Shop = function (_React$Component) {
               return _this2.removeFromCart(index, size);
             },
             goToCheckout: function goToCheckout() {
-              return _this2.setState({ mode: 'checkout' });
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'product',
+                eventAction: 'initCheckout'
+              });
+              _this2.setState({ mode: 'checkout' });
             },
             goToBrowse: function goToBrowse() {
               return _this2.setState({ mode: 'browse' });

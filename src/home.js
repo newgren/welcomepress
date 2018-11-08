@@ -65,17 +65,9 @@ class Home extends React.Component {
     let mark = document.getElementById('mark0');
     let infos = document.getElementsByClassName('info layer');
     let masterIndex = {val: infos.length - 1};
-    mark.onmouseover = () => {
-      if(!this.state.infoOut) {
-        move(infos, masterIndex, true);
-        this.setState({infoOut: true});
-      }
-    };
     mark.onclick = () => {
-      if(this.state.infoOut) {
-        move(infos, masterIndex, false);
-        this.setState({infoOut: !this.state.infoOut});
-      }
+      move(infos, masterIndex, !this.state.infoOut);
+      this.setState({infoOut: !this.state.infoOut});
     };
   }
 

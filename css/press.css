@@ -22,8 +22,8 @@
 }
 
 :root {
-  --green: #B8E986;
-  --pink: #FFBDFB;
+  --yellow: yellow;
+  --blue: blue;
 }
 
 html {
@@ -40,9 +40,9 @@ button:focus {
 }
 
 body {
-  background-color: yellow;
+  background-color: var(--yellow);
   color:white;
-  /* text-shadow: -4px 0 blue, 0 4px blue, 4px 0 blue, 0 -4px blue; */
+  /* text-shadow: -4px 0 var(--blue), 0 4px var(--blue), 4px 0 var(--blue), 0 -4px var(--blue); */
 
   font-family: 'galderglynn', sans-serif;
   margin: 0;
@@ -84,7 +84,7 @@ body {
 }
 
 .home #privacyPolicy a {
-  color: blue;
+  color: var(--blue);
   font-family: questrial;
   text-decoration: none;
 }
@@ -103,15 +103,15 @@ body {
 }
 .homeDesktop div {
   background-color: white;
-  border: 0.36vw solid blue;
-  color: blue;
+  border: 0.36vw solid var(--blue);
+  color: var(--blue);
   display: inline-block;
   font-size: 10.5vw;
   padding: 0 2.4vw 1vh 2.4vw;
   position: fixed;
 }
 .homeDesktop div:hover {
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 .homeDesktop .work {
   cursor: pointer;
@@ -139,7 +139,7 @@ body {
 }
 
 .homeDesktop .mark:hover {
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 
 
@@ -202,12 +202,12 @@ body {
 }
 
 .homeDesktop text{
-  fill: yellow;
+  fill: var(--yellow);
 }
 
 svg text {
   fill: white;
-  stroke: blue;
+  stroke: var(--blue);
   stroke-width:2.5px;
 }
 
@@ -225,7 +225,7 @@ svg text {
 
 .work .text {
   bottom: 0;
-  color:blue;
+  color:var(--blue);
   font-family: questrial;
   margin-left: 2vw;
   position: fixed;
@@ -248,7 +248,7 @@ svg text {
 
 .work .workRight {
   background-color: white;
-  border: .36vw solid blue;
+  border: .36vw solid var(--blue);
   flex: 40;
   height: 100%;
 }
@@ -263,7 +263,7 @@ svg text {
 
 .work .workSlides .slide {
   /* background-color: grey; */
-  border: 0.4vw solid blue;
+  border: 0.4vw solid var(--blue);
   display: inline-block;
   height: 100%;
   margin-left: 10vw;
@@ -287,9 +287,12 @@ svg text {
 
 .shopLeft, .workLeft {
   justify-content: center;
-  background-color: yellow;
+  background-color: var(--yellow);
   display: flex;
   flex: 7;
+  /* overflow-y: hidden; */
+  /* height:100%; */
+
 }
 
 #sidescroll {
@@ -305,7 +308,7 @@ svg text {
 
 .shopBox {
   background-color: white;
-  border: .36vw solid blue;
+  border: .36vw solid var(--blue);
   flex: 40;
   min-width: 0;
   height: calc(100% - .72vw);
@@ -339,7 +342,7 @@ svg text {
 }
 
 .banner #shopProductName {
-  color:blue;
+  color:var(--blue);
   font-size: 4vw;
   max-width: 63vw;
   text-align: center;
@@ -347,7 +350,7 @@ svg text {
 
 .banner #bagbannericon {
   align-items: center;
-  cursor: e-resize;
+  cursor: pointer;
   display: flex;
   height: 55%;
   justify-content: center;
@@ -362,7 +365,7 @@ svg text {
 }
 
 .banner #bagbannericon span {
-  color: blue;
+  color: var(--blue);
   font-family: questrial;
   font-size: 2vw;
   padding-right: 0.55vw;
@@ -370,6 +373,11 @@ svg text {
   pointer-events: none;
   position: absolute;
 }
+
+.banner #bagbannericon span.white {
+  color: white;
+}
+
 
 .shop .scroller {
   -webkit-transition: left 1s;
@@ -394,7 +402,7 @@ svg text {
 }
 
 .shop .slowdownkiddo {
-  color: blue;
+  color: var(--blue);
   font-family: courier;
   left: 105vw;
   position: absolute;
@@ -424,7 +432,7 @@ svg text {
 
   .bag .items #emptyMessage {
     align-items: center;
-    color:blue;
+    color:var(--blue);
     display: flex;
     flex-direction: column;
     font-family: questrial;
@@ -434,8 +442,8 @@ svg text {
   }
 
   .bag .items #emptyMessage #emptyButton {
-    background-color: blue;
-    border: 0.2vw solid blue;
+    background-color: var(--blue);
+    border: 0.2vw solid var(--blue);
     color:white;
     cursor: w-resize;
     font-family: questrial;
@@ -446,8 +454,8 @@ svg text {
   }
 
   .bag .items #emptyMessage #emptyButton:hover {
-    background-color: yellow;
-    color:blue;
+    background-color: var(--yellow);
+    color:var(--blue);
   }
 
   .bag .items, .checkout .left {
@@ -455,7 +463,7 @@ svg text {
   }
 
   .bag .items .bagItem {
-    color:blue;
+    color:var(--blue);
     font-family: questrial;
     width: 100%;
   }
@@ -467,7 +475,7 @@ svg text {
   }
 
   .bag .items .bagItem.legend {
-    border-bottom: 0.4vh solid blue;
+    border-bottom: 0.4vh solid var(--blue);
     height: 5vh;
   }
 
@@ -513,13 +521,13 @@ svg text {
   }
 
   .summary {
-    color: blue;
+    color: var(--blue);
     flex: 3;
     font-family: questrial;
   }
 
   .summary .title {
-    border-bottom: 0.3vw solid blue;
+    border-bottom: 0.3vw solid var(--blue);
     display: block;
     font-family: galderglynn;
     font-size: 2vw;
@@ -535,7 +543,7 @@ svg text {
     padding-top: 1.8vw;
   }
   .summary .bar:nth-of-type(2) {
-    border-bottom: 0.3vw solid blue;
+    border-bottom: 0.3vw solid var(--blue);
     padding-bottom: 1.8vw;
   }
   .summary .bar:nth-of-type(3) {
@@ -547,8 +555,8 @@ svg text {
     float: right;
   }
   .summary button {
-    background-color: blue;
-    border: 0.2vw solid blue;
+    background-color: var(--blue);
+    border: 0.2vw solid var(--blue);
     color:white;
     display: block;
     font-family: questrial;
@@ -570,8 +578,8 @@ svg text {
   }
 
   .summary button:active {
-    background-color: yellow;
-    color:blue;
+    background-color: var(--yellow);
+    color:var(--blue);
   }
   .summary button:focus {
     outline: 0;
@@ -584,7 +592,7 @@ svg text {
     display: none;
   }
   #choosePay {
-    color:blue;
+    color:var(--blue);
     font-family: questrial;
     font-size: 2.2vw;
     font-weight: bold;
@@ -592,7 +600,7 @@ svg text {
 
   [data-braintree-id="toggle"] {
     background: none;
-    color:blue;
+    color:var(--blue);
     font-family: questrial;
     font-size: 1.5vw;
     text-align: left;
@@ -604,8 +612,8 @@ svg text {
   }
 
   [data-braintree-id="toggle"]:hover {
-    background-color: yellow;
-    border: 0.2vw solid blue;
+    background-color: var(--yellow);
+    border: 0.2vw solid var(--blue);
     border-radius: 0;
     cursor: w-resize;
   }
@@ -615,7 +623,7 @@ svg text {
   }
 
   .payment #loadingBox {
-    color: blue;
+    color: var(--blue);
     height: 100%;
     width: 100%;
   }
@@ -652,7 +660,7 @@ svg text {
 }
 
 .item {
-  color: blue;
+  color: var(--blue);
   display: flex;
   height: 82%;
   width: 100%;
@@ -660,23 +668,31 @@ svg text {
 
 .item .left {
   flex: 7;
+  overflow-y: scroll;
   padding-left: 1vw;
   padding-right: 1vw;
 }
 
 .item .left img {
-  margin-top: 3vh;
+  cursor: pointer;
+  margin-bottom: 3vh;
+  transition-duration: 0.2s;
   width: 100%;
 }
 
+.item .left img:hover {
+  filter: hue-rotate(180deg);
+}
+
 .item .mid {
-  flex: 59;
+  /* flex: 59; */
+  padding-bottom: 1vw;
   padding-left: 1vw;
   padding-right: 1vw;
 }
 
 .item .mid img {
-  width: 100%;
+  height: 100%;
 }
 
 .item .right {
@@ -711,7 +727,7 @@ svg text {
 
 .sizebar div {
   align-items: center;
-  border: 0.2vw solid blue;
+  border: 0.2vw solid var(--blue);
   cursor: pointer;
   display: flex;
   float: left;
@@ -724,16 +740,16 @@ svg text {
 }
 
 .sizebar div:hover {
-  background-color: blue;
+  background-color: var(--blue);
   color:white;
 }
 
 .sizebar div.selected {
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 
 .sizebar div.selected:hover {
-  color:blue;
+  color:var(--blue);
 }
 
 .sizebar div > span {
@@ -746,9 +762,9 @@ select {
   appearance: none;
 
   background-color: white;
-  border: 0.2vw solid blue;
+  border: 0.2vw solid var(--blue);
   border-radius: 0;
-  color:blue;
+  color:var(--blue);
   font-family: questrial;
   font-size: 2vw;
   margin-bottom: 2vh;
@@ -768,12 +784,12 @@ select option {
   -moz-appearance: none;
   appearance: none;
 
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 
 .item .right button {
-  background-color: blue;
-  border: 0.2vw solid blue;
+  background-color: var(--blue);
+  border: 0.2vw solid var(--blue);
   color:white;
   display: block;
   font-family: Arial;
@@ -781,8 +797,8 @@ select option {
   padding: 1vw;
 }
 .item .right button:active {
-  background-color: yellow;
-  color:blue;
+  background-color: var(--yellow);
+  color:var(--blue);
 }
 .item .right button:focus {
 }
@@ -800,7 +816,7 @@ select option {
 }
 
 .checkout {
-  color: blue;
+  color: var(--blue);
   font-family: questrial;
 }
 
@@ -823,8 +839,8 @@ select option {
 }
 
 .checkout input {
-  border: 0.2vw solid blue;
-  color:blue;
+  border: 0.2vw solid var(--blue);
+  color:var(--blue);
   font-family: questrial;
   font-size: 1.5vw;
   height: 3vw;
@@ -837,7 +853,7 @@ select option {
   /* Change the white to any color  */
   -webkit-box-shadow: 0 0 0 30px white inset;
   /* Change text in autofill textbox */
-  -webkit-text-fill-color: blue !important;
+  -webkit-text-fill-color: var(--blue) !important;
 }
 
 .formform .title {
@@ -871,9 +887,9 @@ select option {
   appearance: none;
 
   background-color: white;
-  border: 0.2vw solid blue;
+  border: 0.2vw solid var(--blue);
   border-radius: 0;
-  color:blue;
+  color:var(--blue);
   font-family: questrial;
   font-size: 1.5vw;
   height: 3vw;
@@ -893,7 +909,7 @@ select option {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 
 .checkout .twofer {
@@ -938,7 +954,7 @@ select option {
 }
 
 .completed > div {
-  background-color: blue;
+  background-color: var(--blue);
   color:white;
   display: inline-block;
   font-family: galderglynn;
@@ -947,8 +963,8 @@ select option {
 
 .completed button {
   background-color: white;
-  border: 0.2vw solid blue;
-  color:blue;
+  border: 0.2vw solid var(--blue);
+  color:var(--blue);
   display: inline-block;
   font-family: questrial;
   font-size: 5vw;
@@ -956,7 +972,7 @@ select option {
 }
 
 .completed button:hover {
-  background-color: blue;
+  background-color: var(--blue);
   border: 0.2vw solid white;
   color:white;
 
@@ -972,7 +988,7 @@ select option {
   }
 
   #output {
-    color:blue;
+    color:var(--blue);
   }
 
   #mobileStart .press {
@@ -1007,7 +1023,7 @@ select option {
 
   /*  mobile home */
   .homeDesktop div {
-    border: 0.5vw solid blue;
+    border: 0.5vw solid var(--blue);
     padding: 0;
   }
 
@@ -1079,7 +1095,7 @@ select option {
   }
 
   .shopBox {
-    border: .7vw solid blue;
+    border: .7vw solid var(--blue);
   }
 
   .shopLeft {
@@ -1107,13 +1123,13 @@ select option {
   }
 
   .itemPreview {
-    color:blue;
+    color:var(--blue);
     font-family: galderglynn;
     font-size: 7vw;
   }
 
   .itemPreview .imageHolder {
-    border: 0.6vw solid blue;
+    border: 0.6vw solid var(--blue);
     margin-top: 3vw;
   }
 
@@ -1122,11 +1138,11 @@ select option {
   }
 
   .mobileItem {
-    color:blue;
+    color:var(--blue);
   }
 
   select {
-    border: 0.6vw solid blue;
+    border: 0.6vw solid var(--blue);
     font-size: 5vw;
     height: 10vw;
     margin-bottom: 2vh;
@@ -1146,7 +1162,7 @@ select option {
 
   .mobileItem .mid {
     align-items: center;
-    border: 0.8vw solid blue;
+    border: 0.8vw solid var(--blue);
     display: flex;
     justify-content: center;
     padding: 5vw;
@@ -1170,7 +1186,7 @@ select option {
   .mobileItem .itemName {
     /* un-comment two comments below to active vertical centering */
     /* align-items: center; */
-    color:blue;
+    color:var(--blue);
     /* display: inline-flex; */
     flex: 68.5;
     flex-shrink: 0;
@@ -1181,7 +1197,7 @@ select option {
   }
 
   .mobileItem button {
-    background-color: blue;
+    background-color: var(--blue);
     border: 0;
     color:white;
     float: right;
@@ -1193,23 +1209,23 @@ select option {
     flex-shrink: 0;
   }
   .mobileItem button:active {
-    background-color: yellow;
-    color:blue;
+    background-color: var(--yellow);
+    color:var(--blue);
   }
   .mobileItem button:focus {
-    outline:  0.2vw solid blue;
+    outline:  0.2vw solid var(--blue);
   }
 
   .mobileItem .sizebar {
     /* background-color: red; */
-    color: blue;
+    color: var(--blue);
     flex: 70;
     height: 14vw;
     width: inherit;
   }
 
   .mobileItem .sizebar div {
-    border: 0.6vw solid blue;
+    border: 0.6vw solid var(--blue);
     height: 10vw;
     margin-right: 4vw;
     width: 10vw;
@@ -1237,7 +1253,7 @@ select option {
   }
 
   .bagItem .flexOnEm .pic {
-    border: 0.6vw solid blue;
+    border: 0.6vw solid var(--blue);
     flex: 1;
     margin-right: 2vw;
   }
@@ -1266,7 +1282,7 @@ select option {
     font-size: 6vw;
   }
   .summary .title {
-    border-bottom: 0.8vw solid blue;
+    border-bottom: 0.8vw solid var(--blue);
     font-size: 5vw;
     padding-bottom: 0.3vw;
   }
@@ -1278,7 +1294,7 @@ select option {
     padding-top: 4vw;
   }
   .summary .bar:nth-of-type(2){
-    border-bottom: 0.8vw solid blue;
+    border-bottom: 0.8vw solid var(--blue);
     padding-bottom: 4vw;
     padding-top: 1vw;
   }
@@ -1286,10 +1302,10 @@ select option {
     padding-bottom: 4vw;
     padding-top: 4vw;
   }
-  .summary .bar:nth-of-type(4){
+  /* .summary .bar:nth-of-type(4){
     padding-bottom: 4vw;
     padding-top: 0vw;
-  }
+  } */
   .summary .bar .key {
     font-size: 5vw;
   }
@@ -1298,7 +1314,7 @@ select option {
     font-size: 5vw;
   }
   .summary button {
-    border: 0.8vw solid blue;
+    border: 0.8vw solid var(--blue);
     font-size: 6vw;
     height: 10vw;
   }
@@ -1317,8 +1333,8 @@ select option {
   }
 
   .checkout input {
-    border: 0.5vw solid blue;
-    color:blue;
+    border: 0.5vw solid var(--blue);
+    color:var(--blue);
     font-family: questrial;
     font-size: 6vw;
     height: 8vw;
@@ -1331,7 +1347,7 @@ select option {
     /* Change the white to any color  */
     -webkit-box-shadow: 0 0 0 30px white inset;
     /* Change text in autofill textbox */
-    -webkit-text-fill-color: blue !important;
+    -webkit-text-fill-color: var(--blue) !important;
   }
 
   .formform .title {
@@ -1340,7 +1356,7 @@ select option {
   }
 
   .formform select {
-    border: 0.5vw solid blue;
+    border: 0.5vw solid var(--blue);
     font-size: 6vw;
     height: 8vw;
     margin-bottom: 2vh;
@@ -1357,7 +1373,7 @@ select option {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: yellow;
+    background-color: var(--yellow);
   }
 
   .formform .checkbox {
@@ -1389,7 +1405,7 @@ select option {
 
   [data-braintree-id="toggle"] {
     background: none;
-    color:blue;
+    color:var(--blue);
     font-family: questrial;
     font-size: 5vw;
     margin-bottom: 4vw;
@@ -1403,8 +1419,8 @@ select option {
   }
 
   [data-braintree-id="toggle"]:hover {
-    background-color: yellow;
-    border: 0.2vw solid blue;
+    background-color: var(--yellow);
+    border: 0.2vw solid var(--blue);
     border-radius: 0;
     cursor: w-resize;
   }

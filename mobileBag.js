@@ -51,17 +51,12 @@ var MobileBag = function (_React$Component) {
   }, {
     key: 'getShipping',
     value: function getShipping() {
-      return 9.0;
-    }
-  }, {
-    key: 'getEstimatedTax',
-    value: function getEstimatedTax() {
-      return this.formatMoney(0.07 * this.getSubtotal());
+      return 2.05;
     }
   }, {
     key: 'getTotal',
     value: function getTotal() {
-      return this.getSubtotal() + this.getShipping() + this.getEstimatedTax();
+      return this.getSubtotal() + this.getShipping();
     }
   }, {
     key: 'render',
@@ -130,21 +125,6 @@ var MobileBag = function (_React$Component) {
               { className: 'val' },
               '$',
               this.getShipping()
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'bar' },
-            React.createElement(
-              'span',
-              { className: 'key' },
-              'estimated tax'
-            ),
-            React.createElement(
-              'span',
-              { className: 'val' },
-              '$',
-              this.getEstimatedTax()
             )
           ),
           React.createElement(
