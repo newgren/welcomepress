@@ -104,7 +104,8 @@ var Start = function (_React$Component) {
             ga('send', {
               hitType: 'event',
               eventCategory: 'clicks',
-              eventAction: 'start'
+              eventAction: 'start',
+              eventLabel: 'desktop'
             });
             _this2.goToHome();
           }, id: 'start' },

@@ -47,6 +47,12 @@ class MobileShop extends React.Component {
   }
 
   addToCart(id, size, qty) {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'product',
+      eventAction: 'addToCart ' + id,
+      eventLabel: 'mobile'
+    });
     let cart = this.state.cart;
     if (!(id in cart)) {
       cart[id] = {};
@@ -60,6 +66,12 @@ class MobileShop extends React.Component {
   }
 
   removeFromCart(index, size) {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'product',
+      eventAction: 'removeFromCart ' + index,
+      eventLabel: 'mobile'
+    });
     let cart = this.state.cart;
     delete cart[index][size];
     this.setState({cart: cart});
@@ -80,6 +92,13 @@ class MobileShop extends React.Component {
   }
 
   setCheckoutMode(newMode) {
+    let oldMode = this.state.checkoutMode;
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'modeCheckout',
+      eventAction: oldMode + '-' + newMode,
+      eventLabel: 'mobile'
+    });
     this.setState({checkoutMode: newMode});
   }
 
@@ -153,7 +172,15 @@ class MobileShop extends React.Component {
                 </div>),
               'bag': <MobileBag cart={this.state.cart}
                                 remove={(index, size) => this.removeFromCart(index, size)}
-                                goToCheckout={() => this.setState({mode: 'checkout'})}
+                                goToCheckout={() => {
+                                  ga('send', {
+                                    hitType: 'event',
+                                    eventCategory: 'product',
+                                    eventAction: 'initCheckout',
+                                    eventLabel: 'mobile'
+                                  });
+                                  this.setState({mode: 'checkout'});
+                                }}
                                 getCartSize={() => this.getCartSize()}
                                 goBack={() => this.handleBack()}/>,
               'item': <MobileItem item={catalog.items[this.state.sel]}

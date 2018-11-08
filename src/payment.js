@@ -9,6 +9,7 @@ let braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 class Payment extends React.Component {
   constructor(props) {
     super(props);
+    this.parentType = props.parentType;
     this.amount = props.amount;
     this.cart = props.cart;
     this.shipData = props.shipData;
@@ -48,10 +49,12 @@ class Payment extends React.Component {
   }
 
   displayDropin() {
+    document.getElementById('choosePay').style.display = 'inherit';
     document.getElementById('dropin-container').style.display = 'inherit';
   }
 
   hideDropin() {
+    document.getElementById('choosePay').style.display = 'none';
     document.getElementById('dropin-container').style.display = 'none';
   }
 
@@ -123,7 +126,8 @@ class Payment extends React.Component {
               ga('send', {
                 hitType: 'event',
                 eventCategory: 'product',
-                eventAction: 'transactionSuccess'
+                eventAction: 'transactionSuccess',
+                eventLabel: this.parentType == 'checkout' ? 'desktop' : 'mobile'
               });
               console.log('GOOD transaction');
               this.handlePaymentSuccess();
@@ -131,7 +135,8 @@ class Payment extends React.Component {
               ga('send', {
                 hitType: 'event',
                 eventCategory: 'product',
-                eventAction: 'transactionFailure'
+                eventAction: 'transactionFailure',
+                eventLabel: this.parentType == 'checkout' ? 'desktop' : 'mobile'
               });
               console.log('BAD transaction');
               this.handlePaymentFailure();

@@ -57,7 +57,8 @@ var Press = function (_React$Component) {
       ga('send', {
         hitType: 'event',
         eventCategory: 'mode',
-        eventAction: oldMode + '-' + newMode
+        eventAction: oldMode + '-' + newMode,
+        eventLabel: this.isMobile ? 'mobile' : 'desktop'
       });
     }
   }, {

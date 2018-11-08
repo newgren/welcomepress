@@ -22,6 +22,7 @@ var Payment = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
 
+    _this.parentType = props.parentType;
     _this.amount = props.amount;
     _this.cart = props.cart;
     _this.shipData = props.shipData;
@@ -67,11 +68,13 @@ var Payment = function (_React$Component) {
   }, {
     key: 'displayDropin',
     value: function displayDropin() {
+      document.getElementById('choosePay').style.display = 'inherit';
       document.getElementById('dropin-container').style.display = 'inherit';
     }
   }, {
     key: 'hideDropin',
     value: function hideDropin() {
+      document.getElementById('choosePay').style.display = 'none';
       document.getElementById('dropin-container').style.display = 'none';
     }
   }, {
@@ -144,7 +147,8 @@ var Payment = function (_React$Component) {
                 ga('send', {
                   hitType: 'event',
                   eventCategory: 'product',
-                  eventAction: 'transactionSuccess'
+                  eventAction: 'transactionSuccess',
+                  eventLabel: _this3.parentType == 'checkout' ? 'desktop' : 'mobile'
                 });
                 console.log('GOOD transaction');
                 _this3.handlePaymentSuccess();
@@ -152,7 +156,8 @@ var Payment = function (_React$Component) {
                 ga('send', {
                   hitType: 'event',
                   eventCategory: 'product',
-                  eventAction: 'transactionFailure'
+                  eventAction: 'transactionFailure',
+                  eventLabel: _this3.parentType == 'checkout' ? 'desktop' : 'mobile'
                 });
                 console.log('BAD transaction');
                 _this3.handlePaymentFailure();

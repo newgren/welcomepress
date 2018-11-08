@@ -183,7 +183,8 @@ var Checkout = function (_React$Component) {
           ga('send', {
             hitType: 'event',
             eventCategory: 'product',
-            eventAction: 'initPaymentDetails'
+            eventAction: 'initPaymentDetails',
+            eventLabel: 'desktop'
           });
           _this3.setState({
             shippingInfoIsValidated: true,
@@ -586,6 +587,7 @@ var Checkout = function (_React$Component) {
               )
             ),
             React.createElement(Payment, {
+              parentType: 'checkout',
               amount: this.getTotal(),
               cart: this.props.cart,
               shipData: this.state.ship,

@@ -116,7 +116,13 @@ var MobileStart = function (_React$Component) {
       return React.createElement(
         'div',
         { id: 'mobileStart', onClick: function onClick() {
-            return _this2.goToHome();
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'clicks',
+              eventAction: 'start',
+              eventLabel: 'mobile'
+            });
+            _this2.goToHome();
           } },
         React.createElement(
           'div',

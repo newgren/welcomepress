@@ -178,6 +178,12 @@ var MobileCheckout = function (_React$Component) {
       }
       var valid = this.verifyAddress(function (validShipping, validBilling) {
         if (validShipping && validBilling) {
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'product',
+            eventAction: 'initPaymentDetails',
+            eventLabel: 'mobile'
+          });
           // all info validated only at this point
           _this3.setState({
             shippingInfoIsValidated: true,
@@ -251,9 +257,6 @@ var MobileCheckout = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      console.log(this.props.mode);
-      console.log(prevProps.mode);
-
       if (this.props.mode == 'payment' && prevProps.mode != 'payment') {
         console.log("in");
         this.setState({ buttonEnabled: false });
@@ -564,6 +567,7 @@ var MobileCheckout = function (_React$Component) {
             'div',
             { className: 'payAndVerifyMobile' },
             React.createElement(Payment, {
+              parentType: 'mobileCheckout',
               amount: this.getTotal(),
               buttonEnabled: this.state.buttonEnabled,
               cart: this.props.cart,

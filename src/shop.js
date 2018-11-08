@@ -51,7 +51,8 @@ class Shop extends React.Component {
     ga('send', {
       hitType: 'event',
       eventCategory: 'product',
-      eventAction: 'addToCart ' + id
+      eventAction: 'addToCart ' + id,
+      eventLabel: 'desktop'
     });
     let cart = this.state.cart;
     if (!(id in cart)) {
@@ -69,7 +70,8 @@ class Shop extends React.Component {
     ga('send', {
       hitType: 'event',
       eventCategory: 'product',
-      eventAction: 'removeFromCart ' + index
+      eventAction: 'removeFromCart ' + index,
+      eventLabel: 'desktop'
     });
     let cart = this.state.cart;
     delete cart[index][size];
@@ -134,7 +136,8 @@ class Shop extends React.Component {
     ga('send', {
       hitType: 'event',
       eventCategory: 'modeCheckout',
-      eventAction: oldMode + '-' + newMode
+      eventAction: oldMode + '-' + newMode,
+      eventLabel: 'desktop'
     });
     this.setState({checkoutMode: newMode});
   }
@@ -230,7 +233,8 @@ class Shop extends React.Component {
                       ga('send', {
                         hitType: 'event',
                         eventCategory: 'product',
-                        eventAction: 'initCheckout'
+                        eventAction: 'initCheckout',
+                        eventLabel: 'desktop'
                       });
                       this.setState({mode: 'checkout'});
                     }}

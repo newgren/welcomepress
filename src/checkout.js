@@ -193,7 +193,8 @@ class Checkout extends React.Component {
         ga('send', {
           hitType: 'event',
           eventCategory: 'product',
-          eventAction: 'initPaymentDetails'
+          eventAction: 'initPaymentDetails',
+          eventLabel: 'desktop'
         });
         this.setState({
           shippingInfoIsValidated: true,
@@ -445,6 +446,7 @@ class Checkout extends React.Component {
                 </div>
               </div>
               <Payment
+                parentType='checkout'
                 amount={this.getTotal()}
                 cart={this.props.cart}
                 shipData={this.state.ship}

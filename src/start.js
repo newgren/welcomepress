@@ -86,7 +86,8 @@ class Start extends React.Component {
           ga('send', {
             hitType: 'event',
             eventCategory: 'clicks',
-            eventAction: 'start'
+            eventAction: 'start',
+            eventLabel: 'desktop'
           });
           this.goToHome();
         }

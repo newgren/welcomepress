@@ -66,6 +66,12 @@ var MobileShop = function (_React$Component) {
   }, {
     key: 'addToCart',
     value: function addToCart(id, size, qty) {
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'product',
+        eventAction: 'addToCart ' + id,
+        eventLabel: 'mobile'
+      });
       var cart = this.state.cart;
       if (!(id in cart)) {
         cart[id] = {};
@@ -80,6 +86,12 @@ var MobileShop = function (_React$Component) {
   }, {
     key: 'removeFromCart',
     value: function removeFromCart(index, size) {
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'product',
+        eventAction: 'removeFromCart ' + index,
+        eventLabel: 'mobile'
+      });
       var cart = this.state.cart;
       delete cart[index][size];
       this.setState({ cart: cart });
@@ -102,6 +114,13 @@ var MobileShop = function (_React$Component) {
   }, {
     key: 'setCheckoutMode',
     value: function setCheckoutMode(newMode) {
+      var oldMode = this.state.checkoutMode;
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'modeCheckout',
+        eventAction: oldMode + '-' + newMode,
+        eventLabel: 'mobile'
+      });
       this.setState({ checkoutMode: newMode });
     }
 
@@ -207,7 +226,13 @@ var MobileShop = function (_React$Component) {
                 return _this2.removeFromCart(index, size);
               },
               goToCheckout: function goToCheckout() {
-                return _this2.setState({ mode: 'checkout' });
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'product',
+                  eventAction: 'initCheckout',
+                  eventLabel: 'mobile'
+                });
+                _this2.setState({ mode: 'checkout' });
               },
               getCartSize: function getCartSize() {
                 return _this2.getCartSize();

@@ -87,7 +87,15 @@ class MobileStart extends React.Component {
 
   render() {
     return (
-      <div id='mobileStart' onClick={() => this.goToHome()}>
+      <div id='mobileStart' onClick={() => {
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'clicks',
+            eventAction: 'start',
+            eventLabel: 'mobile'
+          });
+          this.goToHome();
+        }}>
           <div className='center'>
             <div id='welcome'>
               <svg viewBox="0 0 417 60">
