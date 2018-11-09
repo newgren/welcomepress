@@ -15,7 +15,7 @@ var numShopTextCopies = 40;
 var numMarkCopies = 20;
 var numInfoCopies = 20;
 
-var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
@@ -94,15 +94,6 @@ var Home = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'home' },
-        React.createElement(
-          'div',
-          { id: 'privacyPolicy' },
-          React.createElement(
-            'a',
-            { href: './privacyPolicy.html' },
-            'Privacy Policy'
-          )
-        ),
         React.createElement(
           'div',
           { id: 'leftStacked' },
@@ -189,11 +180,20 @@ var Home = function (_React$Component) {
               React.createElement('br', null),
               React.createElement(
                 'span',
-                null,
+                { id: 'mailto' },
                 React.createElement(
                   'a',
                   { href: 'mailto:hello@welcomepress.xyz' },
                   'hello@welcomepress.xyz'
+                )
+              ),
+              React.createElement(
+                'span',
+                { id: 'priv' },
+                React.createElement(
+                  'a',
+                  { target: '_blank', href: './privacyPolicy.html' },
+                  'privacy policy'
                 )
               )
             );

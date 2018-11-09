@@ -669,7 +669,7 @@ var MobileCheckout = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'title first' },
-            'Email'
+            'email'
           ),
           React.createElement(
             'div',
@@ -679,7 +679,7 @@ var MobileCheckout = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'title second' },
-            this.state.sameAddress ? 'Address' : 'Shipping Address'
+            this.state.sameAddress ? 'address' : 'shipping address'
           ),
           React.createElement(
             'div',
@@ -702,7 +702,7 @@ var MobileCheckout = function (_React$Component) {
             React.createElement(
               'div',
               { className: 'title third' },
-              this.state.sameAddress ? null : 'Billing Address'
+              this.state.sameAddress ? null : 'billing address'
             ),
             React.createElement(
               'div',

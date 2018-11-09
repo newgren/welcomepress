@@ -22,36 +22,17 @@ class Work extends React.Component {
                  onClick={() => this.goToHome()} />
             <img src='./iconImages/WORK.png' id='shopBannerText' />
           </div>
-          <div className='workSlides'>
-            <div className='slide'>
-              <a href='https://usontheb.us/' target='_blank'>
-                <div>
-                  <img src='./workCaps/usonthebus.png'/>
-                </div>
-              </a>
-            </div>
-            <div className='slide'>
-              <a href='https://usontheb.us/' target='_blank'>
-                <div>
-                  <img src='./workCaps/usonthebus.png'/>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div className='text'>
-            <h1>Want a website? Here's what we offer</h1>
+          <div className='workList'>
             <ul>
-              <li>web/graphic design (read: whole site including logos, etc.)</li>
-              <li>site development and maintenence (read: <span>code</span>)</li>
-              <li>analytics</li>
-              <li>store integration</li>
-              <li>whatever else you can imagine</li>
+              <li><a target="_blank" href='https://usontheb.us'>usontheb.us</a></li>
+              <li><a target="_blank" href='https://welcomepress.xyz'>welcomepress.xyz</a></li>
             </ul>
           </div>
-
         </div>
-
-
+        <div className='workBottom'>
+          <div>work with us.</div>
+          <div id='mailto'><a href='mailto:hello@welcomepress.xyz'>hello@welcomepress.xyz</a></div>
+        </div>
       </div>
     );
   }

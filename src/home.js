@@ -7,7 +7,7 @@ var numShopTextCopies = 40;
 var numMarkCopies = 20;
 var numInfoCopies = 20;
 
-var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 class Home extends React.Component {
   constructor(props) {
@@ -75,9 +75,6 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home'>
-        <div id='privacyPolicy'>
-          <a href='./privacyPolicy.html'>Privacy Policy</a>
-        </div>
         <div id='leftStacked'>
           <img src='./iconImages/leftStacked.png'/>
         </div>
@@ -133,7 +130,8 @@ class Home extends React.Component {
                 }>
                 <span>{infoBlurb}</span>
                 <br/>
-                <span><a href='mailto:hello@welcomepress.xyz'>hello@welcomepress.xyz</a></span>
+                <span id='mailto'><a href='mailto:hello@welcomepress.xyz'>hello@welcomepress.xyz</a></span>
+                <span id='priv'><a target="_blank" href='./privacyPolicy.html'>privacy policy</a></span>
               </div>)
             }
         </div>

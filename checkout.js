@@ -598,7 +598,7 @@ var Checkout = function (_React$Component) {
               React.createElement(
                 'div',
                 { className: 'title first' },
-                'Email'
+                'email'
               ),
               React.createElement(
                 'div',
@@ -608,7 +608,7 @@ var Checkout = function (_React$Component) {
               React.createElement(
                 'div',
                 { className: 'title second' },
-                this.state.sameAddress ? 'Address' : 'Shipping Address'
+                this.state.sameAddress ? 'address' : 'shipping address'
               ),
               Object.keys(this.state.ship).map(function (a) {
                 return _this4.state.ship[a] && a != 'email' ? React.createElement(
@@ -620,7 +620,7 @@ var Checkout = function (_React$Component) {
               React.createElement(
                 'div',
                 { className: 'title third' },
-                this.state.sameAddress ? null : 'Billing Address'
+                this.state.sameAddress ? null : 'billing address'
               ),
               !this.state.sameAddress ? Object.keys(this.state.bill).map(function (a) {
                 return _this4.state.bill[a] ? React.createElement(

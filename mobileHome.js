@@ -15,7 +15,7 @@ var numShopTextCopies = 60;
 var numMarkCopies = 35;
 var numInfoCopies = 40;
 
-var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 // TODO: conditionally render image only for top layer of chchchch
 
@@ -175,6 +175,15 @@ var Home = function (_React$Component) {
                   'a',
                   { href: 'mailto:hello@welcomepress.xyz' },
                   'hello@welcomepress.xyz'
+                )
+              ),
+              React.createElement(
+                'span',
+                { id: 'priv' },
+                React.createElement(
+                  'a',
+                  { href: './privacyPolicy.html' },
+                  'privacy policy'
                 )
               )
             );

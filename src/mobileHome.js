@@ -7,7 +7,7 @@ var numShopTextCopies = 60;
 var numMarkCopies = 35;
 var numInfoCopies = 40;
 
-var infoBlurb = 'we are an independent front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 // TODO: conditionally render image only for top layer of chchchch
 
@@ -133,6 +133,7 @@ class Home extends React.Component {
                 <span>{infoBlurb}</span>
                 <br/>
                 <span><a href='mailto:hello@welcomepress.xyz'>hello@welcomepress.xyz</a></span>
+                <span id='priv'><a href='./privacyPolicy.html'>privacy policy</a></span>
               </div>)
             }
         </div>

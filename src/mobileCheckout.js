@@ -506,14 +506,14 @@ class MobileCheckout extends React.Component {
             this.props.mode != 'shipping' ?
 
               <div className='shippingVerification'>
-                <div className='title first'>Email</div>
+                <div className='title first'>email</div>
                   <div className='bit'>{this.state.ship.email}</div>
-                <div className='title second'>{this.state.sameAddress ? 'Address' : 'Shipping Address'}</div>
+                <div className='title second'>{this.state.sameAddress ? 'address' : 'shipping address'}</div>
                   <div className='bit'>{this.state.ship.firstName + ' ' + this.state.ship.lastName}</div>
                   <div className='bit'>{this.state.ship.street1 + (this.state.ship.street2 ? (', ' + this.state.ship.street2) : '')}</div>
                   <div className='bit'>{this.state.ship.city + ', ' + this.state.ship.state + ' ' + this.state.ship.zip5 + ' ' + this.state.ship.country}</div>
               {!this.state.sameAddress ? <div>
-                <div className='title third'>{this.state.sameAddress ? (null) : 'Billing Address'}</div>
+                <div className='title third'>{this.state.sameAddress ? (null) : 'billing address'}</div>
                   <div className='bit'>{this.state.bill.firstName + ' ' + this.state.bill.lastName}</div>
                   <div className='bit'>{this.state.bill.street1 + (this.state.bill.street2 ? (', ' + this.state.bill.street2) : '')}</div>
                   <div className='bit'>{this.state.bill.city + ', ' + this.state.bill.state + ' ' + this.state.bill.zip5 + ' ' + this.state.bill.country}</div>

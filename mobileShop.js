@@ -199,7 +199,7 @@ var MobileShop = function (_React$Component) {
             'browse': catalog.items.map(function (item, id) {
               return React.createElement(
                 'div',
-                { className: 'itemPreview' },
+                { className: 'itemPreview', key: item.name },
                 React.createElement(
                   'div',
                   null,

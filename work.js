@@ -51,76 +51,46 @@ var Work = function (_React$Component) {
           ),
           React.createElement(
             'div',
-            { className: 'workSlides' },
-            React.createElement(
-              'div',
-              { className: 'slide' },
-              React.createElement(
-                'a',
-                { href: 'https://usontheb.us/', target: '_blank' },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('img', { src: './workCaps/usonthebus.png' })
-                )
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: 'slide' },
-              React.createElement(
-                'a',
-                { href: 'https://usontheb.us/', target: '_blank' },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('img', { src: './workCaps/usonthebus.png' })
-                )
-              )
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'text' },
-            React.createElement(
-              'h1',
-              null,
-              'Want a website? Here\'s what we offer'
-            ),
+            { className: 'workList' },
             React.createElement(
               'ul',
               null,
               React.createElement(
                 'li',
                 null,
-                'web/graphic design (read: whole site including logos, etc.)'
-              ),
-              React.createElement(
-                'li',
-                null,
-                'site development and maintenence (read: ',
                 React.createElement(
-                  'span',
-                  null,
-                  'code'
-                ),
-                ')'
+                  'a',
+                  { target: '_blank', href: 'https://usontheb.us' },
+                  'usontheb.us'
+                )
               ),
               React.createElement(
                 'li',
                 null,
-                'analytics'
-              ),
-              React.createElement(
-                'li',
-                null,
-                'store integration'
-              ),
-              React.createElement(
-                'li',
-                null,
-                'whatever else you can imagine'
+                React.createElement(
+                  'a',
+                  { target: '_blank', href: 'https://welcomepress.xyz' },
+                  'welcomepress.xyz'
+                )
               )
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'workBottom' },
+          React.createElement(
+            'div',
+            null,
+            'work with us.'
+          ),
+          React.createElement(
+            'div',
+            { id: 'mailto' },
+            React.createElement(
+              'a',
+              { href: 'mailto:hello@welcomepress.xyz' },
+              'hello@welcomepress.xyz'
             )
           )
         )

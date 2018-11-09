@@ -47,6 +47,50 @@ var Work = function (_React$Component) {
                 id: 'leftBannerIcon',
                 onClick: this.goToHome }),
               React.createElement('img', { src: './iconImages/WORK.png', id: 'shopBannerText' })
+            ),
+            React.createElement(
+              'div',
+              { className: 'workList' },
+              React.createElement(
+                'ul',
+                null,
+                React.createElement(
+                  'li',
+                  null,
+                  React.createElement(
+                    'a',
+                    { target: '_blank', href: 'https://usontheb.us' },
+                    'usontheb.us'
+                  )
+                ),
+                React.createElement(
+                  'li',
+                  null,
+                  React.createElement(
+                    'a',
+                    { target: '_blank', href: 'https://welcomepress.xyz' },
+                    'welcomepress.xyz'
+                  )
+                )
+              )
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'workBottom' },
+          React.createElement(
+            'div',
+            null,
+            'work with us.'
+          ),
+          React.createElement(
+            'div',
+            { id: 'mailto' },
+            React.createElement(
+              'a',
+              { href: 'mailto:hello@welcomepress.xyz' },
+              'hello@welcomepress.xyz'
             )
           )
         )

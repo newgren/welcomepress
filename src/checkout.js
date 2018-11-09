@@ -468,9 +468,9 @@ class Checkout extends React.Component {
           : // PAYMENT
             <div className='payAndVerify'>
               <div className='shippingVerification'>
-                <div className='title first'>Email</div>
+                <div className='title first'>email</div>
                 <div className='bit'>{this.state.ship.email}</div>
-                <div className='title second'>{this.state.sameAddress ? 'Address' : 'Shipping Address'}</div>
+                <div className='title second'>{this.state.sameAddress ? 'address' : 'shipping address'}</div>
                 {
                   Object.keys(this.state.ship).map((a)=> {
                     return this.state.ship[a] && a != 'email' ?
@@ -479,7 +479,7 @@ class Checkout extends React.Component {
                       (null)
                   })
                 }
-                <div className='title third'>{this.state.sameAddress ? (null) : 'Billing Address'}</div>
+                <div className='title third'>{this.state.sameAddress ? (null) : 'billing address'}</div>
                 {
                     !this.state.sameAddress ?
                       Object.keys(this.state.bill).map((a)=> {

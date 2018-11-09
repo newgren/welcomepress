@@ -162,7 +162,7 @@ class MobileShop extends React.Component {
           {
             {
               'browse': catalog.items.map((item, id) =>
-                <div className='itemPreview'>
+                <div className='itemPreview' key={item.name}>
                   <div>{item.name}</div>
                   <div>${item.price}</div>
                   <div className='imageHolder'>
