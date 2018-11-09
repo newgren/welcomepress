@@ -191,7 +191,32 @@ var Shop = function (_React$Component) {
   }, {
     key: 'getShipping',
     value: function getShipping() {
-      return 2.05;
+      var pounds = 0;
+      var ounces = 6;
+      var userid = "711WELCO2258"; //"[userid]";
+      var url = "http://production.shippingapis.com/ShippingAPI.dll?\
+API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
+<Revision>2</Revision>\
+<Package ID=\"1ST\"><Service>FIRST CLASS</Service>\
+<FirstClassMailType>FLAT</FirstClassMailType>\
+<ZipOrigination>61801</ZipOrigination>\
+<ZipDestination>04019</ZipDestination>\
+<Pounds>0</Pounds>\
+<Ounces>6</Ounces>\
+<Container/>\
+<Size>REGULAR</Size>\
+<Machinable>true</Machinable>\
+</Package>\
+</RateV4Request>";
+      console.log(String(url));
+      var http = new XMLHttpRequest();
+      http.open("GET", url);
+      //http.setRequestHeader("Access-Control-Allow-Origin", "*");
+      // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      http.send();
+      http.onreadystatechange = function (e) {
+        console.log(http.responseText);
+      };
     }
   }, {
     key: 'getTotal',
@@ -293,7 +318,8 @@ var Shop = function (_React$Component) {
               return _this2.setCheckoutMode(newMode);
             },
             completeCheckout: this.goToCompleted,
-            goBack: this.handleBack.bind(this) }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
+            goBack: this.handleBack.bind(this),
+            getCartSize: this.getCartSize.bind(this) }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
             addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }

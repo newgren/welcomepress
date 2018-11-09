@@ -163,7 +163,32 @@ class Shop extends React.Component {
   }
 
   getShipping() {
-    return 2.05;
+    let pounds = 0;
+    let ounces = 6;
+    let userid = "711WELCO2258"; //"[userid]";
+    let url = "http://production.shippingapis.com/ShippingAPI.dll?\
+API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
+<Revision>2</Revision>\
+<Package ID=\"1ST\"><Service>FIRST CLASS</Service>\
+<FirstClassMailType>FLAT</FirstClassMailType>\
+<ZipOrigination>61801</ZipOrigination>\
+<ZipDestination>04019</ZipDestination>\
+<Pounds>0</Pounds>\
+<Ounces>6</Ounces>\
+<Container/>\
+<Size>REGULAR</Size>\
+<Machinable>true</Machinable>\
+</Package>\
+</RateV4Request>";
+    console.log(String(url));
+    const http = new XMLHttpRequest();
+    http.open("GET", url);
+    //http.setRequestHeader("Access-Control-Allow-Origin", "*");
+    // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    http.send();
+    http.onreadystatechange = (e) => {
+      console.log(http.responseText);
+    }
   }
 
   getTotal() {
@@ -246,7 +271,8 @@ class Shop extends React.Component {
                               mode={this.state.checkoutMode}
                               setMode={(newMode) => this.setCheckoutMode(newMode)}
                               completeCheckout={this.goToCompleted}
-                              goBack={this.handleBack.bind(this)}/>
+                              goBack={this.handleBack.bind(this)}
+                              getCartSize={this.getCartSize.bind(this)}/>
                   :
                     (null)
               )

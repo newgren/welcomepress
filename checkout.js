@@ -94,7 +94,59 @@ var Checkout = function (_React$Component) {
   }, {
     key: 'getShipping',
     value: function getShipping() {
-      return 2.05;
+      var num = this.props.getCartSize();
+      if (num === 1) {
+        return 2.05;
+      }
+      if (num === 2) {
+        return 3.31;
+      }
+      if (num === 3) {
+        return 4.05;
+      }
+      if (num > 3 && num < 7) {
+        return 6.05;
+      }
+      return 8.00;
+      //   let pounds = 0;
+      //   let ounces = 6;
+      //   let userid = "711WELCO2258"; //"[userid]";
+      //   let url = "http://production.shippingapis.com/ShippingAPI.dll?\
+      // API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
+      // <Revision>2</Revision>\
+      // <RateClientType>025</RateClientType>\
+      // <Package ID=\"0\"><Service>FIRST CLASS</Service>\
+      // <FirstClassMailType>FLAT</FirstClassMailType>\
+      // <ZipOrigination>61801</ZipOrigination>\
+      // <ZipDestination>04019</ZipDestination>\
+      // <Pounds>0</Pounds>\
+      // <Ounces>6</Ounces>\
+      // <Container/>\
+      // <Size>REGULAR</Size>\
+      // <Machinable>true</Machinable>\
+      // </Package>\
+      // </RateV4Request>";
+      //
+      // url = 'http://production.shippingapis.com/ShippingAPI.dll?' +
+      // encodeURIComponent('API=RateV4&XML=<RateV4Request USERID="711WELCO2258">\
+      //   <Revision>2</Revision>\
+      //   <Package ID="1ST">\
+      //     <Service>FIRST CLASS</Service><FirstClassMailType>LETTER</FirstClassMailType>\
+      //       <ZipOrigination>61801</ZipOrigination><ZipDestination>94020</ZipDestination>\
+      //         <Pounds>0</Pounds><Ounces>6</Ounces><Container/><Size>REGULAR</Size><Machinable>true</Machinable>\
+      //         </Package></RateV4Request>');
+      //   console.log(String(url));
+      //   const http = new XMLHttpRequest();
+      //   http.open("GET", url);
+      //   //http.setRequestHeader("Access-Control-Allow-Origin", "*");
+      //   // Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      //   http.send();
+      //   http.onreadystatechange = (e) => {
+      //     if(http.readyState === 4 && http.status === 200) {
+      //       console.log('RESPONSE');
+      //       console.log(http.responseText);
+      //     }
+      //   }
     }
   }, {
     key: 'getTotal',

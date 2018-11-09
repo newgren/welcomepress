@@ -32,7 +32,7 @@ var Press = function (_React$Component) {
 
     _this.changeMode = _this.changeMode.bind(_this);
     _this.state = {
-      mode: 'start', // start | home | work | shop | completed
+      mode: 'shop', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: null
     };

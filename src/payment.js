@@ -29,9 +29,9 @@ class Payment extends React.Component {
       braintree.dropin.create({
         authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
         container: '#dropin-container',
-        paypal: {
-          flow: 'vault'
-        },
+        // paypal: {
+        //   flow: 'vault'
+        // },
         venmo: {}
       }, (err, instance) => {
         if (err) {
