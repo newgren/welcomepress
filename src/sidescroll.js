@@ -19,7 +19,7 @@ class Sidescroll extends React.Component {
     thing.style.top = amt + 'px';
 
     let marginSize = parseInt(window.getComputedStyle(img).marginBottom, 10);
-    let increment = this.mobile ? 2 : 3;
+    let increment = this.mobile ? 1 : 3;
     window.setInterval(() => {
       if(amt > marginSize) {
         amt = -1 * (img.clientHeight);

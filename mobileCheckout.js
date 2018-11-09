@@ -93,7 +93,20 @@ var MobileCheckout = function (_React$Component) {
   }, {
     key: 'getShipping',
     value: function getShipping() {
-      return 2.05;
+      var num = this.props.getCartSize();
+      if (num === 1) {
+        return 2.05;
+      }
+      if (num === 2) {
+        return 3.31;
+      }
+      if (num === 3) {
+        return 4.05;
+      }
+      if (num > 3 && num < 7) {
+        return 6.05;
+      }
+      return 8.00;
     }
   }, {
     key: 'getTotal',
@@ -676,7 +689,7 @@ var MobileCheckout = function (_React$Component) {
           React.createElement(
             'div',
             { className: 'bit' },
-            this.state.ship.street1 + ', ' + this.state.ship.street2
+            this.state.ship.street1 + (this.state.ship.street2 ? ', ' + this.state.ship.street2 : '')
           ),
           React.createElement(
             'div',
@@ -699,7 +712,7 @@ var MobileCheckout = function (_React$Component) {
             React.createElement(
               'div',
               { className: 'bit' },
-              this.state.bill.street1 + ', ' + this.state.bill.street2
+              this.state.bill.street1 + (this.state.bill.street2 ? ', ' + this.state.bill.street2 : '')
             ),
             React.createElement(
               'div',

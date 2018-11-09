@@ -189,7 +189,8 @@ class MobileShop extends React.Component {
                           mode={this.state.checkoutMode}
                           setMode={(newMode) => this.setCheckoutMode(newMode)}
                           completeCheckout={this.goToCompleted}
-                          goBack={this.handleBack.bind(this)} />
+                          goBack={this.handleBack.bind(this)}
+                          getCartSize={this.getCartSize.bind(this)}/>
 
             }[this.state.mode]
           }

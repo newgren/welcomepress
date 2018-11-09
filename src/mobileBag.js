@@ -72,11 +72,11 @@ class MobileBag extends React.Component {
           </div>
           <div className='bar'>
             <span className='key'>shipping</span>
-            <span className='val'>${this.getShipping()}</span>
+            <span className='val'>TBD</span>
           </div>
           <div className='bar'>
             <span className='key'>total</span>
-            <span className='val'>${this.getTotal()}</span>
+            <span className='val'>TBD</span>
           </div>
           <button type='button'
                   onClick={this.goToCheckout}>

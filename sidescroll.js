@@ -34,7 +34,7 @@ var Sidescroll = function (_React$Component) {
       thing.style.top = amt + 'px';
 
       var marginSize = parseInt(window.getComputedStyle(img).marginBottom, 10);
-      var increment = this.mobile ? 2 : 3;
+      var increment = this.mobile ? 1 : 3;
       window.setInterval(function () {
         if (amt > marginSize) {
           amt = -1 * img.clientHeight;

@@ -250,7 +250,8 @@ var MobileShop = function (_React$Component) {
                 return _this2.setCheckoutMode(newMode);
               },
               completeCheckout: this.goToCompleted,
-              goBack: this.handleBack.bind(this) })
+              goBack: this.handleBack.bind(this),
+              getCartSize: this.getCartSize.bind(this) })
 
           }[this.state.mode]
         ),

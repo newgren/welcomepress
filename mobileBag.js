@@ -123,8 +123,7 @@ var MobileBag = function (_React$Component) {
             React.createElement(
               'span',
               { className: 'val' },
-              '$',
-              this.getShipping()
+              'TBD'
             )
           ),
           React.createElement(
@@ -138,8 +137,7 @@ var MobileBag = function (_React$Component) {
             React.createElement(
               'span',
               { className: 'val' },
-              '$',
-              this.getTotal()
+              'TBD'
             )
           ),
           React.createElement(
