@@ -11,15 +11,18 @@ class Sidescroll extends React.Component {
 
   componentDidMount() {
     let thing = document.getElementById('sidescroll');
+    let img = document.getElementById('scrollimg');
+
     //TODO: MAKE THESE USE 'VH' INSTEAD OF 'PX' so that animation speed is constant when changing broswer size
     // let shopHeight = document.getElementById('shopBox').clientHeight;
-    let amt = -1 * (thing.clientHeight/2);
+    let amt = -1 * (img.clientHeight);
     thing.style.top = amt + 'px';
 
-    let increment = this.mobile ? 1 : 3;
+    let marginSize = parseInt(window.getComputedStyle(img).marginBottom, 10);
+    let increment = this.mobile ? 1 : 4;
     window.setInterval(() => {
-      if(amt > 0) {
-        amt = -1 * (thing.clientHeight/4);
+      if(amt > marginSize) {
+        amt = -1 * (img.clientHeight);
       }
       thing.style.top = amt + 'px';
       amt += increment;

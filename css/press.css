@@ -290,8 +290,8 @@ svg text {
   background-color: var(--yellow);
   display: flex;
   flex: 7;
-  /* overflow-y: hidden; */
-  /* height:100%; */
+  overflow-y: hidden;
+  height:100%;
 
 }
 
@@ -301,7 +301,7 @@ svg text {
 }
 
 #sidescroll > img {
-  margin-bottom: 5vw;
+  margin-bottom: 50px;
   width: 100%;
 }
 
@@ -697,6 +697,7 @@ svg text {
 
 .item .right {
   flex: 34;
+  overflow-y: hidden;
   position: relative;
   padding-left: 1vw;
   top: 15vh;
@@ -1102,6 +1103,11 @@ select option {
     flex: 1;
     flex-shrink: 0;
   }
+
+  #sidescroll > img {
+    margin-bottom: 20;
+  }
+
 
   .shopBox {
     flex: 9;
