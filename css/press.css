@@ -461,6 +461,10 @@ svg text {
     color:var(--blue);
   }
 
+  .bag .items {
+    overflow-y: scroll;
+  }
+
   .bag .items, .checkout .left {
     flex: 7;
   }
@@ -796,7 +800,7 @@ select option {
   border: 0.2vw solid var(--blue);
   color:white;
   display: block;
-  font-family: Arial;
+  font-family: questrial;
   font-size: 2.2vw;
   padding: 1vw;
 }
@@ -1227,8 +1231,8 @@ select option {
     border: 0;
     color:white;
     float: right;
-    font-family: galderglynn;
-    font-size: 4vw;
+    font-family: questrial;
+    font-size: 5vw;
     height: 13vw;
     padding: 1.9vh 8.3vw 2.1vh 8.3vw;
     flex: 31.5;

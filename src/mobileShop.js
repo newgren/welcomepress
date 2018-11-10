@@ -166,7 +166,7 @@ class MobileShop extends React.Component {
                   <div>{item.name}</div>
                   <div>${item.price}</div>
                   <div className='imageHolder'>
-                    <img src={'./product/'+item.image_urls[0]+'.png'}
+                    <img src={'./product/'+item.preview_url+'.png'}
                          onClick={()=> this.setState({mode: 'item', sel: id})}/>
                   </div>
                 </div>),

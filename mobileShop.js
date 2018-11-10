@@ -214,7 +214,7 @@ var MobileShop = function (_React$Component) {
                 React.createElement(
                   'div',
                   { className: 'imageHolder' },
-                  React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+                  React.createElement('img', { src: './product/' + item.preview_url + '.png',
                     onClick: function onClick() {
                       return _this2.setState({ mode: 'item', sel: id });
                     } })
