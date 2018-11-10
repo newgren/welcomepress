@@ -1091,6 +1091,8 @@ select option {
   .work .workBottom {
     font-size: 5vw;
     padding: 0 7vw 10vw 0;
+  }
+  .work #mailto {
     text-decoration: underline;
   }
 
