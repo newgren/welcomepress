@@ -102,6 +102,9 @@ var Payment = function (_React$Component) {
               alert('An unknown error occured. Please try again.');
             }
             console.log("requestPaymentMethodError: " + err);
+            _this3.setButtonEnabled(true);
+            _this3.displayDropin();
+            _this3.setState({ selfLoaded: true });
             return;
           }
 
@@ -170,7 +173,7 @@ var Payment = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      // this is important, so we don't lock the button!
+      // this is important so we don't lock the button
       this.setButtonEnabled(true);
     }
   }, {

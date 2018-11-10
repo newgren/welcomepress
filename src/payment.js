@@ -80,6 +80,9 @@ class Payment extends React.Component {
             alert('An unknown error occured. Please try again.');
           }
           console.log("requestPaymentMethodError: " + err);
+          this.setButtonEnabled(true);
+          this.displayDropin();
+          this.setState({selfLoaded: true});
           return;
         }
 
@@ -148,7 +151,7 @@ class Payment extends React.Component {
   }
 
   componentWillUnmount() {
-    // this is important, so we don't lock the button!
+    // this is important so we don't lock the button
     this.setButtonEnabled(true);
   }
 
