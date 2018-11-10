@@ -53,6 +53,24 @@ body {
   cursor: none;
 }
 
+.start .enterText,
+#mobileStart .enterText {
+  align-items: center;
+  background-color: white;
+  border: 0.36vw solid var(--blue);
+  bottom: 20vh;
+  color: blue;
+  display: none;
+  font-family: questrial;
+  font-size: 2.5vw;
+  justify-content: center;
+  height: 5vw;
+  left:40vw;
+  padding: 0.1vw;
+  position: fixed;
+  width: 20vw;
+}
+
 /* @media only screen
 and (min-device-width : 375px)
 and (max-device-width : 812px)
@@ -1018,6 +1036,17 @@ select option {
     stroke-width: 0.8vw;
   }
 
+  #mobileStart .enterText {
+    border: 0.8vw solid var(--blue);
+    bottom: 20vh;
+    font-family: questrial;
+    font-size: 5vw;
+    height: 8vw;
+    left:30vw;
+    padding: 0.5vw;
+    width: 40vw;
+  }
+
   /* .press {
     font-size: 100px;
     position: relative;
@@ -1345,8 +1374,10 @@ select option {
   }
   .summary button {
     border: 0.8vw solid var(--blue);
-    font-size: 6vw;
-    height: 10vw;
+    font-size: 5vw;
+    /* height: 10vw; */
+    margin-top: 3vw;
+    padding: 1.9vh 8.3vw 2.1vh 8.3vw;
   }
 
   .checkout > .formform {

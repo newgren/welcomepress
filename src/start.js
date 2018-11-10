@@ -8,6 +8,8 @@ var timeout = null;
 var interval = null;
 var mousemoveHandler = null;
 
+let numCopies = 25;
+
 class Start extends React.Component {
   constructor(props) {
     super(props);
@@ -77,6 +79,20 @@ class Start extends React.Component {
     }
 
     window.addEventListener('mousemove', mousemoveHandler, false);
+
+    let chchch = (copies, duration) => {
+      let copyIndex = copies.length - 1;
+      let intervalPointer = window.setInterval(() => {
+        if(copyIndex < 0) {
+          clearInterval(intervalPointer);
+          return;
+        }
+        copies[copyIndex--].style.display = 'inline-flex';
+      }, duration);
+    }
+    let enterCopies = document.getElementsByClassName('enterText layer');
+    window.setTimeout(() => chchch(enterCopies, 20), 5000);
+
   }
 
 
@@ -106,6 +122,19 @@ class Start extends React.Component {
                   <text y="57">PRESS</text>
                 </svg>
               </div>
+            </div>)
+          }
+          {
+            Array.apply(null, Array(numCopies)).map((i, j) => <div
+              id={'enterText'+j}
+              key={j}
+              className='enterText layer'
+              onClick={this.goToHome}
+              style={
+                {transform: `translate(${-j}vw, ${j*1.5}vh)`,
+                zIndex: -j}
+              }>
+              <span>click to enter &#8594;</span>
             </div>)
           }
         </div>

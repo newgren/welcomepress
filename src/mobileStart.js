@@ -8,6 +8,8 @@ var timeout = null;
 var interval = null;
 var mousemoveHandler = null;
 
+let numCopies = 25;
+
 class MobileStart extends React.Component {
   constructor(props) {
     super(props);
@@ -82,6 +84,19 @@ class MobileStart extends React.Component {
     }
 
     window.addEventListener('deviceorientation', handleOrientation);
+
+    let chchch = (copies, duration) => {
+      let copyIndex = copies.length - 1;
+      let intervalPointer = window.setInterval(() => {
+        if(copyIndex < 0) {
+          clearInterval(intervalPointer);
+          return;
+        }
+        copies[copyIndex--].style.display = 'inline-flex';
+      }, duration);
+    }
+    let enterCopies = document.getElementsByClassName('enterText layer');
+    window.setTimeout(() => chchch(enterCopies, 20), 5000);
   }
 
 
@@ -108,6 +123,19 @@ class MobileStart extends React.Component {
               <svg id={'pressText'+j} viewBox="0 0 417 60">
                 <text y="57">PRESS</text>
               </svg>
+            </div>)
+          }
+          {
+            Array.apply(null, Array(numCopies)).map((i, j) => <div
+              id={'enterText'+j}
+              key={j}
+              className='enterText layer'
+              onClick={this.goToHome}
+              style={
+                {transform: `translate(${-j*1.3}vw, ${j*1.2}vh)`,
+                zIndex: -j}
+              }>
+              <span>click to enter &#8594;</span>
             </div>)
           }
       </div>

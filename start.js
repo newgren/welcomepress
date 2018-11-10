@@ -16,6 +16,8 @@ var timeout = null;
 var interval = null;
 var mousemoveHandler = null;
 
+var numCopies = 25;
+
 var Start = function (_React$Component) {
   _inherits(Start, _React$Component);
 
@@ -92,6 +94,21 @@ var Start = function (_React$Component) {
       };
 
       window.addEventListener('mousemove', mousemoveHandler, false);
+
+      var chchch = function chchch(copies, duration) {
+        var copyIndex = copies.length - 1;
+        var intervalPointer = window.setInterval(function () {
+          if (copyIndex < 0) {
+            clearInterval(intervalPointer);
+            return;
+          }
+          copies[copyIndex--].style.display = 'inline-flex';
+        }, duration);
+      };
+      var enterCopies = document.getElementsByClassName('enterText layer');
+      window.setTimeout(function () {
+        return chchch(enterCopies, 20);
+      }, 5000);
     }
   }, {
     key: 'render',
@@ -142,6 +159,23 @@ var Start = function (_React$Component) {
                   'PRESS'
                 )
               )
+            )
+          );
+        }),
+        Array.apply(null, Array(numCopies)).map(function (i, j) {
+          return React.createElement(
+            'div',
+            {
+              id: 'enterText' + j,
+              key: j,
+              className: 'enterText layer',
+              onClick: _this2.goToHome,
+              style: { transform: 'translate(' + -j + 'vw, ' + j * 1.5 + 'vh)',
+                zIndex: -j } },
+            React.createElement(
+              'span',
+              null,
+              'click to enter \u2192'
             )
           );
         })
