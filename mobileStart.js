@@ -181,7 +181,7 @@ var MobileStart = function (_React$Component) {
               key: j,
               className: 'enterText layer',
               onClick: _this2.goToHome,
-              style: { transform: 'translate(' + -j * 1.3 + 'vw, ' + j * 1.2 + 'vh)',
+              style: { transform: 'translate(' + -j * 1.5 + 'vw, ' + j + 'vh)',
                 zIndex: -j } },
             React.createElement(
               'span',

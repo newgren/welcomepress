@@ -132,7 +132,7 @@ class MobileStart extends React.Component {
               className='enterText layer'
               onClick={this.goToHome}
               style={
-                {transform: `translate(${-j*1.3}vw, ${j*1.2}vh)`,
+                {transform: `translate(${-j*1.5}vw, ${j}vh)`,
                 zIndex: -j}
               }>
               <span>click to enter &#8594;</span>

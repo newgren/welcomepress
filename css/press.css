@@ -1037,7 +1037,7 @@ select option {
   }
 
   #mobileStart .enterText {
-    border: 0.8vw solid var(--blue);
+    border: 0.5vw solid var(--blue);
     bottom: 20vh;
     font-family: questrial;
     font-size: 5vw;
@@ -1116,10 +1116,10 @@ select option {
 
   .homeDesktop .info {
     display: none;
-    bottom: 30vh;
+    bottom: 25vh;
     font-family: questrial;
     font-size: 4vw;
-    left: 12vw;
+    left: 8vw;
     max-width: 68vw;
     padding: 3vw;
   }
