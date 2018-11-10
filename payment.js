@@ -84,16 +84,21 @@ var Payment = function (_React$Component) {
 
       // onclick for final checkout button
       if (this.props.finalClick === true) {
+        if (Object.keys(this.cart).length < 1) {
+          alert('Add something to your cart to checkout.');
+          return;
+        }
+
         // prevents spamming
         this.setButtonEnabled(false);
         this.hideDropin();
         this.setState({ selfLoaded: false });
 
         this.flipFinalClick();
-        console.log('transaction initiated');
 
         // deactivate button
         dropinInstance.requestPaymentMethod(function (err, payload) {
+          console.log('transaction initiated');
           if (err) {
             // Handle errors in requesting payment method
             if (err == 'DropinError: No payment method is available.') {

@@ -61,6 +61,11 @@ class Payment extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // onclick for final checkout button
     if(this.props.finalClick === true) {
+      if(Object.keys(this.cart).length < 1) {
+        alert('Add something to your cart to checkout.')
+        return;
+      }
+
       // prevents spamming
       this.setButtonEnabled(false);
       this.hideDropin();
@@ -68,10 +73,10 @@ class Payment extends React.Component {
 
 
       this.flipFinalClick();
-      console.log('transaction initiated');
 
       // deactivate button
       dropinInstance.requestPaymentMethod((err, payload) => {
+        console.log('transaction initiated');
         if(err) {
           // Handle errors in requesting payment method
           if(err == 'DropinError: No payment method is available.') {
