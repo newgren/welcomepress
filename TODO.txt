@@ -1,2 +1,0 @@
-get react-responsive working; using @media+className workaround to conditionally render mobile vs. desktop for now
-test
