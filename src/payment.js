@@ -6,6 +6,8 @@ const port = '443';
 var dropinInstance;
 let braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
+let production = true;
+
 class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ class Payment extends React.Component {
 
   componentDidMount() {
       braintree.dropin.create({
-        authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
+        authorization: production ? 'production_g559bcnn_ch4gpnw7bcm4tpmb' : 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
         container: '#dropin-container'
         // paypal: {
         //   flow: 'vault'
@@ -63,7 +65,7 @@ class Payment extends React.Component {
     if(this.props.finalClick === true) {
       if(Object.keys(this.cart).length < 1) {
         alert('Add something to your cart to checkout.')
-        return;
+        //return;
       }
 
       // prevents spamming

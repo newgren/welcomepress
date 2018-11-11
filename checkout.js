@@ -95,6 +95,9 @@ var Checkout = function (_React$Component) {
     key: 'getShipping',
     value: function getShipping() {
       var num = this.props.getCartSize();
+      if (num === 0) {
+        return 0.01;
+      }
       if (num === 1) {
         return 2.05;
       }

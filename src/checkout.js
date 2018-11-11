@@ -78,6 +78,9 @@ class Checkout extends React.Component {
 
   getShipping() {
     let num = this.props.getCartSize();
+    if(num === 0) {
+      return 0.01;
+    }
     if(num === 1) {
       return 2.05;
     }

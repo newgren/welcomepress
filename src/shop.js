@@ -16,7 +16,7 @@ class Shop extends React.Component {
     this.goToHome = props.goToHome;
     this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,

@@ -14,6 +14,8 @@ var port = '443';
 var dropinInstance;
 var braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
+var production = true;
+
 var Payment = function (_React$Component) {
   _inherits(Payment, _React$Component);
 
@@ -45,7 +47,7 @@ var Payment = function (_React$Component) {
       var _this2 = this;
 
       braintree.dropin.create({
-        authorization: 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
+        authorization: production ? 'production_g559bcnn_ch4gpnw7bcm4tpmb' : 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
         container: '#dropin-container'
         // paypal: {
         //   flow: 'vault'
@@ -86,7 +88,7 @@ var Payment = function (_React$Component) {
       if (this.props.finalClick === true) {
         if (Object.keys(this.cart).length < 1) {
           alert('Add something to your cart to checkout.');
-          return;
+          //return;
         }
 
         // prevents spamming
