@@ -2,7 +2,7 @@ export default
 {
 	"items": [
 		{
-			"name": "happy welder",
+			"name": "all smiles",
 			"preview_url": ["weldy0"],
 			"image_urls": ["weldy1", "weldy2", "weldy3"],
 			"description": "Gildan Ultra Cotton",

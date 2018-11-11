@@ -142,6 +142,12 @@ class MobileShop extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if(!this.state.productForced && this.props.forceProduct) {
+      this.setState({productForced: true, sel: 0, mode: 'item'});
+    }
+  }
+
   render() {
     return (
       <div className='mobileShop'>

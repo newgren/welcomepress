@@ -167,6 +167,13 @@ var MobileShop = function (_React$Component) {
       }
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!this.state.productForced && this.props.forceProduct) {
+        this.setState({ productForced: true, sel: 0, mode: 'item' });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;

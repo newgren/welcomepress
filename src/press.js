@@ -2,6 +2,7 @@
 
 const e = React.createElement;
 
+
 import Start from './start.js'
 import Home from './home.js'
 import Work from './work.js'
@@ -22,6 +23,7 @@ class Press extends React.Component {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
       windowWidth: null,
+      routed: false,
     };
   }
 
@@ -47,6 +49,9 @@ class Press extends React.Component {
   componentDidMount() {
     this.updateWidth();
     window.addEventListener('resize', this.updateWidth.bind(this));
+    if(!this.state.routed && window.location.href.includes('shop')) {
+      this.setState({routed: true, mode: 'shop'});
+    }
   }
 
   componentWillUnmount() {
@@ -59,6 +64,7 @@ class Press extends React.Component {
       return (null);
     }
 
+
     if(this.isMobile()) {
       console.log("mobile");
       switch (this.state.mode) {
@@ -70,7 +76,8 @@ class Press extends React.Component {
           break;
         case 'shop':
           return <MobileShop goToHome={() => this.changeMode('home')}
-                             goToCompleted={() => this.changeMode('completed')} />
+                             goToCompleted={() => this.changeMode('completed')}
+                             forceProduct={this.state.routed} />
           break;
         case 'completed':
           return <Completed goToHome={() => this.changeMode('home')} />
@@ -90,7 +97,8 @@ class Press extends React.Component {
         case 'shop':
           return <Shop goToBag={() => this.changeMode('bag')}
                        goToHome={() => this.changeMode('home')}
-                       goToCompleted={() => this.changeMode('completed')}/>
+                       goToCompleted={() => this.changeMode('completed')}
+                       forceProduct={this.state.routed} />
           break;
         case 'completed':
           return <Completed goToHome={() => this.changeMode('home')} />

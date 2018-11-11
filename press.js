@@ -34,7 +34,8 @@ var Press = function (_React$Component) {
     _this.state = {
       mode: 'start', // start | home | work | shop | completed
       homeEntered: 'false',
-      windowWidth: null
+      windowWidth: null,
+      routed: false
     };
     return _this;
   }
@@ -66,6 +67,9 @@ var Press = function (_React$Component) {
     value: function componentDidMount() {
       this.updateWidth();
       window.addEventListener('resize', this.updateWidth.bind(this));
+      if (!this.state.routed && window.location.href.includes('shop')) {
+        this.setState({ routed: true, mode: 'shop' });
+      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -101,7 +105,8 @@ var Press = function (_React$Component) {
               },
               goToCompleted: function goToCompleted() {
                 return _this2.changeMode('completed');
-              } });
+              },
+              forceProduct: this.state.routed });
             break;
           case 'completed':
             return React.createElement(Completed, { goToHome: function goToHome() {
@@ -137,7 +142,8 @@ var Press = function (_React$Component) {
               },
               goToCompleted: function goToCompleted() {
                 return _this2.changeMode('completed');
-              } });
+              },
+              forceProduct: this.state.routed });
             break;
           case 'completed':
             return React.createElement(Completed, { goToHome: function goToHome() {
