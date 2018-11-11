@@ -47,6 +47,7 @@ class MobileShop extends React.Component {
   }
 
   addToCart(id, size, qty) {
+    fbq('track', 'AddToCart');
     ga('send', {
       hitType: 'event',
       eventCategory: 'product',
@@ -158,6 +159,22 @@ class MobileShop extends React.Component {
               :
                 <span id='shopProductName'>BAG</span>
             }
+            <div id='bagbannericon'>
+              {this.state.mode == 'browse' || this.state.mode == 'item' ?
+                <img src='./iconImages/bag_desktop.png'
+                     onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
+                /> :
+                <img src='./iconImages/bag_desktop_blue.png'
+                     onClick={() => this.getCartSize() > 0 ? this.setState({mode: 'bag', sel: -1}) : alert('add something to your cart first!')}
+                />
+              }
+              {this.state.mode == 'browse' || this.state.mode == 'item' ?
+                <span>{this.getCartSize()}</span>
+                :
+                <span className='white'>{this.getCartSize()}</span>
+
+              }
+            </div>
           </div>
           {
             {
@@ -173,6 +190,7 @@ class MobileShop extends React.Component {
               'bag': <MobileBag cart={this.state.cart}
                                 remove={(index, size) => this.removeFromCart(index, size)}
                                 goToCheckout={() => {
+                                  fbq('track', 'InitiateCheckout');
                                   ga('send', {
                                     hitType: 'event',
                                     eventCategory: 'product',

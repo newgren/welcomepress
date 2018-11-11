@@ -358,8 +358,19 @@ svg text {
 }
 
 .mobileShop .banner img#shopBannerText{
-  height: 65%;
+  height: 55%;
   padding: 2vh 0;
+}
+
+.mobileShop .banner #bagbannericon {
+  padding-right: 0;
+}
+
+
+.mobileShop .banner #bagbannericon span {
+  font-size: 4vw;
+  padding-right: 0.8vw;
+  padding-top: 2.4vw;
 }
 
 .banner #shopProductName {
@@ -1150,10 +1161,6 @@ select option {
     font-size: 13vw;
   }
 
-  .shopBox {
-    border: .7vw solid var(--blue);
-  }
-
   .shopLeft {
     flex: 1;
     flex-shrink: 0;
@@ -1165,9 +1172,11 @@ select option {
 
 
   .shopBox {
+    border: .7vw solid var(--blue);
     flex: 9;
     height: inherit;
     padding: 6vw;
+    padding-top: 2vw;
   }
 
   .banner {

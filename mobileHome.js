@@ -15,7 +15,7 @@ var numShopTextCopies = 60;
 var numMarkCopies = 35;
 var numInfoCopies = 40;
 
-var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are a full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 // TODO: conditionally render image only for top layer of chchchch
 

@@ -29,7 +29,7 @@ var Shop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
@@ -66,6 +66,7 @@ var Shop = function (_React$Component) {
   }, {
     key: 'addToCart',
     value: function addToCart(id, size, qty) {
+      fbq('track', 'AddToCart');
       ga('send', {
         hitType: 'event',
         eventCategory: 'product',
@@ -300,6 +301,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
               return _this2.removeFromCart(index, size);
             },
             goToCheckout: function goToCheckout() {
+              fbq('track', 'InitiateCheckout');
               ga('send', {
                 hitType: 'event',
                 eventCategory: 'product',

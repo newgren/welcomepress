@@ -154,6 +154,10 @@ var Payment = function (_React$Component) {
               _this3.displayDropin();
               _this3.setState({ selfLoaded: true });
               if (req.status === 200) {
+                fbq('track', 'Purchase', {
+                  value: _this3.amount,
+                  currency: 'USD'
+                });
                 ga('send', {
                   hitType: 'event',
                   eventCategory: 'product',

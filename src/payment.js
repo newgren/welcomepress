@@ -133,6 +133,10 @@ class Payment extends React.Component {
             this.displayDropin();
             this.setState({selfLoaded: true});
             if(req.status === 200) {
+              fbq('track', 'Purchase', {
+                value: this.amount,
+                currency: 'USD'
+              });
               ga('send', {
                 hitType: 'event',
                 eventCategory: 'product',

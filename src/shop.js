@@ -16,7 +16,7 @@ class Shop extends React.Component {
     this.goToHome = props.goToHome;
     this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
@@ -48,6 +48,7 @@ class Shop extends React.Component {
   }
 
   addToCart(id, size, qty) {
+    fbq('track', 'AddToCart');
     ga('send', {
       hitType: 'event',
       eventCategory: 'product',
@@ -255,6 +256,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
                     cart={this.state.cart}
                     remove={(index, size) => this.removeFromCart(index, size)}
                     goToCheckout={() => {
+                      fbq('track', 'InitiateCheckout');
                       ga('send', {
                         hitType: 'event',
                         eventCategory: 'product',

@@ -66,6 +66,7 @@ var MobileShop = function (_React$Component) {
   }, {
     key: 'addToCart',
     value: function addToCart(id, size, qty) {
+      fbq('track', 'AddToCart');
       ga('send', {
         hitType: 'event',
         eventCategory: 'product',
@@ -193,6 +194,28 @@ var MobileShop = function (_React$Component) {
               'span',
               { id: 'shopProductName' },
               'BAG'
+            ),
+            React.createElement(
+              'div',
+              { id: 'bagbannericon' },
+              this.state.mode == 'browse' || this.state.mode == 'item' ? React.createElement('img', { src: './iconImages/bag_desktop.png',
+                onClick: function onClick() {
+                  return _this2.getCartSize() > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
+                }
+              }) : React.createElement('img', { src: './iconImages/bag_desktop_blue.png',
+                onClick: function onClick() {
+                  return _this2.getCartSize() > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
+                }
+              }),
+              this.state.mode == 'browse' || this.state.mode == 'item' ? React.createElement(
+                'span',
+                null,
+                this.getCartSize()
+              ) : React.createElement(
+                'span',
+                { className: 'white' },
+                this.getCartSize()
+              )
             )
           ),
           {
@@ -226,6 +249,7 @@ var MobileShop = function (_React$Component) {
                 return _this2.removeFromCart(index, size);
               },
               goToCheckout: function goToCheckout() {
+                fbq('track', 'InitiateCheckout');
                 ga('send', {
                   hitType: 'event',
                   eventCategory: 'product',

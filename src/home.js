@@ -7,7 +7,7 @@ var numShopTextCopies = 40;
 var numMarkCopies = 20;
 var numInfoCopies = 20;
 
-var infoBlurb = 'we are an full-service front-end design shop located in Urbana, IL. we also make shirts.';
+var infoBlurb = 'we are a full-service front-end design shop located in Urbana, IL. we also make shirts.';
 
 class Home extends React.Component {
   constructor(props) {
