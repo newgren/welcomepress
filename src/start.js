@@ -108,8 +108,6 @@ class Start extends React.Component {
           this.goToHome();
         }
         } id='start'>
-          <div className='blackbar'></div>
-          <div className='blackbar'></div>
           <div className='center'>
             <div id='welcome'>
               <svg viewBox="0 0 417 60">

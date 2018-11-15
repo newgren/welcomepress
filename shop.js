@@ -29,7 +29,7 @@ var Shop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       productForced: false,
       pos: 0,

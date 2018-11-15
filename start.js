@@ -126,8 +126,6 @@ var Start = function (_React$Component) {
             });
             _this2.goToHome();
           }, id: 'start' },
-        React.createElement('div', { className: 'blackbar' }),
-        React.createElement('div', { className: 'blackbar' }),
         React.createElement(
           'div',
           { className: 'center' },
