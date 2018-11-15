@@ -10,11 +10,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 var server = 'welcomepresspayment.tk';
-var port = '443';
+var port = '442';
 var dropinInstance;
 var braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
-var production = true;
+var production = false;
 
 var Payment = function (_React$Component) {
   _inherits(Payment, _React$Component);
@@ -48,11 +48,11 @@ var Payment = function (_React$Component) {
 
       braintree.dropin.create({
         authorization: production ? 'production_g559bcnn_ch4gpnw7bcm4tpmb' : 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
-        container: '#dropin-container'
+        container: '#dropin-container',
         // paypal: {
         //   flow: 'vault'
         // },
-        //venmo: {}
+        venmo: {}
       }, function (err, instance) {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in

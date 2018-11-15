@@ -2,11 +2,11 @@
 
 const e = React.createElement;
 const server = 'welcomepresspayment.tk';
-const port = '443';
+const port = '442';
 var dropinInstance;
 let braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
-let production = true;
+let production = false;
 
 class Payment extends React.Component {
   constructor(props) {
@@ -30,11 +30,11 @@ class Payment extends React.Component {
   componentDidMount() {
       braintree.dropin.create({
         authorization: production ? 'production_g559bcnn_ch4gpnw7bcm4tpmb' : 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
-        container: '#dropin-container'
+        container: '#dropin-container',
         // paypal: {
         //   flow: 'vault'
         // },
-        //venmo: {}
+        venmo: {}
       }, (err, instance) => {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
