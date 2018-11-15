@@ -2,7 +2,6 @@
 
 const e = React.createElement;
 
-
 import Start from './start.js'
 import Home from './home.js'
 import Work from './work.js'
@@ -52,6 +51,10 @@ class Press extends React.Component {
     if(!this.state.routed && window.location.href.includes('shop')) {
       this.setState({routed: true, mode: 'shop'});
     }
+
+    //preload
+    let a = new Image();
+    a.src = './product/weldy0.png';
   }
 
   componentWillUnmount() {

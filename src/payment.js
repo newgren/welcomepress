@@ -2,7 +2,7 @@
 
 const e = React.createElement;
 const server = 'welcomepresspayment.tk';
-const port = '443';
+const port = '442';
 var dropinInstance;
 let braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 

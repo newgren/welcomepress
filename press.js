@@ -70,6 +70,10 @@ var Press = function (_React$Component) {
       if (!this.state.routed && window.location.href.includes('shop')) {
         this.setState({ routed: true, mode: 'shop' });
       }
+
+      //preload
+      var a = new Image();
+      a.src = './product/weldy0.png';
     }
   }, {
     key: 'componentWillUnmount',

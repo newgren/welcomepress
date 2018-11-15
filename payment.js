@@ -10,7 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 var server = 'welcomepresspayment.tk';
-var port = '443';
+var port = '442';
 var dropinInstance;
 var braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
