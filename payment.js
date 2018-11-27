@@ -48,11 +48,11 @@ var Payment = function (_React$Component) {
 
       braintree.dropin.create({
         authorization: production ? 'production_g559bcnn_ch4gpnw7bcm4tpmb' : 'sandbox_48psd8gz_36dbhbmvhvv9cpjd',
-        container: '#dropin-container'
+        container: '#dropin-container',
         // paypal: {
         //   flow: 'vault'
         // },
-        //venmo: {}
+        venmo: {}
       }, function (err, instance) {
         if (err) {
           // Handle any errors that might've occurred when creating Drop-in
